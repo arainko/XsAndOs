@@ -1,0 +1,7 @@
+#custom-button {
+    -fx-font: 12px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #AAAAAA;
+    -fx-border-style: solid;
+    -fx-border-color: crimson;
+}

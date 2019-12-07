@@ -7,6 +7,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="javafx" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" />
+        </NATIVE>
+        <SOURCES>
+          <root url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
