@@ -1,10 +1,16 @@
-package com.arainko.xno.gamelogic.abstracts;
+package com.arainko.xno.gamelogic.supers;
 
-public abstract class CordPairElement {
+public class Element {
+    private enum TransformTarget {
+        CROSS,
+        CIRCLE,
+        LINE
+    }
+
     private int cordX;
     private int cordY;
 
-    public CordPairElement(int cordX, int cordY) {
+    public Element(int cordX, int cordY) {
         this.setCordX(cordX);
         this.setCordY(cordY);
     }
@@ -31,10 +37,10 @@ public abstract class CordPairElement {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CordPairElement))
+        if (!(obj instanceof Element))
             return false;
 
-        CordPairElement that = (CordPairElement) obj;
+        Element that = (Element) obj;
         return this.getCordX() == that.getCordX() && this.getCordY() == that.getCordY();
     }
 

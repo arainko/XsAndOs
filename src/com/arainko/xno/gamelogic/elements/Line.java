@@ -1,26 +1,45 @@
 package com.arainko.xno.gamelogic.elements;
 
-import com.arainko.xno.gamelogic.abstracts.CordPairElement;
+import com.arainko.xno.gamelogic.supers.Element;
 
-public class Line extends CordPairElement {
-    private enum Orientation {
+public class Line extends Element {
+    private enum Mode {
         HORIZONTAL,
-        VERTICAL
+        VERTICAL,
+        JOINT,
+        NOT_CONNECTED
     }
 
-    private Orientation orientation;
-    private CordPairElement elementContainer;
+    private Mode mode;
+    private Element elementContainer;
 
-    public Line(int cordX, int cordY, Orientation orientation) {
+    public Line(int cordX, int cordY) {
         super(cordX, cordY);
-        setOrientation(orientation);
+        setMode(Mode.NOT_CONNECTED);
     }
 
-    private void setOrientation(Orientation orientation) {
-        this.orientation = orientation;
+    public void setMode(Mode mode) {
+        this.mode = mode;
     }
 
-    public Orientation getOrientation() {
-        return orientation;
+    public Mode getMode() {
+        return mode;
+    }
+
+    @Override
+    public String toString() {
+        String string = "L";
+        switch (mode) {
+            case JOINT:
+                string = "J";
+                break;
+            case VERTICAL:
+                string = "V";
+                break;
+            case HORIZONTAL:
+                string = "H";
+                break;
+        }
+        return string;
     }
 }
