@@ -1,12 +1,6 @@
-package com.arainko.xno.gamelogic.supers;
+package com.arainko.xno.gamelogic.abstracts;
 
-public class Element {
-    private enum TransformTarget {
-        CROSS,
-        CIRCLE,
-        LINE
-    }
-
+public abstract class Element {
     private int cordX;
     private int cordY;
 
@@ -46,7 +40,9 @@ public class Element {
 
     @Override
     public String toString() {
-        return "cordX = " + this.getCordX() + ", cordY = " + this.getCordY();
+//        return "cordX = " + this.getCordX() + ", cordY = " + this.getCordY();
+//        return cordX + " " + getCordY();
+        return "E";
     }
 }
 
