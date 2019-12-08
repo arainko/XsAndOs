@@ -47,23 +47,22 @@ public class XNO_Tests {
     }
 
     @Test
-    public void connectionHorizontalCalculationTest() {
-        ConnectionUnit unit1 = new ConnectionUnit(0,0);
-        ConnectionUnit unit2 = new ConnectionUnit(1,0);
-        ConnectionUnit unit3 = new ConnectionUnit(2,0);
-        ConnectionUnit unit4 = new ConnectionUnit(4,0);
+    public void connectionCalculationTest() {
         Connection connection = new Connection();
+        ConnectionUnit[] units = { new ConnectionUnit(0,0), new ConnectionUnit(1,0),
+                new ConnectionUnit(2,0), new ConnectionUnit(3,0),
+                new ConnectionUnit(3,1), new ConnectionUnit(3,2),
+                new ConnectionUnit(2,2), new ConnectionUnit(1,2)};
 
-        connection.addConnectionUnit(unit1);
-        connection.addConnectionUnit(unit2);
-        connection.addConnectionUnit(unit3);
-        connection.addConnectionUnit(unit4);
+       for (ConnectionUnit unit : units)
+           connection.addConnectionUnit(unit);
+
         connection.calculateConnections();
+        connection.calculateJoints();
 
-        assertSame(unit1.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
-        assertSame(unit2.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
-        assertSame(unit3.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
-        assertSame(unit4.getConnectionType(), ConnectionUnit.Type.NONE);
+        assertEquals(units[3].getConnectionType(), ConnectionUnit.Type.JOINT);
+        assertEquals(units[5].getConnectionType(), ConnectionUnit.Type.JOINT);
+
 
     }
 

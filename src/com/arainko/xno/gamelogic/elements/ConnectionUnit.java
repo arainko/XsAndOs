@@ -6,7 +6,9 @@ public class ConnectionUnit extends Element {
     public enum Type {
         HORIZONTAL,
         VERTICAL,
-        JOIN,
+        JOINT,
+        END,
+        START,
         NONE
     }
 
@@ -17,11 +19,24 @@ public class ConnectionUnit extends Element {
         setConnectionType(Type.NONE);
     }
 
+    boolean isNextToOnPaneX(ConnectionUnit that) {
+        return Math.abs(this.getCordX() - that.getCordX()) == 1 && this.getCordY()-that.getCordY() == 0;
+    }
+
+    boolean isNextToOnPaneY(ConnectionUnit that) {
+        return Math.abs(this.getCordY() - that.getCordY()) == 1 && this.getCordX()-that.getCordX() == 0;
+    }
+
     public void setConnectionType(Type connectionType) {
         this.connectionType = connectionType;
     }
 
     public Type getConnectionType() {
         return connectionType;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + getCordX() +", "+ getCordY() + ")";
     }
 }

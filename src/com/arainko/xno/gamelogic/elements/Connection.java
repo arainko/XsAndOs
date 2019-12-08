@@ -8,7 +8,7 @@ public class Connection {
     private List<ConnectionUnit> connectionUnits;
 
     public Connection() {
-        connectionUnits = new LinkedList<>();
+        connectionUnits = new ArrayList<>();
     }
 
     public void addConnectionUnit(ConnectionUnit unit) {
@@ -16,15 +16,35 @@ public class Connection {
     }
 
     public void calculateConnections() {
-        for (int i=1; i < connectionUnits.size(); i++) {
-            ConnectionUnit lastUnit = connectionUnits.get(i-1);
-            ConnectionUnit currUnit = connectionUnits.get(i);
+        connectionUnits.get(0).setConnectionType(ConnectionUnit.Type.START);
+        connectionUnits.get(connectionUnits.size()-1).setConnectionType(ConnectionUnit.Type.END);
 
-            if (Math.abs(lastUnit.getCordX() - currUnit.getCordX()) == 1) {
-                lastUnit.setConnectionType(ConnectionUnit.Type.HORIZONTAL);
+        for (int i=1; i < connectionUnits.size()-1; i++) {
+            ConnectionUnit currUnit = connectionUnits.get(i);
+            ConnectionUnit nextUnit = connectionUnits.get(i+1);
+
+            if (currUnit.isNextToOnPaneX(nextUnit))
                 currUnit.setConnectionType(ConnectionUnit.Type.HORIZONTAL);
-            }
+            else if (currUnit.isNextToOnPaneY(nextUnit))
+                currUnit.setConnectionType(ConnectionUnit.Type.VERTICAL);
         }
     }
+
+    public void calculateJoints() {
+        if (connectionUnits.size() >= 3)
+            for (int i=1; i + 1 < connectionUnits.size(); i++) {
+                ConnectionUnit lastUnit = connectionUnits.get(i-1);
+                ConnectionUnit currUnit = connectionUnits.get(i);
+                ConnectionUnit nextUnit = connectionUnits.get(i+1);
+
+                if (lastUnit.getCordX() != nextUnit.getCordX() && lastUnit.getCordY() != nextUnit.getCordY() && currUnit.getConnectionType() != ConnectionUnit.Type.NONE)
+                    currUnit.setConnectionType(ConnectionUnit.Type.JOINT);
+            }
+        for (ConnectionUnit unit : connectionUnits)
+            System.out.println(unit.getConnectionType());
+    }
+
+
+
 
 }
