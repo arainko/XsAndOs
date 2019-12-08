@@ -19,13 +19,13 @@ public class Board {
     private void setDimX(int dimX) {
         if (dimX > 0)
             this.dimX = dimX;
-        else throw new IllegalStateException("Negative value: dimX = " + dimX);
+        else throw new IllegalStateException("Negative or zero value: dimX = " + dimX);
     }
 
     private void setDimY(int dimY) {
         if (dimY > 0)
             this.dimY = dimY;
-        else throw new IllegalStateException("Negative value: dimY = " + dimY);
+        else throw new IllegalStateException("Negative or zero value: dimY = " + dimY);
     }
 
     private void setBoard() {
@@ -42,7 +42,7 @@ public class Board {
         int elementCordY = element.getCordY();
         if (elementCordX < dimX && elementCordY < dimY)
             this.board.get(elementCordY).set(elementCordX, element);
-        else throw new IndexOutOfBoundsException("Element's cords are out of bounds: cordX = " + elementCordX + ", cordY = " + elementCordY);
+        else throw new IndexOutOfBoundsException("Element cords are out of bounds: cordX = " + elementCordX + ", cordY = " + elementCordY);
     }
 
     public int getDimX() {

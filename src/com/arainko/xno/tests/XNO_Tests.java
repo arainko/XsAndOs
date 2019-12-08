@@ -1,12 +1,13 @@
 package com.arainko.xno.tests;
 
 import com.arainko.xno.gamelogic.elements.Circle;
+import com.arainko.xno.gamelogic.elements.Connection;
+import com.arainko.xno.gamelogic.elements.ConnectionUnit;
 import com.arainko.xno.gamelogic.elements.Cross;
 import com.arainko.xno.gamelogic.board.Board;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class XNO_Tests {
 
@@ -43,6 +44,27 @@ public class XNO_Tests {
             isExceptionThrown = true;
         }
         assertTrue(isExceptionThrown);
+    }
+
+    @Test
+    public void connectionHorizontalCalculationTest() {
+        ConnectionUnit unit1 = new ConnectionUnit(0,0);
+        ConnectionUnit unit2 = new ConnectionUnit(1,0);
+        ConnectionUnit unit3 = new ConnectionUnit(2,0);
+        ConnectionUnit unit4 = new ConnectionUnit(4,0);
+        Connection connection = new Connection();
+
+        connection.addConnectionUnit(unit1);
+        connection.addConnectionUnit(unit2);
+        connection.addConnectionUnit(unit3);
+        connection.addConnectionUnit(unit4);
+        connection.calculateConnections();
+
+        assertSame(unit1.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
+        assertSame(unit2.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
+        assertSame(unit3.getConnectionType(), ConnectionUnit.Type.HORIZONTAL);
+        assertSame(unit4.getConnectionType(), ConnectionUnit.Type.NONE);
+
     }
 
 }
