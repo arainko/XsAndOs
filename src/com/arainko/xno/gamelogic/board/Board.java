@@ -2,8 +2,12 @@ package com.arainko.xno.gamelogic.board;
 
 import com.arainko.xno.gamelogic.abstracts.Element;
 import com.arainko.xno.gamelogic.elements.Cell;
+import com.arainko.xno.gamelogic.elements.Connection;
+import com.arainko.xno.gamelogic.elements.ConnectionUnit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EventListener;
 import java.util.List;
 
 public class Board {
@@ -37,12 +41,33 @@ public class Board {
         }
     }
 
+    public void placeConnectionIfValid(Connection connection) {
+        if (isConnectionValid(connection))
+            placeConnection(connection);
+    }
+
+    public boolean isConnectionValid(Connection connection) {
+        List<ConnectionUnit> units = connection.getConnectionUnits();
+        for (List<Element> row : board)
+            if (!Collections.disjoint(row, units))
+                return false;
+        return true;
+    }
+
+    public void placeConnection(Connection connection) {
+        for (ConnectionUnit unit : connection.getConnectionUnits())
+            replaceBoardElement(unit);
+    }
+
     public void replaceBoardElement(Element element) {
         int elementCordX = element.getCordX();
         int elementCordY = element.getCordY();
-        if (elementCordX < dimX && elementCordY < dimY)
-            this.board.get(elementCordY).set(elementCordX, element);
-        else throw new IndexOutOfBoundsException("Element cords are out of bounds: cordX = " + elementCordX + ", cordY = " + elementCordY);
+        if (elementCordX < dimX && elementCordY < dimY) {
+            if (element instanceof ConnectionUnit) {
+                Element elementToContain = board.get(elementCordY).get(elementCordX);
+                ((ConnectionUnit) element).setContainer(elementToContain);
+            } this.board.get(elementCordY).set(elementCordX, element);
+        } else throw new IndexOutOfBoundsException("Element cords are out of bounds: cordX = " + elementCordX + ", cordY = " + elementCordY);
     }
 
     public int getDimX() {

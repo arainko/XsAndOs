@@ -5,39 +5,41 @@ import com.arainko.xno.gamelogic.elements.Connection;
 import com.arainko.xno.gamelogic.elements.ConnectionUnit;
 import com.arainko.xno.gamelogic.elements.Cross;
 import com.arainko.xno.gamelogic.board.Board;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class XNO_Tests {
 
-    @Test
-    public void equalsCordPairElementTest() {
-        Circle cell1 = new Circle(1,1);
-        Cross cross1 = new Cross(1,1);
+    public Board board;
+    public Connection presetConnection1;
+    public Connection presetConnection2;
 
-        assertEquals( cell1, cross1);
+    @BeforeEach
+    public void setupForTests() {
+        board = new Board(10,10);
+        ConnectionUnit[] units1 = {new ConnectionUnit(0,0), new ConnectionUnit(1,0), new ConnectionUnit(2,0) };
+        ConnectionUnit[] units2 = {new ConnectionUnit(2,0), new ConnectionUnit(3,0) };
+        presetConnection1 = new Connection(units1);
+        presetConnection2 = new Connection(units2);
     }
 
     @Test
     public void boardElementReplacementTest() {
-        Board board = new Board(10, 10);
-
         board.replaceBoardElement(new Circle(0,0));
         board.replaceBoardElement(new Cross(9,9));
         board.replaceBoardElement(new Cross(5,4));
-
-        board.printBoard();
+        board.replaceBoardElement(new ConnectionUnit(5,4));
 
         assertTrue(board.getBoard().get(0).get(0) instanceof Circle);
         assertTrue(board.getBoard().get(9).get(9) instanceof Cross);
-        assertTrue(board.getBoard().get(4).get(5) instanceof Cross);
+        assertTrue(board.getBoard().get(4).get(5) instanceof ConnectionUnit);
     }
 
     @Test
     public void boardOutOfBoundsReplacementTest() {
         boolean isExceptionThrown = false;
-        Board board = new Board(10, 10);
         try {
             board.replaceBoardElement(new Circle(10,10));
         } catch (IndexOutOfBoundsException ex) {
@@ -48,22 +50,24 @@ public class XNO_Tests {
 
     @Test
     public void connectionCalculationTest() {
-        Connection connection = new Connection();
         ConnectionUnit[] units = { new ConnectionUnit(0,0), new ConnectionUnit(1,0),
                 new ConnectionUnit(2,0), new ConnectionUnit(3,0),
                 new ConnectionUnit(3,1), new ConnectionUnit(3,2),
                 new ConnectionUnit(2,2), new ConnectionUnit(1,2)};
-
-       for (ConnectionUnit unit : units)
-           connection.addConnectionUnit(unit);
+        Connection connection = new Connection(units);
 
         connection.calculateConnections();
         connection.calculateJoints();
 
         assertEquals(units[3].getConnectionType(), ConnectionUnit.Type.JOINT);
         assertEquals(units[5].getConnectionType(), ConnectionUnit.Type.JOINT);
-
-
     }
 
+    @Test
+    public void connectionOnBoardValidityTest() {
+        board.placeConnectionIfValid(presetConnection1);
+        board.placeConnectionIfValid(presetConnection2);
+        board.printBoard();
+        assertFalse(board.isConnectionValid(presetConnection2));
+    }
 }

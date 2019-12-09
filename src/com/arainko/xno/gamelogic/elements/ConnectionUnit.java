@@ -2,6 +2,9 @@ package com.arainko.xno.gamelogic.elements;
 
 import com.arainko.xno.gamelogic.abstracts.Element;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConnectionUnit extends Element {
     public enum Type {
         HORIZONTAL,
@@ -13,6 +16,7 @@ public class ConnectionUnit extends Element {
     }
 
     private Type connectionType;
+    private Element container;
 
     public ConnectionUnit(int cordX, int cordY) {
         super(cordX, cordY);
@@ -35,8 +39,21 @@ public class ConnectionUnit extends Element {
         return connectionType;
     }
 
+    public void setContainer(Element element) {
+        this.container = element;
+    }
+
     @Override
     public String toString() {
-        return "(" + getCordX() +", "+ getCordY() + ")";
+        return "(" + container.toString() + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ConnectionUnit))
+            return false;
+
+        ConnectionUnit that = (ConnectionUnit) obj;
+        return this.getCordX() == that.getCordX() && this.getCordY() == that.getCordY();
     }
 }

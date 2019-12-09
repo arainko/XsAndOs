@@ -1,6 +1,7 @@
 package com.arainko.xno.gamelogic.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,10 @@ public class Connection {
 
     public Connection() {
         connectionUnits = new ArrayList<>();
+    }
+
+    public Connection(ConnectionUnit[] units) {
+        connectionUnits = new ArrayList<>(Arrays.asList(units));
     }
 
     public void addConnectionUnit(ConnectionUnit unit) {
@@ -44,7 +49,9 @@ public class Connection {
             System.out.println(unit.getConnectionType());
     }
 
-
+    public List<ConnectionUnit> getConnectionUnits() {
+        return this.connectionUnits;
+    }
 
 
 }
