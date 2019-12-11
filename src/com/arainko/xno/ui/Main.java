@@ -13,21 +13,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Game Board");
-        GridPane gridPane = new GridPane();
+        ButtonBoard buttonBoard = new ButtonBoard(10,10);
 
 
-        for (int i=0; i < 10; i++) {
-            for (int j=0; j<10; j++) {
-                Button button = new Button("  ");
-                button.setId("custom-button");
-                button.setShape(new Rectangle(10,10));
-                gridPane.addRow(i, button);
-            }
-        }
-
-        Scene scene = new Scene(gridPane, 400, 400);
+        Scene scene = new Scene(buttonBoard, 400, 400);
         scene.getStylesheets().add("style.css");
-        gridPane.setAlignment(Pos.CENTER);
+        buttonBoard.setAlignment(Pos.CENTER);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

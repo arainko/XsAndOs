@@ -5,3 +5,15 @@
     -fx-border-style: solid;
     -fx-border-color: crimson;
 }
+
+#custom-button:hover {
+    -fx-background-color: #FFFF00;
+}
+
+#clicked-button {
+    -fx-font: 12px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: cadetblue;
+    -fx-border-style: solid;
+    -fx-border-color: crimson;
+}

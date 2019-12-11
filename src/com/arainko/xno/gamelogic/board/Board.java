@@ -7,7 +7,6 @@ import com.arainko.xno.gamelogic.elements.ConnectionUnit;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EventListener;
 import java.util.List;
 
 public class Board {
