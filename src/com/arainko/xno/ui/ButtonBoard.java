@@ -1,10 +1,7 @@
 package com.arainko.xno.ui;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
 
 public class ButtonBoard extends GridPane {
     int dimX;
@@ -25,10 +22,16 @@ public class ButtonBoard extends GridPane {
             for (int j=0; j < dimX; j++) {
                 Button button = new Button("  ");
                 button.setId("custom-button");
+                button.setPrefSize(50,50);
                 this.addRow(i, button);
                 board[i][j] = button;
             }
         }
+//        Button button = new Button("COS");
+//        button.setId("custom-button");
+//
+//        button.setPrefSize(300, 300);
+//        this.addRow(1, button);
     }
 
     private void setupButtonEventHandlers() {
