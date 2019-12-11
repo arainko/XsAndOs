@@ -3,5 +3,5 @@ module XsAndOs {
     requires javafx.controls;
     requires org.junit.jupiter.api;
 
-    opens com.arainko.xno.ui;
+    opens com.arainko.xno.view;
 }

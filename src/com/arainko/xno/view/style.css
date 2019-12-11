@@ -8,7 +8,9 @@
 }
 
 #custom-button:hover {
-    -fx-background-color: #ff4063;
+    /*#30b4ef*/
+    -fx-background-color: #20a4cf;
+    /*-fx-background-color: #ff4063;*/
 }
 
 #clicked-button {
@@ -20,5 +22,7 @@
 }
 
 #clicked-button:hover {
-    -fx-background-color: #ffdc40;
+    /*#82f7ff*/
+    -fx-background-color: #62c7cf;
+    /*-fx-background-color: #ffdc40;*/
 }

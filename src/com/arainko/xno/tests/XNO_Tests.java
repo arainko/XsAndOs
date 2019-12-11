@@ -1,10 +1,10 @@
 package com.arainko.xno.tests;
 
-import com.arainko.xno.gamelogic.elements.Circle;
-import com.arainko.xno.gamelogic.elements.Connection;
-import com.arainko.xno.gamelogic.elements.ConnectionUnit;
-import com.arainko.xno.gamelogic.elements.Cross;
-import com.arainko.xno.gamelogic.board.Board;
+import com.arainko.xno.model.elements.Circle;
+import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.model.elements.ConnectionUnit;
+import com.arainko.xno.model.elements.Cross;
+import com.arainko.xno.model.board.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

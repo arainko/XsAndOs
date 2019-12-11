@@ -1,6 +1,6 @@
-package com.arainko.xno.gamelogic.elements;
+package com.arainko.xno.model.elements;
 
-import com.arainko.xno.gamelogic.abstracts.Element;
+import com.arainko.xno.model.abstracts.Element;
 
 public class Cell extends Element {
     public Cell(int cordX, int cordY) {

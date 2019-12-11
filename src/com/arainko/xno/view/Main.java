@@ -1,4 +1,4 @@
-package com.arainko.xno.ui;
+package com.arainko.xno.view;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -16,7 +16,7 @@ public class Main extends Application {
         buttonBoard.setBackground(Background.EMPTY);
         Scene scene = new Scene(buttonBoard, 800, 600);
         scene.setFill(Color.rgb(66,66,66));
-        scene.getStylesheets().add("style.css");
+        scene.getStylesheets().add("com/arainko/xno/view/style.css");
         buttonBoard.setAlignment(Pos.CENTER);
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -1,9 +1,9 @@
-package com.arainko.xno.gamelogic.board;
+package com.arainko.xno.model.board;
 
-import com.arainko.xno.gamelogic.abstracts.Element;
-import com.arainko.xno.gamelogic.elements.Cell;
-import com.arainko.xno.gamelogic.elements.Connection;
-import com.arainko.xno.gamelogic.elements.ConnectionUnit;
+import com.arainko.xno.model.abstracts.Element;
+import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.model.elements.ConnectionUnit;
 
 import java.util.ArrayList;
 import java.util.Collections;

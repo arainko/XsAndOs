@@ -1,8 +1,7 @@
-package com.arainko.xno.gamelogic.elements;
+package com.arainko.xno.model.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Connection {

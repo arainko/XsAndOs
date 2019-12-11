@@ -1,9 +1,6 @@
-package com.arainko.xno.gamelogic.elements;
+package com.arainko.xno.model.elements;
 
-import com.arainko.xno.gamelogic.abstracts.Element;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.arainko.xno.model.abstracts.Element;
 
 public class ConnectionUnit extends Element {
     public enum Type {

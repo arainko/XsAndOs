@@ -1,4 +1,4 @@
-package com.arainko.xno.ui;
+package com.arainko.xno.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;

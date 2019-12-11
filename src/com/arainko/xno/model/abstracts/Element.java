@@ -1,4 +1,4 @@
-package com.arainko.xno.gamelogic.abstracts;
+package com.arainko.xno.model.abstracts;
 
 public abstract class Element {
     private int cordX;
