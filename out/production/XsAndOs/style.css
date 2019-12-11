@@ -1,19 +1,24 @@
 #custom-button {
     -fx-font: 12px "Serif";
     -fx-padding: 10;
-    -fx-background-color: #AAAAAA;
+    -fx-background-color: #40c4ff;
     -fx-border-style: solid;
-    -fx-border-color: crimson;
+    -fx-border-color: #0094cc;
+    -fx-background-radius: 0%;
 }
 
 #custom-button:hover {
-    -fx-background-color: #FFFF00;
+    -fx-background-color: #ff4063;
 }
 
 #clicked-button {
     -fx-font: 12px "Serif";
     -fx-padding: 10;
-    -fx-background-color: cadetblue;
+    -fx-background-color: #82f7ff;
     -fx-border-style: solid;
-    -fx-border-color: crimson;
+    -fx-border-color: #0094cc;
+}
+
+#clicked-button:hover {
+    -fx-background-color: #ffdc40;
 }
