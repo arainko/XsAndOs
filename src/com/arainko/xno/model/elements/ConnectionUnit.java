@@ -40,6 +40,10 @@ public class ConnectionUnit extends Element {
         this.container = element;
     }
 
+    public Element getContainer() {
+        return container;
+    }
+
     @Override
     public String toString() {
         return "(" + container.toString() + ")";

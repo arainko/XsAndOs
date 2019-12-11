@@ -1,9 +1,7 @@
 package com.arainko.xno.model.board;
 
 import com.arainko.xno.model.abstracts.Element;
-import com.arainko.xno.model.elements.Cell;
-import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.model.elements.ConnectionUnit;
+import com.arainko.xno.model.elements.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -86,5 +84,26 @@ public class Board {
             System.out.println(row);
     }
 
+    public void setCircleAt(int cordX, int cordY) {
+        replaceBoardElement(new Circle(cordX, cordY));
+    }
+
+    public void setCrossAt(int cordX, int cordY) {
+        replaceBoardElement(new Cross(cordX, cordY));
+    }
+
+    public void setCellAt(int cordX, int cordY) {
+        replaceBoardElement(new Cell(cordX, cordY));
+    }
+
+    public void setConnectionUnitAt(int cordX, int cordY, Connection parentConnection) {
+        ConnectionUnit newConnectionUnit = new ConnectionUnit(cordX, cordY);
+        replaceBoardElement(newConnectionUnit);
+        parentConnection.addConnectionUnit(newConnectionUnit);
+    }
+
+    public void removeConnectionUnit(ConnectionUnit connectionUnit) {
+        replaceBoardElement(connectionUnit.getContainer());
+    }
 
 }

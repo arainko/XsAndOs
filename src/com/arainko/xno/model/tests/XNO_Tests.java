@@ -1,10 +1,11 @@
-package com.arainko.xno.tests;
+package com.arainko.xno.model.tests;
 
+import com.arainko.xno.model.abstracts.Element;
+import com.arainko.xno.model.board.Board;
 import com.arainko.xno.model.elements.Circle;
 import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.model.elements.ConnectionUnit;
 import com.arainko.xno.model.elements.Cross;
-import com.arainko.xno.model.board.Board;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,10 @@ public class XNO_Tests {
     public Board board;
     public Connection presetConnection1;
     public Connection presetConnection2;
+
+    public Element getBoardElementAt(int cordX, int cordY) {
+        return board.getBoard().get(cordY).get(cordX);
+    }
 
     @BeforeEach
     public void setupForTests() {
@@ -69,5 +74,19 @@ public class XNO_Tests {
         board.placeConnectionIfValid(presetConnection2);
         board.printBoard();
         assertFalse(board.isConnectionValid(presetConnection2));
+    }
+
+    @Test
+    public void granularBoardSettersTest() {
+        board.setCircleAt(5,4);
+        board.setCrossAt(3,3);
+        board.setConnectionUnitAt(5,4, presetConnection2);
+
+        assertTrue(getBoardElementAt(3,3) instanceof Cross);
+        assertTrue(getBoardElementAt(5,4) instanceof ConnectionUnit);
+
+        board.removeConnectionUnit(presetConnection2.getConnectionUnits().get(2));
+
+        assertTrue(getBoardElementAt(5,4) instanceof Circle);
     }
 }
