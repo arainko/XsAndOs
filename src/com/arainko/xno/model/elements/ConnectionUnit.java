@@ -4,14 +4,11 @@ import com.arainko.xno.model.abstracts.Element;
 
 public class ConnectionUnit extends Element {
     public enum Type {
-        HORIZONTAL,
-        VERTICAL,
+        LINE,
         JOINT,
         END,
-        START,
         NONE
     }
-
     private Type connectionType;
     private Element container;
 

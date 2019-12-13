@@ -39,5 +39,18 @@
         <jarDirectory url="file://$USER_HOME$/javafx-sdk-13.0.1/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" />
+        </NATIVE>
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/someIntellijShit/javafx-sdk-13.0.1/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

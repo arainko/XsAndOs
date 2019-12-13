@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class XNO_Tests {
+public class XNOModelTests {
 
     public Board board;
     public Connection presetConnection1;
@@ -88,5 +88,21 @@ public class XNO_Tests {
         board.removeConnectionUnit(presetConnection2.getConnectionUnits().get(2));
 
         assertTrue(getBoardElementAt(5,4) instanceof Circle);
+    }
+
+    @Test
+    public void connectionWinConditionTest() {
+        board.setCircleAt(0,0);
+        board.setCrossAt(3,2);
+
+        ConnectionUnit[] testConnUnits = {new ConnectionUnit(0,0), new ConnectionUnit(1,0), new ConnectionUnit(2,0), new ConnectionUnit(3,0),
+                new ConnectionUnit(3,1), new ConnectionUnit(3,2)};
+        Connection testConn = new Connection(testConnUnits);
+        board.placeConnection(testConn);
+        testConn.calculateConnections();
+        testConn.calculateJoints();
+        testConn.calculateEnds();
+        board.printBoard();
+        assertTrue(testConn.isConnectionUpToWinCondition());
     }
 }
