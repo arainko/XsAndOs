@@ -1,16 +1,13 @@
 package com.arainko.xno.model.elements;
 
-import com.arainko.xno.abstracts.Element;
+import com.arainko.xno.abstracts.Cell;
 
-public class ConnectionUnit extends Element {
+public class ConnectionUnit extends Cell {
     public enum Type {
-        LINE,
-        JOINT,
-        END,
-        NONE
+        LINE, JOINT, END, NONE
     }
     private Type connectionType;
-    private Element container;
+    private Cell container;
 
     public ConnectionUnit(int cordX, int cordY) {
         super(cordX, cordY);
@@ -33,11 +30,11 @@ public class ConnectionUnit extends Element {
         return connectionType;
     }
 
-    public void setContainer(Element element) {
-        this.container = element;
+    public void setContainer(Cell cell) {
+        this.container = cell;
     }
 
-    public Element getContainer() {
+    public Cell getContainer() {
         return container;
     }
 

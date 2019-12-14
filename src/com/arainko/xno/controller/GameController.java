@@ -1,16 +1,16 @@
 package com.arainko.xno.controller;
 
-import com.arainko.xno.abstracts.Element;
+import com.arainko.xno.abstracts.Cell;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class GameController {
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
+    private Button clickedButton;
 
     public GameController(int dimX, int dimY) {
         this.viewBoard = new ViewBoard(dimX, dimY);
@@ -29,7 +29,7 @@ public class GameController {
     void setupViewBoard() {
         int dimX = modelBoard.getDimX();
         int dimY = modelBoard.getDimY();
-        List<List<Element>> modelElements = modelBoard.getBoardElements();
+        List<List<Cell>> modelElements = modelBoard.getBoardElements();
         List<List<Button>> viewElements = viewBoard.getBoardElements();
 
         for (int i=0; i < dimY; i++)
@@ -37,6 +37,12 @@ public class GameController {
                 String elementStr = modelElements.get(i).get(j).toString();
                 viewElements.get(i).get(j).setText(elementStr);
             }
+
+        viewBoard.setButtonsOnAction(eventHandler -> {
+            Button currButton = (Button) eventHandler.getSource();
+            currButton.setId("clicked-button");
+            clickedButton = currButton;
+        });
     }
 
     public ViewBoard getViewBoard() {
