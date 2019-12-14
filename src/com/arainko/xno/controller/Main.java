@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Game Board");
-        GameController gc = new GameController(15,15);
+        GameController gc = new GameController(10,10);
         Scene scene = new Scene(gc.getViewBoard().getButtonGridPane(), 800, 600);
         scene.setFill(Color.rgb(66,66,66));
         scene.getStylesheets().add("style.css");

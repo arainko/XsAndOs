@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ModelBoard extends Board<Element> {
-
+    List<Connection> connectionsOnBoard;
     public ModelBoard(int dimX, int dimY) {
         super(dimX, dimY);
     }

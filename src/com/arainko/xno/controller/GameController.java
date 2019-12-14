@@ -6,6 +6,7 @@ import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class GameController {
     private ViewBoard viewBoard;

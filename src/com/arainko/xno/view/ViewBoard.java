@@ -10,6 +10,7 @@ import java.util.List;
 public class ViewBoard extends Board<Button> {
 
     private GridPane buttonGridPane;
+    private Button clickedButton;
 
     public ViewBoard(int dimX, int dimY) {
         super(dimX, dimY);
@@ -35,7 +36,10 @@ public class ViewBoard extends Board<Button> {
             getBoardElements().get(i).forEach(button -> {
                 button.setId("custom-button");
                 button.setPrefSize(50,50);
-                button.setOnAction(eventHandler -> button.setId("clicked-button"));
+                button.setOnAction(eventHandler -> {
+                    button.setId("clicked-button");
+                    clickedButton = button;
+                });
                 buttonGridPane.addRow(finalI, button);
             });
         }
@@ -43,5 +47,12 @@ public class ViewBoard extends Board<Button> {
 
     public GridPane getButtonGridPane() {
         return buttonGridPane;
+    }
+    public int getClickedButtonRowCol() {
+        for (int i=0; i<getDimY(); i++) {
+            if (getBoardElements().get(i).contains(clickedButton))
+                return i*10 + getBoardElements().get(i).indexOf(clickedButton);
+        }
+       return -1;
     }
 }
