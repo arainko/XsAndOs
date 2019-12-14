@@ -1,4 +1,4 @@
-package com.arainko.xno.model.abstracts;
+package com.arainko.xno.abstracts;
 
 public abstract class Element {
     private int cordX;

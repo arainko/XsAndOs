@@ -1,40 +1,27 @@
 package com.arainko.xno.model.board;
 
-import com.arainko.xno.model.abstracts.Element;
+import com.arainko.xno.abstracts.Board;
+import com.arainko.xno.abstracts.Element;
 import com.arainko.xno.model.elements.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Board {
-    private int dimX, dimY;
-    private List<List<Element>> board;
+public class ModelBoard extends Board<Element> {
 
-    public Board(int dimX, int dimY) {
-        this.setDimX(dimX);
-        this.setDimY(dimY);
-        this.setBoard();
+    public ModelBoard(int dimX, int dimY) {
+        super(dimX, dimY);
     }
 
-    private void setDimX(int dimX) {
-        if (dimX > 0)
-            this.dimX = dimX;
-        else throw new IllegalStateException("Negative or zero value: dimX = " + dimX);
-    }
-
-    private void setDimY(int dimY) {
-        if (dimY > 0)
-            this.dimY = dimY;
-        else throw new IllegalStateException("Negative or zero value: dimY = " + dimY);
-    }
-
-    private void setBoard() {
-        board = new ArrayList<>();
-        for (int i = 0; i < this.dimY; i++) {
-            board.add(new ArrayList<>());
-            for (int j = 0; j < this.dimX; j++)
-                board.get(i).add(new Cell(i, j));
+    @Override
+    public void setBoardInitialState() {
+        for (int i=0; i < getDimY(); i++) {
+            List<Element> row = new ArrayList<>();
+            for (int j=0; j < getDimX(); j++) {
+                row.add(j, new Cell(i,j));
+            }
+            getBoardElements().add(row);
         }
     }
 
@@ -45,7 +32,7 @@ public class Board {
 
     public boolean isConnectionValid(Connection connection) {
         List<ConnectionUnit> units = connection.getConnectionUnits();
-        for (List<Element> row : board)
+        for (List<Element> row : getBoardElements())
             if (!Collections.disjoint(row, units))
                 return false;
         return true;
@@ -59,29 +46,12 @@ public class Board {
     public void replaceBoardElement(Element element) {
         int elementCordX = element.getCordX();
         int elementCordY = element.getCordY();
-        if (elementCordX < dimX && elementCordY < dimY) {
+        if (elementCordX < getDimX() && elementCordY < getDimY()) {
             if (element instanceof ConnectionUnit) {
-                Element elementToContain = board.get(elementCordY).get(elementCordX);
+                Element elementToContain = getBoardElements().get(elementCordY).get(elementCordX);
                 ((ConnectionUnit) element).setContainer(elementToContain);
-            } this.board.get(elementCordY).set(elementCordX, element);
+            } this.getBoardElements().get(elementCordY).set(elementCordX, element);
         } else throw new IndexOutOfBoundsException("Element cords are out of bounds: cordX = " + elementCordX + ", cordY = " + elementCordY);
-    }
-
-    public int getDimX() {
-        return this.dimX;
-    }
-
-    public int getDimY() {
-        return this.dimY;
-    }
-
-    public List<List<Element>> getBoard() {
-        return board;
-    }
-
-    public void printBoard() {
-        for (List<Element> row : board)
-            System.out.println(row);
     }
 
     public void setCircleAt(int cordX, int cordY) {

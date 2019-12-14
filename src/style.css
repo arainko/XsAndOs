@@ -5,6 +5,7 @@
     -fx-border-style: solid;
     -fx-border-color: #0094cc;
     -fx-background-radius: 0%;
+    -fx-font-size: 20px;
 }
 
 #custom-button:hover {

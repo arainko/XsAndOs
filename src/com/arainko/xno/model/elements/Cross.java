@@ -1,6 +1,6 @@
 package com.arainko.xno.model.elements;
 
-import com.arainko.xno.model.abstracts.Element;
+import com.arainko.xno.abstracts.Element;
 
 public class Cross extends Element {
     public Cross(int cordX, int cordY) {

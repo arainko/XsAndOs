@@ -1,9 +1,8 @@
-package com.arainko.xno.view;
+package com.arainko.xno.controller;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -12,12 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Game Board");
-        ButtonBoard buttonBoard = new ButtonBoard(10,10);
-        buttonBoard.setBackground(Background.EMPTY);
-        Scene scene = new Scene(buttonBoard, 800, 600);
+        GameController gc = new GameController(15,15);
+        Scene scene = new Scene(gc.getViewBoard().getButtonGridPane(), 800, 600);
         scene.setFill(Color.rgb(66,66,66));
-        scene.getStylesheets().add("com/arainko/xno/view/style.css");
-        buttonBoard.setAlignment(Pos.CENTER);
+        scene.getStylesheets().add("style.css");
+        gc.getViewBoard().getButtonGridPane().setAlignment(Pos.CENTER);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
