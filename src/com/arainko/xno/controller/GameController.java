@@ -1,23 +1,32 @@
 package com.arainko.xno.controller;
 
+import com.arainko.xno.controller.gamestates.GameRunningState;
+import com.arainko.xno.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 
 import java.util.List;
-import java.util.function.Function;
 
 public class GameController {
+
+//    GameState gameSetupState;
+    GameState gameRunningState;
+//    GameState gameEndState;
+
+    GameState currentGameState;
+
+
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
-    private Button clickedButton;
 
     public GameController(int dimX, int dimY) {
         this.viewBoard = new ViewBoard(dimX, dimY);
         this.modelBoard = new ModelBoard(dimX, dimY);
+        currentGameState = new GameRunningState(this);
         setupExampleModelBoard();
-        setupViewBoard();
+        onGameBoardSetup();
     }
 
     void setupExampleModelBoard() {
@@ -27,7 +36,7 @@ public class GameController {
         modelBoard.setBoardCellContentsAt(3,8, Cell.Contents.CROSS);
     }
 //
-    void setupViewBoard() {
+    void onGameBoardSetup() {
         int dimX = modelBoard.getDimX();
         int dimY = modelBoard.getDimY();
         List<List<Cell>> modelElements = modelBoard.getBoardElements();
@@ -35,26 +44,29 @@ public class GameController {
 
         for (int i=0; i < dimY; i++)
             for (int j=0; j < dimX; j++) {
-                String elementStr = modelElements.get(i).get(j).toString();
-                viewElements.get(i).get(j).setText(elementStr);
+                String cellStr = modelElements.get(i).get(j).toString();
+                viewElements.get(i).get(j).setText(cellStr);
             }
 
         viewBoard.setButtonsOnAction(eventHandler -> {
             Button currButton = (Button) eventHandler.getSource();
-            int[] rowCol = viewBoard.getButtonRowCol(currButton);
-            List<Cell> neighbors = modelBoard.getFreeNeighborsAt(rowCol[1], rowCol[0]);
-            for (Cell cell : neighbors) {
-                int cordX = cell.getCordX();
-                int cordY = cell.getCordY();
-                viewBoard.getButtonAt(cordX, cordY).setId("neighbor-button");
-            }
-            currButton.setId("clicked-button");
-            clickedButton = currButton;
+            currentGameState.onGameStateClickHandler(currButton);
         });
     }
 
+//    private void onGameClickHandler(Button clickedButton) {
+//        int[] buttonPos = viewBoard.getButtonRowCol(clickedButton);
+//        List<Cell> clickedButtonNeighbors = modelBoard.getFreeNeighborsAt(buttonPos[0], buttonPos[1]);
+//        clickedButtonNeighbors.forEach(cell ->
+//                viewBoard.getButtonAt(cell.getCordX(), cell.getCordY()).setId("neighbor-button"));
+//    }
+
     public ViewBoard getViewBoard() {
         return viewBoard;
+    }
+
+    public ModelBoard getModelBoard() {
+        return modelBoard;
     }
 }
 

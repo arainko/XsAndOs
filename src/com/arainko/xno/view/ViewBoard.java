@@ -60,7 +60,7 @@ public class ViewBoard extends Board<Button> {
     public int[] getButtonRowCol(Button button) {
         for (int i = 0; i < getDimY(); i++) {
             if (getBoardElements().get(i).contains(button))
-                return new int[] {i, getBoardElements().get(i).indexOf(button)};
+                return new int[] {getBoardElements().get(i).indexOf(button), i};
         } throw new NoSuchElementException("Button not found.");
     }
 
