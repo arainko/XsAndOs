@@ -1,57 +1,71 @@
 package com.arainko.xno.model.elements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 public class Connection {
-
-    private List<ConnectionUnit> connectionUnits;
+    private enum Type {
+        LINE, JOINT, END, NONE
+    }
+    private List<Cell> connectionCells;
+    private Map<Cell, Type> connectionTypes;
 
     public Connection() {
-        connectionUnits = new ArrayList<>();
+        connectionCells = new ArrayList<>();
+        connectionTypes = new LinkedHashMap<>();
     }
 
-    public Connection(ConnectionUnit[] units) {
-        connectionUnits = new ArrayList<>(Arrays.asList(units));
+    public void addConnectionUnit(Cell cell) {
+        connectionCells.add(cell);
+        connectionTypes.put(cell, Type.NONE);
     }
 
-    public void addConnectionUnit(ConnectionUnit unit) {
-        connectionUnits.add(unit);
+    public void setConnectionTypes() {
+        calculateConnections();
+        calculateJoints();
+        calculateEnds();
     }
 
-    public void calculateConnections() {
-        for (int i=1; i < connectionUnits.size()-1; i++) {
-            ConnectionUnit currUnit = connectionUnits.get(i);
-            ConnectionUnit nextUnit = connectionUnits.get(i+1);
-
-            if (currUnit.isNextToOnPaneX(nextUnit) || currUnit.isNextToOnPaneY(nextUnit))
-                currUnit.setConnectionType(ConnectionUnit.Type.LINE);
+    private void calculateConnections() {
+        BiPredicate<Cell, Cell> nextToOnPaneY = (c1, c2) ->
+                Math.abs(c1.getCordY()-c2.getCordY()) == 1 && c1.getCordX()-c2.getCordX() == 0;
+        BiPredicate<Cell, Cell> nextToOnPaneX = (c1, c2) ->
+                Math.abs(c1.getCordX()-c2.getCordX()) == 1 && c1.getCordY()-c2.getCordY() == 0;
+        for (int i = 1; i < connectionCells.size()-1; i++) {
+            Cell currCell = connectionCells.get(i);
+            Cell nextCell = connectionCells.get(i+1);
+            if (currCell.isCell(nextCell, nextToOnPaneX) || currCell.isCell(nextCell, nextToOnPaneY))
+                connectionTypes.put(currCell, Type.LINE);
         }
     }
 
-    public void calculateJoints() {
-        if (connectionUnits.size() >= 3)
-            for (int i=1; i + 1 < connectionUnits.size(); i++) {
-                ConnectionUnit lastUnit = connectionUnits.get(i-1);
-                ConnectionUnit currUnit = connectionUnits.get(i);
-                ConnectionUnit nextUnit = connectionUnits.get(i+1);
-
-                if (lastUnit.getCordX() != nextUnit.getCordX() && lastUnit.getCordY() != nextUnit.getCordY() && currUnit.getConnectionType() != ConnectionUnit.Type.NONE)
-                    currUnit.setConnectionType(ConnectionUnit.Type.JOINT);
+    private void calculateJoints() {
+        BiPredicate<Cell, Cell> connectedByJoint = (c1, c2) ->
+                c1.getCordX() != c2.getCordX() && c1.getCordY() != c2.getCordY();
+        if (connectionCells.size() >= 3)
+            for (int i = 1; i + 1 < connectionCells.size(); i++) {
+                Cell lastCell = connectionCells.get(i-1);
+                Cell currCell = connectionCells.get(i);
+                Cell nextCell = connectionCells.get(i+1);
+                if (lastCell.isCell(nextCell, connectedByJoint) && connectionTypes.get(currCell) != Type.NONE)
+                    connectionTypes.put(currCell, Type.JOINT);
             }
     }
 
-    public void calculateEnds() {
-        int size = connectionUnits.size();
-        if (size > 1) {
-            ConnectionUnit[] firstAndLastUnit = {connectionUnits.get(0), connectionUnits.get(size-1)};
-            for (ConnectionUnit unit : firstAndLastUnit)
-                if (unit.getContainer() instanceof Cross || unit.getContainer() instanceof Circle)
-                    unit.setConnectionType(ConnectionUnit.Type.END);
-        }
-//        for (ConnectionUnit unit : connectionUnits)
-//            System.out.println(unit.getConnectionType());
+    private void calculateEnds() {
+        Predicate<Cell> containsCrossOrCircle = c ->
+                c.getCellContents() == Cell.Contents.CROSS || c.getCellContents() == Cell.Contents.CIRCLE;
+        int size = connectionCells.size();
+        if (size > 1)
+            IntStream.of(0, size-1).forEach( i -> {
+                if (connectionCells.get(i).isCell(containsCrossOrCircle))
+                    connectionTypes.put(connectionCells.get(i), Type.END);
+            });
     }
 
     public boolean isConnectionUpToWinCondition() {
@@ -59,20 +73,24 @@ public class Connection {
         int crossCount = 0;
         int circleCount  = 0;
 
-        for (ConnectionUnit unit : connectionUnits) {
-            if (unit.getConnectionType() == ConnectionUnit.Type.JOINT)
+        for (Cell cell : connectionTypes.keySet()) {
+            if (connectionTypes.get(cell) == Type.JOINT)
                 jointCount++;
-            if (unit.getConnectionType() == ConnectionUnit.Type.END)
-                if (unit.getContainer() instanceof Circle)
+            if (connectionTypes.get(cell) == Type.END)
+                if (cell.getCellContents() == Cell.Contents.CIRCLE)
                     circleCount++;
-                else if (unit.getContainer() instanceof Cross)
+                else if (cell.getCellContents() == Cell.Contents.CROSS)
                     crossCount++;
         }
         return jointCount == 1 && circleCount == 1 && crossCount == 1;
     }
 
-    public List<ConnectionUnit> getConnectionUnits() {
-        return this.connectionUnits;
+    public List<Cell> getConnectionCells() {
+        return this.connectionCells;
     }
 
+    public void print() {
+        for (Type cell : connectionTypes.values())
+            System.out.println(cell);
+    }
 }

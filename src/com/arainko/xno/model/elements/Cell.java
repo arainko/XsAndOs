@@ -1,33 +1,53 @@
 package com.arainko.xno.model.elements;
 
-public class Cell extends com.arainko.xno.abstracts.Cell {
-    public enum Content {
+import com.arainko.xno.abstracts.Element;
+
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
+public class Cell extends Element {
+    public enum Contents {
         CROSS, CIRCLE, EMPTY
     }
-    private Content cellType;
+    private boolean isPartOfConnection;
+    private Contents cellContents;
 
-    public Cell(int cordX, int cordY, Content content) {
+    public Cell(int cordX, int cordY, Contents contents) {
         super(cordX, cordY);
-        setCellType(content);
+        setCellContents(contents);
     }
 
-    public void setCellType(Content content) {
-        this.cellType = content;
+    public void setCellContents(Contents contents) {
+        this.cellContents = contents;
     }
 
-    public Content getCellType() {
-        return cellType;
+    public Contents getCellContents() {
+        return cellContents;
+    }
+
+    public boolean isCell(Cell that, BiPredicate<Cell, Cell> pred) {
+        return pred.test(this, that);
+    }
+
+    public boolean isCell(Predicate<Cell> pred) {
+        return pred.test(this);
     }
 
     @Override
     public String toString() {
-        switch (cellType) {
+        String cellString = "";
+        switch (cellContents) {
             case CROSS:
-                return "X";
+                cellString = "X";
+                break;
             case CIRCLE:
-                return "O";
-            default:
-                return " ";
+                cellString = "O";
+                break;
+            case EMPTY:
+                cellString = " ";
         }
+        if (isPartOfConnection)
+            return "(" + cellString + ")";
+        else return cellString;
     }
 }

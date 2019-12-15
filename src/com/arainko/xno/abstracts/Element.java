@@ -1,10 +1,10 @@
 package com.arainko.xno.abstracts;
 
-public abstract class Cell {
+public abstract class Element {
     private int cordX;
     private int cordY;
 
-    public Cell(int cordX, int cordY) {
+    public Element(int cordX, int cordY) {
         this.setCordX(cordX);
         this.setCordY(cordY);
     }
@@ -31,10 +31,10 @@ public abstract class Cell {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Cell))
+        if (!(obj instanceof Element))
             return false;
 
-        Cell that = (Cell) obj;
+        Element that = (Element) obj;
         return this.getCordX() == that.getCordX() && this.getCordY() == that.getCordY();
     }
 
