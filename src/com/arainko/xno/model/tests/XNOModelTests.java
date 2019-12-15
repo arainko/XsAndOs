@@ -6,6 +6,10 @@ import com.arainko.xno.model.elements.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 public class XNOModelTests {
 
     public ModelBoard modelBoard;
@@ -22,12 +26,18 @@ public class XNOModelTests {
     @Test
     public void connectionTest() {
         Cell[] cells = {new Cell(0, 0, Cell.Contents.CROSS), new Cell(1, 0, Cell.Contents.EMPTY),
-                new Cell(1, 1, Cell.Contents.EMPTY), new Cell(1, 2, Cell.Contents.CIRCLE)};
+                new Cell(1, 1, Cell.Contents.EMPTY), new Cell(0, 1, Cell.Contents.CIRCLE)};
         for (Cell cell : cells)
             presetConnection1.addConnectionUnit(cell);
 
         presetConnection1.setConnectionTypes();
-        presetConnection1.print();
+        assertFalse(presetConnection1.isConnectionUpToWinCondition());
+    }
+
+    @Test
+    public void neighborGetterTest() {
+        List<Cell> cells = modelBoard.getFreeNeighborsAt(5,5);
+        cells.forEach(n -> System.out.println(n +" "+ n.getCordX()+" "+n.getCordY()));
     }
 
 }

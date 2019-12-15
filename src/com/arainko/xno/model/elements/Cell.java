@@ -12,9 +12,18 @@ public class Cell extends Element {
     private boolean isPartOfConnection;
     private Contents cellContents;
 
+    public Cell(int cordX, int cordY) {
+        super(cordX, cordY);
+        setCellContents(Contents.EMPTY);
+    }
+
     public Cell(int cordX, int cordY, Contents contents) {
         super(cordX, cordY);
         setCellContents(contents);
+    }
+
+    public boolean isPartOfConnection() {
+        return isPartOfConnection;
     }
 
     public void setCellContents(Contents contents) {
@@ -25,12 +34,12 @@ public class Cell extends Element {
         return cellContents;
     }
 
-    public boolean isCell(Cell that, BiPredicate<Cell, Cell> pred) {
-        return pred.test(this, that);
-    }
-
     public boolean isCell(Predicate<Cell> pred) {
         return pred.test(this);
+    }
+
+    public boolean isCell(Cell that, BiPredicate<Cell, Cell> pred) {
+        return pred.test(this, that);
     }
 
     @Override
@@ -44,7 +53,7 @@ public class Cell extends Element {
                 cellString = "O";
                 break;
             case EMPTY:
-                cellString = " ";
+                cellString = "E";
         }
         if (isPartOfConnection)
             return "(" + cellString + ")";
