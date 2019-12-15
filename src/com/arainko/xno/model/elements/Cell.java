@@ -22,24 +22,28 @@ public class Cell extends Element {
         setCellContents(contents);
     }
 
-    public boolean isPartOfConnection() {
-        return isPartOfConnection;
+    public void setConnectionFlag(boolean partOfConnection) {
+        isPartOfConnection = partOfConnection;
     }
 
     public void setCellContents(Contents contents) {
         this.cellContents = contents;
     }
 
-    public Contents getCellContents() {
-        return cellContents;
-    }
-
     public boolean isCell(Predicate<Cell> pred) {
         return pred.test(this);
     }
 
-    public boolean isCell(Cell that, BiPredicate<Cell, Cell> pred) {
+    public boolean isCell(BiPredicate<Cell, Cell> pred, Cell that) {
         return pred.test(this, that);
+    }
+
+    public boolean isPartOfConnection() {
+        return isPartOfConnection;
+    }
+
+    public Contents getCellContents() {
+        return cellContents;
     }
 
     @Override
@@ -53,7 +57,7 @@ public class Cell extends Element {
                 cellString = "O";
                 break;
             case EMPTY:
-                cellString = "E";
+                cellString = " ";
         }
         if (isPartOfConnection)
             return "(" + cellString + ")";

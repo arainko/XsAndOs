@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
+import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XNOModelTests {
 
@@ -25,13 +28,22 @@ public class XNOModelTests {
 
     @Test
     public void connectionTest() {
-        Cell[] cells = {new Cell(0, 0, Cell.Contents.CROSS), new Cell(1, 0, Cell.Contents.EMPTY),
+        Cell[] cells1 = {new Cell(0, 0, Cell.Contents.CROSS), new Cell(1, 0, Cell.Contents.EMPTY),
                 new Cell(1, 1, Cell.Contents.EMPTY), new Cell(0, 1, Cell.Contents.CIRCLE)};
-        for (Cell cell : cells)
+
+        Cell[] cells2 = {new Cell(3, 0, Cell.Contents.CROSS), new Cell(4, 0, Cell.Contents.EMPTY),
+                new Cell(5, 0, Cell.Contents.EMPTY), new Cell(6, 0, Cell.Contents.CIRCLE)};
+
+        for (Cell cell : cells1)
             presetConnection1.addConnectionUnit(cell);
+        for (Cell cell : cells2)
+            presetConnection2.addConnectionUnit(cell);
 
         presetConnection1.setConnectionTypes();
-        assertFalse(presetConnection1.isConnectionUpToWinCondition());
+        presetConnection2.setConnectionTypes();
+        assertFalse(presetConnection1.isConnection(upToWinCondition()));
+        assertFalse(presetConnection2.isConnection(upToWinCondition()));
+        assertFalse(presetConnection1.isConnection(interferingWith(), presetConnection2));
     }
 
     @Test

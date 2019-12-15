@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 
 public class Connection {
-    private enum Type {
+    public enum Type {
         LINE, JOINT, END, NONE
     }
     private List<Cell> connectionCells;
@@ -20,9 +21,19 @@ public class Connection {
         connectionTypes = new LinkedHashMap<>();
     }
 
+    public boolean isConnection(Predicate<Connection> pred) {
+        return pred.test(this);
+    }
+
+    public boolean isConnection(BiPredicate<Connection, Connection> pred, Connection that) {
+        return pred.test(this, that);
+    }
+
     public void addConnectionUnit(Cell cell) {
-        connectionCells.add(cell);
-        connectionTypes.put(cell, Type.NONE);
+        if (cell.isCell(notPartOfConnection())){
+            connectionCells.add(cell);
+            connectionTypes.put(cell, Type.NONE);
+        }
     }
 
     public void setConnectionTypes() {
@@ -35,7 +46,7 @@ public class Connection {
         for (int i = 1; i < connectionCells.size()-1; i++) {
             Cell currCell = connectionCells.get(i);
             Cell nextCell = connectionCells.get(i+1);
-            if (currCell.isCell(nextCell, nextToOnPaneX()) || currCell.isCell(nextCell, nextToOnPaneY()))
+            if (currCell.isCell(nextToOnPaneX(), nextCell) || currCell.isCell(nextToOnPaneY(), nextCell))
                 connectionTypes.put(currCell, Type.LINE);
         }
     }
@@ -46,39 +57,27 @@ public class Connection {
                 Cell lastCell = connectionCells.get(i-1);
                 Cell currCell = connectionCells.get(i);
                 Cell nextCell = connectionCells.get(i+1);
-                if (lastCell.isCell(nextCell, connectedByJoint()) && connectionTypes.get(currCell) != Type.NONE)
+                if (lastCell.isCell(connectedByJoint(), nextCell) && connectionTypes.get(currCell) != Type.NONE)
                     connectionTypes.put(currCell, Type.JOINT);
             }
     }
 
     private void calculateEnds() {
         int size = connectionCells.size();
-        if (size > 1)
-            IntStream.of(0, size-1).forEach( i -> {
+        if (size > 1) {
+            for (int i : new int[]{0, size-1})
                 if (connectionCells.get(i).isCell(containingCross().or(containingCircle())))
                     connectionTypes.put(connectionCells.get(i), Type.END);
-            });
-    }
-
-    public boolean isConnectionUpToWinCondition() {
-        int jointCount = 0;
-        int crossCount = 0;
-        int circleCount  = 0;
-
-        for (Cell cell : connectionTypes.keySet()) {
-            if (connectionTypes.get(cell) == Type.JOINT)
-                jointCount++;
-            if (connectionTypes.get(cell) == Type.END)
-                if (cell.isCell(containingCircle()))
-                    circleCount++;
-                else if (cell.isCell(containingCross()))
-                    crossCount++;
         }
-        return jointCount == 1 && circleCount == 1 && crossCount == 1;
     }
+
 
     public List<Cell> getConnectionCells() {
         return this.connectionCells;
+    }
+
+    public Map<Cell, Type> getConnectionTypes() {
+        return connectionTypes;
     }
 
     public void print() {

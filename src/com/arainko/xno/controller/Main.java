@@ -3,6 +3,7 @@ package com.arainko.xno.controller;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -15,6 +16,7 @@ public class Main extends Application {
         primaryStage.setTitle("Game Board");
         GameController gc = new GameController(10,10);
         BorderPane borderPane = new BorderPane();
+        borderPane.setBackground(Background.EMPTY);
         Text text = new Text("COS");
         borderPane.setBottom(text);
         borderPane.setCenter(gc.getViewBoard().getButtonGridPane());

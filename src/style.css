@@ -11,7 +11,7 @@
 #custom-button:hover {
     /*#30b4ef*/
     -fx-background-color: #20a4cf;
-    /*-fx-background-color: #ff4063;*/
+
 }
 
 #clicked-button {
@@ -20,10 +20,20 @@
     -fx-background-color: #82f7ff;
     -fx-border-style: solid;
     -fx-border-color: #0094cc;
+    -fx-font-size: 20px;
 }
 
 #clicked-button:hover {
     /*#82f7ff*/
     -fx-background-color: #62c7cf;
     /*-fx-background-color: #ffdc40;*/
+}
+
+#neighbor-button {
+    -fx-font: 12px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #ff4063;
+    -fx-border-style: solid;
+    -fx-border-color: #0094cc;
+    -fx-font-size: 20px;
 }

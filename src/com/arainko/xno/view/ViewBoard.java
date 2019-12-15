@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ViewBoard extends Board<Button> {
 
@@ -33,13 +34,12 @@ public class ViewBoard extends Board<Button> {
 
     private void setButtonGridPane() {
         for (int i=0; i < getDimY(); i++) {
-            int finalI = i;
-            getBoardElements().get(i).forEach(button -> {
+            for (Button button : getBoardElements().get(i)) {
                 button.setId("custom-button");
-                button.setPrefSize(50,50);
+                button.setPrefSize(50, 50);
 //                button.setOnAction(eventHandler -> button.setId("clicked-button"));
-                buttonGridPane.addRow(finalI, button);
-            });
+                buttonGridPane.addRow(i, button);
+            }
         }
     }
 
@@ -52,4 +52,16 @@ public class ViewBoard extends Board<Button> {
     public GridPane getButtonGridPane() {
         return buttonGridPane;
     }
+
+    public Button getButtonAt(int cordX, int cordY) {
+        return getBoardElements().get(cordY).get(cordX);
+    }
+
+    public int[] getButtonRowCol(Button button) {
+        for (int i = 0; i < getDimY(); i++) {
+            if (getBoardElements().get(i).contains(button))
+                return new int[] {i, getBoardElements().get(i).indexOf(button)};
+        } throw new NoSuchElementException("Button not found.");
+    }
+
 }
