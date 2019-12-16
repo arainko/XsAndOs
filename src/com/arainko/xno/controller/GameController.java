@@ -1,6 +1,6 @@
 package com.arainko.xno.controller;
 
-import com.arainko.xno.controller.gamestates.GameRunningState;
+import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
@@ -51,13 +51,6 @@ public class GameController {
             currentGameState.onGameStateClickHandler(currButton);
         });
     }
-
-//    private void onGameClickHandler(Button clickedButton) {
-//        int[] buttonPos = viewBoard.getButtonRowCol(clickedButton);
-//        List<Cell> clickedButtonNeighbors = modelBoard.getFreeNeighborsAt(buttonPos[0], buttonPos[1]);
-//        clickedButtonNeighbors.forEach(cell ->
-//                viewBoard.getButtonAt(cell.getCordX(), cell.getCordY()).setId("neighbor-button"));
-//    }
 
     public ViewBoard getViewBoard() {
         return viewBoard;

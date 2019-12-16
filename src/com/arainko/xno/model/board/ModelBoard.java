@@ -41,9 +41,11 @@ public class ModelBoard extends Board<Cell> {
     }
 
     public Cell getCellAt(int cordX, int cordY) {
-        if (isBoard(ableToAccommodateCords(cordX, cordY)))
             return getBoardElements().get(cordY).get(cordX);
-        else throw new NoSuchElementException("No cell at: (" + cordX + ", " + cordY + ")");
+    }
+
+    public Cell getCellAt(Cords cords) {
+        return getBoardElements().get(cords.Y()).get(cords.X());
     }
 
     public List<Cords> getFreeNeighborsAt(Cords cords) {
