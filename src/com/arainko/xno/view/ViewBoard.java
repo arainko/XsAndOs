@@ -1,5 +1,6 @@
 package com.arainko.xno.view;
 
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.abstracts.Board;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -53,14 +54,14 @@ public class ViewBoard extends Board<Button> {
         return buttonGridPane;
     }
 
-    public Button getButtonAt(int cordX, int cordY) {
-        return getBoardElements().get(cordY).get(cordX);
+    public Button getButtonAt(Cords cords) {
+        return getBoardElements().get(cords.Y()).get(cords.X());
     }
 
-    public int[] getButtonRowCol(Button button) {
+    public Cords getButtonCords(Button button) {
         for (int i = 0; i < getDimY(); i++) {
             if (getBoardElements().get(i).contains(button))
-                return new int[] {getBoardElements().get(i).indexOf(button), i};
+                return new Cords(getBoardElements().get(i).indexOf(button), i);
         } throw new NoSuchElementException("Button not found.");
     }
 

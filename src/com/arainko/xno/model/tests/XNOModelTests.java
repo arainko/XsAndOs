@@ -46,10 +46,10 @@ public class XNOModelTests {
         assertFalse(presetConnection1.isConnection(interferingWith(), presetConnection2));
     }
 
-    @Test
-    public void neighborGetterTest() {
-        List<Cell> cells = modelBoard.getFreeNeighborsAt(5,5);
-        cells.forEach(n -> System.out.println(n +" "+ n.getCordX()+" "+n.getCordY()));
-    }
+//    @Test
+//    public void neighborGetterTest() {
+//        List<Cell> cells = modelBoard.getFreeNeighborsAt(5,5);
+//        cells.forEach(n -> System.out.println(n +" "+ n.getCordX()+" "+n.getCordY()));
+//    }
 
 }

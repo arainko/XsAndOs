@@ -1,7 +1,7 @@
 package com.arainko.xno.controller;
 
 import com.arainko.xno.controller.gamestates.GameRunningState;
-import com.arainko.xno.interfaces.GameState;
+import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.ViewBoard;
@@ -37,13 +37,11 @@ public class GameController {
     }
 //
     void onGameBoardSetup() {
-        int dimX = modelBoard.getDimX();
-        int dimY = modelBoard.getDimY();
         List<List<Cell>> modelElements = modelBoard.getBoardElements();
         List<List<Button>> viewElements = viewBoard.getBoardElements();
 
-        for (int i=0; i < dimY; i++)
-            for (int j=0; j < dimX; j++) {
+        for (int i=0; i < modelBoard.getDimY(); i++)
+            for (int j=0; j < modelBoard.getDimX(); j++) {
                 String cellStr = modelElements.get(i).get(j).toString();
                 viewElements.get(i).get(j).setText(cellStr);
             }

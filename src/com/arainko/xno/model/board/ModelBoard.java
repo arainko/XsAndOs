@@ -1,5 +1,6 @@
 package com.arainko.xno.model.board;
 
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodateCords;
 import static com.arainko.xno.model.predicates.CellPredicates.containingNothing;
@@ -46,15 +46,15 @@ public class ModelBoard extends Board<Cell> {
         else throw new NoSuchElementException("No cell at: (" + cordX + ", " + cordY + ")");
     }
 
-    public List<Cell> getFreeNeighborsAt(int cordX, int cordY) {
-        List<Cell> neighborList = new ArrayList<>();
+    public List<Cords> getFreeNeighborsAt(Cords cords) {
+        List<Cords> neighborList = new ArrayList<>();
         for (int i : new int[]{-1, 1}) {
-            if (isBoard(ableToAccommodateCords(cordX + i, cordY))
-                    && getCellAt(cordX + i, cordY).isCell(containingNothing().and(notPartOfConnection())))
-                neighborList.add(getCellAt(cordX + i, cordY));
-            if (isBoard(ableToAccommodateCords(cordX, cordY + i))
-                    && getCellAt(cordX, cordY + i).isCell(containingNothing().and(notPartOfConnection())))
-                neighborList.add(getCellAt(cordX, cordY + i));
+            if (isBoard(ableToAccommodateCords(cords.X() + i, cords.Y()))
+                    && getCellAt(cords.X() + i, cords.Y()).isCell(notPartOfConnection()))
+                neighborList.add(new Cords(cords.X() + i, cords.Y()));
+            if (isBoard(ableToAccommodateCords(cords.X(), cords.Y() + i))
+                    && getCellAt(cords.X(), cords.Y() + i).isCell(notPartOfConnection()))
+                neighborList.add(new Cords(cords.X(), cords.Y() + i));
         }
         return neighborList;
     }

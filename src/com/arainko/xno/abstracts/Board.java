@@ -2,7 +2,6 @@ package com.arainko.xno.abstracts;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public abstract class Board<T> {
     private int dimX;

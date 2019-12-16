@@ -1,4 +1,4 @@
-package com.arainko.xno.interfaces;
+package com.arainko.xno.controller.gamestates.interfaces;
 
 import javafx.scene.control.Button;
 
