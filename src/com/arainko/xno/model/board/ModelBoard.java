@@ -1,19 +1,16 @@
 package com.arainko.xno.model.board;
 
-import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.abstracts.Board;
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodateCords;
-import static com.arainko.xno.model.predicates.CellPredicates.containingNothing;
 import static com.arainko.xno.model.predicates.CellPredicates.notPartOfConnection;
-import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
 
 public class ModelBoard extends Board<Cell> {
     private List<Connection> connections;
@@ -61,11 +58,11 @@ public class ModelBoard extends Board<Cell> {
         return neighborList;
     }
 
-    private boolean isConnectionValid(Connection connection) {
-        return connections.stream().noneMatch(conn -> conn.isConnection(interferingWith(), connection));
+    public void addConnection(Connection connection) {
+        connections.add(connection);
     }
 
-    public void placeConnection(Connection connection) {
-        connection.getConnectionCells().forEach( cell -> cell.setConnectionFlag(true));
+    public List<Connection> getConnections() {
+        return connections;
     }
 }

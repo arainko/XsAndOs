@@ -3,7 +3,6 @@ package com.arainko.xno.model.predicates;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
-import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 import java.util.function.BiPredicate;
@@ -38,7 +37,20 @@ public class ConnectionPredicates {
         return conn -> conn.getConnectionCells().isEmpty();
     }
 
-    public static Predicate<Connection> with(Predicate<Cell> cellPred) {
+    public static Predicate<Connection> ended() {
+        return conn -> {
+            Map<Cell, Connection.Type> connectionTypes = conn.getConnectionTypes();
+            int endsCount = 0;
+
+            for (Cell cell : connectionTypes.keySet()) {
+                if (connectionTypes.get(cell) == Connection.Type.END)
+                    endsCount++;
+            }
+            return endsCount == 2;
+        };
+    }
+
+    public static Predicate<Connection> withCell(Predicate<Cell> cellPred) {
         return conn -> conn.getConnectionCells().stream()
                 .anyMatch(cellPred);
     }

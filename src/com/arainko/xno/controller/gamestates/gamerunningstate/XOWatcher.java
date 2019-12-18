@@ -22,7 +22,7 @@ public class XOWatcher implements InternalGameState {
         boolean isXO = parentGameState.getGameController()
                 .getModelBoard()
                 .getCellAt(clickedButtonCords)
-                .isCell(containingCircle().or(containingCross().and(notPartOfConnection())));
+                .isCell((containingCircle().or(containingCross())).and(notPartOfConnection()));
 
         if (isXO) {
 //            button.setId("clicked-button");

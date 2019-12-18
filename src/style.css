@@ -41,3 +41,12 @@
 #neighbor-button:hover {
     -fx-background-color: #df2043;
 }
+
+#wrong-button {
+    -fx-font: 12px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #ff0000;
+    -fx-border-style: solid;
+    -fx-border-color: #0094cc;
+    -fx-font-size: 20px;
+}
