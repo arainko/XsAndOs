@@ -1,5 +1,7 @@
 package com.arainko.xno.abstracts;
 
+import java.util.Objects;
+
 public abstract class Element {
     private int cordX;
     private int cordY;
@@ -36,6 +38,11 @@ public abstract class Element {
 
         Element that = (Element) obj;
         return this.getCordX() == that.getCordX() && this.getCordY() == that.getCordY();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cordX, cordY);
     }
 
     @Override

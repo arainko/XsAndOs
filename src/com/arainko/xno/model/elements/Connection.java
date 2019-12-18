@@ -33,6 +33,7 @@ public class Connection {
         if (cell.isCell(notPartOfConnection())){
             connectionCells.add(cell);
             connectionTypes.put(cell, Type.NONE);
+            cell.setConnectionFlag(true);
         }
     }
 

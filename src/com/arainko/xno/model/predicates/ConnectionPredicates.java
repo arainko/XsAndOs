@@ -34,6 +34,15 @@ public class ConnectionPredicates {
         };
     }
 
+    public static Predicate<Connection> empty() {
+        return conn -> conn.getConnectionCells().isEmpty();
+    }
+
+    public static Predicate<Connection> with(Predicate<Cell> cellPred) {
+        return conn -> conn.getConnectionCells().stream()
+                .anyMatch(cellPred);
+    }
+
     public static BiPredicate<Connection, Connection> interferingWith() {
         return (conn1, conn2) -> !Collections.disjoint(conn1.getConnectionCells(), conn2.getConnectionCells());
     }

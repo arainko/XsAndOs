@@ -1,6 +1,7 @@
 package com.arainko.xno.model.elements;
 
 import com.arainko.xno.abstracts.Element;
+import com.arainko.xno.helpers.Cords;
 
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -44,6 +45,10 @@ public class Cell extends Element {
 
     public Contents getCellContents() {
         return cellContents;
+    }
+
+    public Cords getCellCords() {
+        return new Cords(this.getCordX(), this.getCordY());
     }
 
     @Override

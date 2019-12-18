@@ -4,8 +4,7 @@ import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
 import com.arainko.xno.helpers.Cords;
 import javafx.scene.control.Button;
 
-import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
-import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
+import static com.arainko.xno.model.predicates.CellPredicates.*;
 
 public class XOWatcher implements InternalGameState {
     private GameRunningState parentGameState;
@@ -23,10 +22,10 @@ public class XOWatcher implements InternalGameState {
         boolean isXO = parentGameState.getGameController()
                 .getModelBoard()
                 .getCellAt(clickedButtonCords)
-                .isCell(containingCircle().or(containingCross()));
+                .isCell(containingCircle().or(containingCross().and(notPartOfConnection())));
 
         if (isXO) {
-            button.setId("clicked-button");
+//            button.setId("clicked-button");
             parentGameState.setCurrentInternalGameState(parentGameState.getConnectionBuilder());
             parentGameState.getCurrentInternalGameState().onInternalGameStateClickHandler(button);
         }
