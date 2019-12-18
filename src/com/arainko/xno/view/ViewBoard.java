@@ -36,7 +36,7 @@ public class ViewBoard extends Board<Button> {
     private void setButtonGridPane() {
         for (int i=0; i < getDimY(); i++) {
             for (Button button : getBoardElements().get(i)) {
-                button.setId("custom-button");
+                button.setId("default-button");
                 button.setPrefSize(50, 50);
 //                button.setOnAction(eventHandler -> button.setId("clicked-button"));
                 buttonGridPane.addRow(i, button);

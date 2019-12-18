@@ -1,4 +1,4 @@
-#custom-button {
+#default-button {
     -fx-font: 12px "Serif";
     -fx-padding: 10;
     -fx-background-color: #40c4ff;
@@ -8,7 +8,7 @@
     -fx-font-size: 20px;
 }
 
-#custom-button:hover {
+#default-button:hover {
     /*#30b4ef*/
     -fx-background-color: #20a4cf;
 

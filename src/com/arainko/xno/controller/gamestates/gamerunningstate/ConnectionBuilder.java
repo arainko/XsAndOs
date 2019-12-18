@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.empty;
+import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
 public class ConnectionBuilder implements InternalGameState {
 
@@ -53,15 +54,30 @@ public class ConnectionBuilder implements InternalGameState {
     private void onStateContinuousEntryHandler(Button button, Cell clickedCell, Cords clickedCords) {
         if (lastClickedNeighbors.contains(clickedCords)) {
             connection.addConnectionUnit(clickedCell);
-            litUpNeighborButtonColors(lastClickedNeighbors, "custom-button");
+            litUpNeighborButtonColors(lastClickedNeighbors, "default-button");
             lastClickedNeighbors = modelBoard.getFreeNeighborsAt(clickedCords);
             button.setId("clicked-button");
             litUpNeighborButtonColors(lastClickedNeighbors, "neighbor-button");
+            connection.setConnectionTypes();
+//            connection.print();
+//            System.out.println(connection.isConnection(upToWinCondition()));
+//            System.out.println();
+        }
+
+        if (connection.isConnection(upToWinCondition())) {
+            internalStateCleanUp();
+            parentGameState.setCurrentInternalGameState(parentGameState.getXOWatcher());
         }
     }
 
     private void litUpNeighborButtonColors(List<Cords> neighborCords, String buttonStyleId) {
         neighborCords.forEach( cord -> viewBoard.getButtonAt(cord).setId(buttonStyleId));
+    }
+
+    private void internalStateCleanUp() {
+        litUpNeighborButtonColors(lastClickedNeighbors, "default-button");
+        connection = new Connection();
+        lastClickedNeighbors = new ArrayList<>();
     }
 
 }
