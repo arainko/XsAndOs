@@ -37,3 +37,7 @@
     -fx-border-color: #0094cc;
     -fx-font-size: 20px;
 }
+
+#neighbor-button:hover {
+    -fx-background-color: #df2043;
+}
