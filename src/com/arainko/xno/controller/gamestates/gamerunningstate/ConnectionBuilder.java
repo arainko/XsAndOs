@@ -33,8 +33,8 @@ public class ConnectionBuilder extends InternalGameRunningState {
     }
 
     private void onStateInitialEntryHandler(Button clickedButton, Cell clickedCell, Cords clickedCords) {
-        connection.addConnectionUnit(clickedCell);
         clickedButton.setId("clicked-button");
+        connection.addConnectionUnit(clickedCell);
         lastClickedNeighbors = getModelBoard().getFreeNeighborsAt(clickedCords);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "neighbor-button");
     }
@@ -53,10 +53,10 @@ public class ConnectionBuilder extends InternalGameRunningState {
     }
 
     private void onStateExitHandler() {
-        if (!connection.isConnection(upToWinCondition()))
-            getViewBoard().setButtonsColorAtCords(Cords.getCordList(connection.getConnectionCells()), "wrong-button");
-        else
-            getViewBoard().setButtonsColorAtCords(Cords.getCordList(connection.getConnectionCells()), "right-button");
+        getViewBoard().setButtonsColorAtCords(
+                Cords.getCordList(connection.getConnectionCells()),
+                !connection.isConnection(upToWinCondition()) ? "wrong-button" : "right-button");
+
         getModelBoard().addConnection(connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
         connection = new Connection();

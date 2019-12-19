@@ -20,7 +20,7 @@ public class Main extends Application {
         Text text = new Text("COS");
         borderPane.setBottom(text);
         borderPane.setCenter(gc.getViewBoard().getButtonGridPane());
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = new Scene(borderPane, 600, 600);
         scene.setFill(Color.rgb(66,66,66));
         scene.getStylesheets().add("style.css");
         gc.getViewBoard().getButtonGridPane().setAlignment(Pos.CENTER);
