@@ -94,7 +94,10 @@ public class GameController {
     public void setupBorderPane() {
         borderPane.setCenter(viewBoard.getButtonGridPane());
         borderPane.setBackground(Background.EMPTY);
-        borderPane.setTop(new Button());
+        Button proceedButton = new Button("Launch Game");
+        proceedButton.setAlignment(Pos.CENTER);
+        proceedButton.setOnAction(event -> currentGameState = gameRunningState);
+        borderPane.setTop(proceedButton);
         getViewBoard().getButtonGridPane().setAlignment(Pos.CENTER);
     }
 
