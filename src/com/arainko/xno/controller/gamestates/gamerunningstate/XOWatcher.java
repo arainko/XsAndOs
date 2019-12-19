@@ -1,33 +1,34 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
+import com.arainko.xno.abstracts.InternalGameRunningState;
 import com.arainko.xno.helpers.Cords;
+import com.arainko.xno.model.elements.Cell;
 import javafx.scene.control.Button;
 
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 
-public class XOWatcher implements InternalGameState {
-    private GameRunningState parentGameState;
+public class XOWatcher extends InternalGameRunningState {
 
     public XOWatcher(GameRunningState parentGameState) {
-        this.parentGameState = parentGameState;
+        super(parentGameState);
     }
 
     @Override
     public void onInternalGameStateClickHandler(Button button) {
-        Cords clickedButtonCords = parentGameState.getGameController()
+        Cords clickedButtonCords = getParentGameState().getGameController()
             .getViewBoard()
             .getButtonCords(button);
 
-        boolean isXO = parentGameState.getGameController()
+        Cell clickedCell = getParentGameState().getGameController()
                 .getModelBoard()
-                .getCellAt(clickedButtonCords)
+                .getCellAt(clickedButtonCords);
+
+        boolean isXO = clickedCell
                 .isCell((containingCircle().or(containingCross())).and(notPartOfConnection()));
 
         if (isXO) {
-//            button.setId("clicked-button");
-            parentGameState.setCurrentInternalGameState(parentGameState.getConnectionBuilder());
-            parentGameState.getCurrentInternalGameState().onInternalGameStateClickHandler(button);
+            getParentGameState().setCurrentInternalGameState(getParentGameState().getConnectionBuilder());
+            getParentGameState().getCurrentInternalGameState().onInternalGameStateClickHandler(button);
         }
     }
 }

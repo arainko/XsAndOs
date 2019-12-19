@@ -22,20 +22,26 @@ public class GameRunningState implements GameState {
     }
 
     @Override
-    public void onGameStateClickHandler(Button button) {
-        onRunningGameClickHandler(button);
+    public void onGameStatePrimaryClickHandler(Button button) {
+        getCurrentInternalGameState().onInternalGameStateClickHandler(button);
     }
 
-    public InternalGameState getConnectionDestroyer() {
-        return connectionDestroyer;
-    }
-
-    private void onRunningGameClickHandler(Button button) {
-        currentInternalGameState.onInternalGameStateClickHandler(button);
+    @Override
+    public void onGameStateSecondaryClickHandler(Button button) {
+        if (currentInternalGameState != connectionBuilder)
+            getConnectionDestroyer().onInternalGameStateClickHandler(button);
     }
 
     public void setCurrentInternalGameState(InternalGameState currentInternalGameState) {
         this.currentInternalGameState = currentInternalGameState;
+    }
+
+    public GameController getGameController() {
+        return gameController;
+    }
+
+    public InternalGameState getConnectionDestroyer() {
+        return connectionDestroyer;
     }
 
     public InternalGameState getXOWatcher() {
@@ -48,9 +54,5 @@ public class GameRunningState implements GameState {
 
     public InternalGameState getCurrentInternalGameState() {
         return currentInternalGameState;
-    }
-
-    public GameController getGameController() {
-        return gameController;
     }
 }

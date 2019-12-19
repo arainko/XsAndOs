@@ -6,6 +6,7 @@ import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 
 import java.util.List;
 
@@ -46,9 +47,12 @@ public class GameController {
                 viewElements.get(i).get(j).setText(cellStr);
             }
 
-        viewBoard.setButtonsOnAction(eventHandler -> {
-            Button currButton = (Button) eventHandler.getSource();
-            currentGameState.onGameStateClickHandler(currButton);
+        viewBoard.setButtonsOnMouseClicked(mouseEvent -> {
+            Button currButton = (Button) mouseEvent.getSource();
+            if (mouseEvent.getButton() == MouseButton.PRIMARY)
+                currentGameState.onGameStatePrimaryClickHandler(currButton);
+            else if (mouseEvent.getButton() == MouseButton.SECONDARY)
+                currentGameState.onGameStateSecondaryClickHandler(currButton);
         });
     }
 

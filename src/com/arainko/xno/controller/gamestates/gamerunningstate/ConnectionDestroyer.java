@@ -1,24 +1,41 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
+import com.arainko.xno.abstracts.InternalGameRunningState;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.board.ModelBoard;
+import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 
-public class ConnectionDestroyer implements InternalGameState {
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-    private GameRunningState parentGameState;
-    private ModelBoard modelBoard;
-    private ViewBoard viewBoard;
+import static com.arainko.xno.model.predicates.CellPredicates.notPartOfConnection;
+import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
+
+public class ConnectionDestroyer extends InternalGameRunningState {
 
     public ConnectionDestroyer(GameRunningState parentGameState) {
-        this.parentGameState = parentGameState;
-        this.modelBoard = parentGameState.getGameController().getModelBoard();
-        this.viewBoard = parentGameState.getGameController().getViewBoard();
+        super(parentGameState);
     }
 
     @Override
     public void onInternalGameStateClickHandler(Button button) {
-        button.setId("wrong-button");
+        Cords clickedButtonCords = getViewBoard().getButtonCords(button);
+        Cell clickedCell = getModelBoard().getCellAt(clickedButtonCords);
+
+        if (clickedCell.isCell(Predicate.not(notPartOfConnection()))) {
+            Connection connectionToRemove =  getModelBoard().getConnections().stream()
+                    .filter(containingCell(clickedCell))
+                    .findFirst()
+                    .get();
+
+           connectionToRemove.getConnectionCells().forEach(cell ->
+                   getViewBoard().getButtonAt(cell.getCellCords()).setId("default-button"));
+
+           getModelBoard().removeConnection(connectionToRemove);
+        }
     }
 }

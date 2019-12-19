@@ -5,6 +5,7 @@ import com.arainko.xno.abstracts.Board;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -38,16 +39,19 @@ public class ViewBoard extends Board<Button> {
             for (Button button : getBoardElements().get(i)) {
                 button.setId("default-button");
                 button.setPrefSize(50, 50);
-//                button.setOnAction(eventHandler -> button.setId("clicked-button"));
                 buttonGridPane.addRow(i, button);
             }
         }
     }
 
-    public void setButtonsOnAction(EventHandler<ActionEvent> onActionEvent) {
+    public void setButtonsOnMouseClicked(EventHandler<MouseEvent> onMouseActionEvent) {
         getBoardElements().forEach(row -> row.forEach( button -> {
-            button.setOnAction(onActionEvent);
+            button.setOnMouseClicked(onMouseActionEvent);
         }));
+    }
+
+    public void setButtonsColorAtCords(List<Cords> cordList, String styleId) {
+        cordList.forEach( cord -> getButtonAt(cord).setId(styleId));
     }
 
     public GridPane getButtonGridPane() {

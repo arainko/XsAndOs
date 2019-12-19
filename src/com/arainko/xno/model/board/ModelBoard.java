@@ -16,6 +16,7 @@ public class ModelBoard extends Board<Cell> {
     private List<Connection> connections;
     public ModelBoard(int dimX, int dimY) {
         super(dimX, dimY);
+        connections = new ArrayList<>();
     }
 
     @Override
@@ -60,6 +61,11 @@ public class ModelBoard extends Board<Cell> {
 
     public void addConnection(Connection connection) {
         connections.add(connection);
+    }
+
+    public void removeConnection(Connection connection) {
+        connections.remove(connection);
+        connection.remove();
     }
 
     public List<Connection> getConnections() {

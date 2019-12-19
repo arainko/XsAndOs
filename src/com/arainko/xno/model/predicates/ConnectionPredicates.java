@@ -50,6 +50,10 @@ public class ConnectionPredicates {
         };
     }
 
+    public static Predicate<Connection> containingCell(Cell cell) {
+        return conn -> conn.getConnectionCells().contains(cell);
+    }
+
     public static Predicate<Connection> withCell(Predicate<Cell> cellPred) {
         return conn -> conn.getConnectionCells().stream()
                 .anyMatch(cellPred);

@@ -45,8 +45,25 @@
 #wrong-button {
     -fx-font: 12px "Serif";
     -fx-padding: 10;
-    -fx-background-color: #ff0000;
+    -fx-background-color: #ff8482;
     -fx-border-style: solid;
     -fx-border-color: #0094cc;
     -fx-font-size: 20px;
+}
+
+#wrong-button:hover {
+    -fx-background-color: #df6462;
+}
+
+#right-button {
+    -fx-font: 12px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: #82ff8a;
+    -fx-border-style: solid;
+    -fx-border-color: #0094cc;
+    -fx-font-size: 20px;
+}
+
+#right-button:hover {
+    -fx-background-color: #62df6a;
 }
