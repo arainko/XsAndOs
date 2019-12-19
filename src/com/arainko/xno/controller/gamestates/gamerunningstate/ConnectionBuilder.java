@@ -48,7 +48,7 @@ public class ConnectionBuilder extends InternalGameRunningState {
             getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "neighbor-button");
             connection.setConnectionTypes();
         }
-        if (connection.isConnection(ended()))
+        if (connection.isConnection(ended()) || lastClickedNeighbors.isEmpty())
             onStateExitHandler();
     }
 

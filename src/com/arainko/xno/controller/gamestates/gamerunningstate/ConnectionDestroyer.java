@@ -32,9 +32,7 @@ public class ConnectionDestroyer extends InternalGameRunningState {
                     .findFirst()
                     .get();
 
-           connectionToRemove.getConnectionCells().forEach(cell ->
-                   getViewBoard().getButtonAt(cell.getCellCords()).setId("default-button"));
-
+           getViewBoard().setButtonsColorAtCords(Cords.getCordList(connectionToRemove.getConnectionCells()), "default-button");
            getModelBoard().removeConnection(connectionToRemove);
         }
     }

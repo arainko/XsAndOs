@@ -31,10 +31,10 @@ public class GameController {
     }
 
     void setupExampleModelBoard() {
-        modelBoard.setBoardCellContentsAt(0,1, Cell.Contents.CIRCLE);
+        modelBoard.setBoardCellContentsAt(5,1, Cell.Contents.CIRCLE);
         modelBoard.setBoardCellContentsAt(5,5, Cell.Contents.CIRCLE);
-        modelBoard.setBoardCellContentsAt(9,9, Cell.Contents.CROSS);
-        modelBoard.setBoardCellContentsAt(3,8, Cell.Contents.CROSS);
+        modelBoard.setBoardCellContentsAt(4,9, Cell.Contents.CROSS);
+        modelBoard.setBoardCellContentsAt(3,4, Cell.Contents.CROSS);
     }
 //
     void onGameBoardSetup() {
