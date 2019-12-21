@@ -5,6 +5,7 @@ import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.view.SetupMenu;
 import com.arainko.xno.view.ViewBoard;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class GameController {
     BorderPane borderPane;
+    SetupMenu setupMenu;
 
     GameState gameSetupState;
     GameState gameRunningState;
@@ -92,13 +94,14 @@ public class GameController {
     }
 
     public void setupBorderPane() {
-        borderPane.setCenter(viewBoard.getButtonGridPane());
+        setupMenu = new SetupMenu();
+        borderPane.setCenter(setupMenu);
         borderPane.setBackground(Background.EMPTY);
         Button proceedButton = new Button("Launch Game");
         proceedButton.setAlignment(Pos.CENTER);
         proceedButton.setOnAction(event -> currentGameState = gameRunningState);
         borderPane.setTop(proceedButton);
-        getViewBoard().getButtonGridPane().setAlignment(Pos.CENTER);
+        setupMenu.setAlignment(Pos.CENTER);
     }
 
     public BorderPane getBorderPane() {

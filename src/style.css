@@ -67,3 +67,19 @@
 #right-button:hover {
     -fx-background-color: #62df6a;
 }
+
+#menu-button {
+    -fx-font: 20px "Serif";
+    /*-fx-padding: 10;*/
+    -fx-background-color: #aaaaaa;
+}
+
+#menu-button:hover {
+    -fx-background-color: #ffffff;
+}
+
+#menu-text {
+    -fx-font-size: 30px;
+    -fx-font-smoothing-type: lcd;
+    -fx-font-weight:  bold;
+}
