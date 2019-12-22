@@ -36,6 +36,7 @@ public class GameRunningState implements GameState {
         this.currentInternalGameState = currentInternalGameState;
     }
 
+    @Override
     public GameController getGameController() {
         return gameController;
     }

@@ -10,7 +10,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         primaryStage.setTitle("Game Board");
-        GameController gc = new GameController(10,10);
+        GameController gc = new GameController();
         Scene scene = new Scene(gc.getBorderPane(), 600, 600);
         scene.setFill(Color.rgb(66,66,66));
         scene.getStylesheets().add("style.css");

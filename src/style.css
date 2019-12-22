@@ -83,3 +83,7 @@
     -fx-font-smoothing-type: lcd;
     -fx-font-weight:  bold;
 }
+
+#setup-menu {
+    -fx-spacing: 20px;
+}
