@@ -34,7 +34,7 @@ public class GameController {
         setupBorderPane();
     }
 
-    void onGameBoardButtonSetup() {
+    private void onGameBoardButtonSetup() {
         viewBoard.setButtonsOnMouseClicked(mouseEvent -> {
             Button currButton = (Button) mouseEvent.getSource();
             if (mouseEvent.getButton() == MouseButton.PRIMARY)
@@ -66,9 +66,10 @@ public class GameController {
 //        setupMenu.setAlignment(Pos.CENTER);
     }
 
-    public void setBoards(int dimXY) {
-        this.viewBoard = new ViewBoard(dimXY, dimXY);
-        this.modelBoard = new ModelBoard(dimXY, dimXY);
+    public void setupBoards(int squareDim) {
+        this.viewBoard = new ViewBoard(squareDim, squareDim);
+        this.modelBoard = new ModelBoard(squareDim, squareDim);
+        onGameBoardButtonSetup();
     }
 
     public BorderPane getBorderPane() {

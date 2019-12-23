@@ -11,6 +11,7 @@ import java.util.List;
 
 public class SetupMenu extends VBox {
     private List<Button> buttonList;
+    private Button proceedButton;
 
      public SetupMenu() {
          buttonList = new ArrayList<>();
@@ -33,11 +34,17 @@ public class SetupMenu extends VBox {
              this.getChildren().add(sizeButton);
              buttonList.add(sizeButton);
          }
+         proceedButton = new Button("Proceed with:");
+         this.getChildren().add(proceedButton);
      }
 
      public void setButtonsOnMouseClicked(EventHandler<MouseEvent> onMouseActionEvent) {
          buttonList.forEach( button -> button.setOnMouseClicked(onMouseActionEvent));
      }
+
+    public Button getProceedButton() {
+        return proceedButton;
+    }
 
     public List<Button> getButtonList() {
         return buttonList;
