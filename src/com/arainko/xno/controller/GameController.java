@@ -5,17 +5,17 @@ import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.view.UIWrapper;
 import com.arainko.xno.view.ViewBoard;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 
 import java.util.List;
 
 public class GameController {
-    BorderPane borderPane;
+    UIWrapper UIWrapper;
 
     GameState gameSetupState;
     GameState gameRunningState;
@@ -26,7 +26,7 @@ public class GameController {
     private ModelBoard modelBoard;
 
     public GameController() {
-        this.borderPane = new BorderPane();
+        this.UIWrapper = new UIWrapper();
         this.gameRunningState = new GameRunningState(this);
         this.gameSetupState = new GameSetupState(this);
         currentGameState = gameSetupState;
@@ -56,14 +56,10 @@ public class GameController {
     }
 
     public void setupBorderPane() {
-//        SetupMenu setupMenu = new SetupMenu();
-//        borderPane.setCenter(setupMenu);
-        borderPane.setBackground(Background.EMPTY);
         Button proceedButton = new Button("Launch Game");
         proceedButton.setAlignment(Pos.CENTER);
         proceedButton.setOnAction(event -> currentGameState = gameRunningState);
-        borderPane.setTop(proceedButton);
-//        setupMenu.setAlignment(Pos.CENTER);
+        UIWrapper.setTop(proceedButton);
     }
 
     public void setupBoards(int squareDim) {
@@ -72,8 +68,8 @@ public class GameController {
         onGameBoardButtonSetup();
     }
 
-    public BorderPane getBorderPane() {
-        return borderPane;
+    public BorderPane getUIWrapper() {
+        return UIWrapper;
     }
 
     public ViewBoard getViewBoard() {

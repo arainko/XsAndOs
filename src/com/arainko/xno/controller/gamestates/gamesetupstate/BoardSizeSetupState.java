@@ -12,7 +12,7 @@ public class BoardSizeSetupState extends InternalAbstractGameState<GameSetupStat
         super(parentGameState);
         setupMenu = new SetupMenu();
         setupButtonsAction();
-        parentGameState.getGameController().getBorderPane().setCenter(setupMenu);
+        parentGameState.getGameController().getUIWrapper().setCenter(setupMenu);
     }
 
     private void setupButtonsAction() {
@@ -31,7 +31,7 @@ public class BoardSizeSetupState extends InternalAbstractGameState<GameSetupStat
                 .getButtonGridPane();
 
         getParentGameState().getGameController()
-                .getBorderPane()
+                .getUIWrapper()
                 .setCenter(viewButtons);
 
         getParentGameState().setCurrentInternalGameState();
