@@ -32,8 +32,8 @@ public class BoardSizeSetupState extends InternalAbstractGameState<GameSetupStat
 
         getParentGameState().getGameController()
                 .getUIWrapper()
-                .setCenter(viewButtons);
+                .changeMainView(viewButtons);
 
-        getParentGameState().setCurrentInternalGameState();
+        getParentGameState().setBoardSizeSetupDone(true);
     }
 }

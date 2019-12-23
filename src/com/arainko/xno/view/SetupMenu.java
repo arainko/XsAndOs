@@ -1,6 +1,7 @@
 package com.arainko.xno.view;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ public class SetupMenu extends VBox {
      public SetupMenu() {
          buttonList = new ArrayList<>();
          this.setId("setup-menu");
+         this.setAlignment(Pos.CENTER);
          setupInfoText();
          setupButtons();
      }

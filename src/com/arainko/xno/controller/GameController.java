@@ -10,7 +10,6 @@ import com.arainko.xno.view.ViewBoard;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.BorderPane;
 
 import java.util.List;
 
@@ -68,7 +67,7 @@ public class GameController {
         onGameBoardButtonSetup();
     }
 
-    public BorderPane getUIWrapper() {
+    public UIWrapper getUIWrapper() {
         return UIWrapper;
     }
 

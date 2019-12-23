@@ -7,33 +7,35 @@ import javafx.scene.control.Button;
 
 public class GameSetupState implements GameState {
     private GameController gameController;
+    boolean isBoardSizeSetupDone;
 
     InternalGameState boardSizeSetupState;
     InternalGameState circleAdder;
     InternalGameState crossAdder;
-    InternalGameState currentInternalGameState;
+
 
     public GameSetupState(GameController gameController) {
         this.gameController = gameController;
         boardSizeSetupState = new BoardSizeSetupState(this);
         circleAdder = new CircleAdder(this);
         crossAdder = new CrossAdder(this);
+        isBoardSizeSetupDone = false;
     }
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
-        if (currentInternalGameState != boardSizeSetupState)
+        if (isBoardSizeSetupDone)
             crossAdder.onInternalGameStateClickHandler(button);
     }
 
     @Override
     public void onGameStateSecondaryClickHandler(Button button) {
-        if (currentInternalGameState != boardSizeSetupState)
+        if (isBoardSizeSetupDone)
             circleAdder.onInternalGameStateClickHandler(button);
     }
 
-    public void setCurrentInternalGameState() {
-        currentInternalGameState = circleAdder;
+    public void setBoardSizeSetupDone(boolean boardSizeSetupDone) {
+        isBoardSizeSetupDone = boardSizeSetupDone;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.arainko.xno.view;
 
-import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.abstracts.Board;
-import javafx.event.ActionEvent;
+import com.arainko.xno.helpers.Cords;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -42,6 +42,7 @@ public class ViewBoard extends Board<Button> {
                 buttonGridPane.addRow(i, button);
             }
         }
+        buttonGridPane.setAlignment(Pos.CENTER);
     }
 
     public void setButtonsOnMouseClicked(EventHandler<MouseEvent> onMouseActionEvent) {
