@@ -1,18 +1,18 @@
 package com.arainko.xno.controller.gamestates.gamesetupstate;
 
-import com.arainko.xno.abstracts.InternalAbstractGameState;
+import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.view.SetupMenu;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-public class BoardSizeSetupState extends InternalAbstractGameState<GameSetupState> {
+public class InternalBoardSizeSetupHandler extends InternalGameStateHandler<GameSetupState> {
     SetupMenu setupMenu;
 
-    public BoardSizeSetupState(GameSetupState parentGameState) {
+    public InternalBoardSizeSetupHandler(GameSetupState parentGameState) {
         super(parentGameState);
         setupMenu = new SetupMenu();
         setupButtonsAction();
-        parentGameState.getGameController().getUIWrapper().setCenter(setupMenu);
+        parentGameState.getGameController().getUIWrapper().changeMainView(setupMenu);
     }
 
     private void setupButtonsAction() {

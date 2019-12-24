@@ -1,6 +1,6 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.abstracts.InternalAbstractGameState;
+import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -11,9 +11,9 @@ import java.util.function.Predicate;
 import static com.arainko.xno.model.predicates.CellPredicates.notPartOfConnection;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
-public class ConnectionDestroyer extends InternalAbstractGameState<GameRunningState> {
+public class InternalConnectionDestroyer extends InternalGameStateHandler<GameRunningState> {
 
-    public ConnectionDestroyer(GameRunningState parentGameState) {
+    public InternalConnectionDestroyer(GameRunningState parentGameState) {
         super(parentGameState);
     }
 

@@ -1,23 +1,21 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
+import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.GameController;
-import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
 import javafx.scene.control.Button;
 
-public class GameRunningState implements GameState {
-    private GameController gameController;
-
+public class GameRunningState extends GameStateHandler {
     private InternalGameState XOWatcher;
     private InternalGameState connectionBuilder;
     private InternalGameState connectionDestroyer;
     private InternalGameState currentInternalGameState;
 
     public GameRunningState(GameController gameController) {
-        this.gameController = gameController;
-        XOWatcher = new XOWatcher(this);
-        connectionBuilder = new ConnectionBuilder(this);
-        connectionDestroyer = new ConnectionDestroyer(this);
+        super(gameController);
+        XOWatcher = new InternalXOWatcher(this);
+        connectionBuilder = new InternalConnectionBuilder(this);
+        connectionDestroyer = new InternalConnectionDestroyer(this);
         this.currentInternalGameState = XOWatcher;
     }
 
@@ -34,11 +32,6 @@ public class GameRunningState implements GameState {
 
     public void setCurrentInternalGameState(InternalGameState currentInternalGameState) {
         this.currentInternalGameState = currentInternalGameState;
-    }
-
-    @Override
-    public GameController getGameController() {
-        return gameController;
     }
 
     public InternalGameState getConnectionDestroyer() {

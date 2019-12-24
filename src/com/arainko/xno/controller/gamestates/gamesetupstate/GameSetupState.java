@@ -1,24 +1,22 @@
 package com.arainko.xno.controller.gamestates.gamesetupstate;
 
+import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.GameController;
-import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
 import javafx.scene.control.Button;
 
-public class GameSetupState implements GameState {
-    private GameController gameController;
+public class GameSetupState extends GameStateHandler {
     boolean isBoardSizeSetupDone;
 
     InternalGameState boardSizeSetupState;
     InternalGameState circleAdder;
     InternalGameState crossAdder;
 
-
     public GameSetupState(GameController gameController) {
-        this.gameController = gameController;
-        boardSizeSetupState = new BoardSizeSetupState(this);
-        circleAdder = new CircleAdder(this);
-        crossAdder = new CrossAdder(this);
+        super(gameController);
+        boardSizeSetupState = new InternalBoardSizeSetupHandler(this);
+        circleAdder = new InternalCircleAdder(this);
+        crossAdder = new InternalCrossAdder(this);
         isBoardSizeSetupDone = false;
     }
 
@@ -36,10 +34,5 @@ public class GameSetupState implements GameState {
 
     public void setBoardSizeSetupDone(boolean boardSizeSetupDone) {
         isBoardSizeSetupDone = boardSizeSetupDone;
-    }
-
-    @Override
-    public GameController getGameController() {
-        return gameController;
     }
 }

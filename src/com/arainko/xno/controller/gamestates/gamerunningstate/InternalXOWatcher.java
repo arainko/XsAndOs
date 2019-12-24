@@ -1,15 +1,15 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.abstracts.InternalAbstractGameState;
+import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import javafx.scene.control.Button;
 
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 
-public class XOWatcher extends InternalAbstractGameState<GameRunningState> {
+public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState> {
 
-    public XOWatcher(GameRunningState parentGameState) {
+    public InternalXOWatcher(GameRunningState parentGameState) {
         super(parentGameState);
     }
 

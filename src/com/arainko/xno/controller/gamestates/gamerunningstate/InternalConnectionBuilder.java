@@ -1,6 +1,6 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.abstracts.InternalAbstractGameState;
+import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -11,11 +11,11 @@ import java.util.List;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.*;
 
-public class ConnectionBuilder extends InternalAbstractGameState<GameRunningState> {
+public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunningState> {
     List<Cords> lastClickedNeighbors;
     Connection connection;
 
-    public ConnectionBuilder(GameRunningState parentGameState) {
+    public InternalConnectionBuilder(GameRunningState parentGameState) {
         super(parentGameState);
         connection = new Connection();
         lastClickedNeighbors = new ArrayList<>();
