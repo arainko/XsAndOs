@@ -13,6 +13,7 @@ public class InternalBoardSizeSetupHandler extends InternalGameStateHandler<Game
         setupMenu = new SetupMenu();
         setupButtonsAction();
         parentGameState.getGameController().getUIWrapper().changeMainView(setupMenu);
+//        parentGameState.getGameController().getUIWrapper().disableLeftButton();
     }
 
     private void setupButtonsAction() {
