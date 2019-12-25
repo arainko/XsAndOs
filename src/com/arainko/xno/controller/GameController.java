@@ -1,21 +1,19 @@
 package com.arainko.xno.controller;
 
+import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetupState;
 import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
-import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.UIWrapper;
 import com.arainko.xno.view.ViewBoard;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
-
-import java.util.List;
 
 public class GameController {
     UIWrapper UIWrapper;
 
+    GameState gameMainMenuState;
     GameState gameSetupState;
     GameState gameRunningState;
 //    GameState gameEndState;
@@ -26,11 +24,24 @@ public class GameController {
 
     public GameController() {
         this.UIWrapper = new UIWrapper();
+        this.gameMainMenuState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
         this.gameSetupState = new GameSetupState(this);
-        currentGameState = gameSetupState;
-//        setupExampleModelBoard();
-        setupBorderPane();
+        setCurrentGameState(gameMainMenuState);
+    }
+
+    public void refreshBoards() {
+        for (int i=0; i < modelBoard.getDimY(); i++)
+            for (int j=0; j < modelBoard.getDimX(); j++) {
+                String cellStr = modelBoard.getBoardElements().get(i).get(j).toString();
+                viewBoard.getBoardElements().get(i).get(j).setText(cellStr);
+            }
+    }
+
+    public void setupBoards(int squareDim) {
+        this.viewBoard = new ViewBoard(squareDim, squareDim);
+        this.modelBoard = new ModelBoard(squareDim, squareDim);
+        onGameBoardButtonSetup();
     }
 
     private void onGameBoardButtonSetup() {
@@ -43,28 +54,23 @@ public class GameController {
         });
     }
 
-    public void refreshBoards() {
-        List<List<Cell>> modelElements = modelBoard.getBoardElements();
-        List<List<Button>> viewElements = viewBoard.getBoardElements();
-
-        for (int i=0; i < modelBoard.getDimY(); i++)
-            for (int j=0; j < modelBoard.getDimX(); j++) {
-                String cellStr = modelElements.get(i).get(j).toString();
-                viewElements.get(i).get(j).setText(cellStr);
-            }
+    public void setCurrentGameState(GameState currentGameState) {
+        this.currentGameState = currentGameState;
+        currentGameState.onGameStateSet();
+        UIWrapper.getLeftButton().setOnActionEnhanced(currentGameState.getLeftButtonActionEvent());
+        UIWrapper.getRightButton().setOnActionEnhanced(currentGameState.getRightButtonActionEvent());
     }
 
-    public void setupBorderPane() {
-        Button proceedButton = new Button("Launch Game");
-        proceedButton.setAlignment(Pos.CENTER);
-        proceedButton.setOnAction(event -> currentGameState = gameRunningState);
-        UIWrapper.setTop(proceedButton);
+    public GameState getGameMainMenuState() {
+        return gameMainMenuState;
     }
 
-    public void setupBoards(int squareDim) {
-        this.viewBoard = new ViewBoard(squareDim, squareDim);
-        this.modelBoard = new ModelBoard(squareDim, squareDim);
-        onGameBoardButtonSetup();
+    public GameState getGameSetupState() {
+        return gameSetupState;
+    }
+
+    public GameState getGameRunningState() {
+        return gameRunningState;
     }
 
     public UIWrapper getUIWrapper() {

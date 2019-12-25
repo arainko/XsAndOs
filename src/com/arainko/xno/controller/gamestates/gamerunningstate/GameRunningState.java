@@ -3,6 +3,8 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.GameController;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class GameRunningState extends GameStateHandler {
@@ -13,6 +15,10 @@ public class GameRunningState extends GameStateHandler {
 
     public GameRunningState(GameController gameController) {
         super(gameController);
+    }
+
+    @Override
+    public void onGameStateSet() {
         XOWatcher = new InternalXOWatcher(this);
         connectionBuilder = new InternalConnectionBuilder(this);
         connectionDestroyer = new InternalConnectionDestroyer(this);
@@ -28,6 +34,16 @@ public class GameRunningState extends GameStateHandler {
     public void onGameStateSecondaryClickHandler(Button button) {
         if (currentInternalGameState != connectionBuilder)
             getConnectionDestroyer().onInternalGameStateClickHandler(button);
+    }
+
+    @Override
+    public EventHandler<ActionEvent> getLeftButtonActionEvent() {
+        return null;
+    }
+
+    @Override
+    public EventHandler<ActionEvent> getRightButtonActionEvent() {
+        return null;
     }
 
     public void setCurrentInternalGameState(InternalGameState currentInternalGameState) {

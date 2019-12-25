@@ -22,4 +22,5 @@ public abstract class InternalGameStateHandler<T extends GameStateHandler> imple
     public T getParentGameState() {
         return parentGameState;
     }
+
 }
