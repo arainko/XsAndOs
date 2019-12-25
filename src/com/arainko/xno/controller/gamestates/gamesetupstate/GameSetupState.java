@@ -8,48 +8,58 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
 
 public class GameSetupState extends GameStateHandler {
-    private int crossCount;
-    private int circleCount;
+    Map<Cell.Contents, Integer> contentsCount;
     public GameSetupState(GameController gameController) {
         super(gameController);
     }
 
     @Override
     public void onGameStateSet() {
-        crossCount = 0;
-        circleCount = 0;
-        getGameController().getUIWrapper().getLeftButton().setVisible(true);
-        getGameController().getUIWrapper().getRightButton().setVisible(true);
+        contentsCount = new HashMap<>();
+        contentsCount.put(Cell.Contents.CROSS, 0);
+        contentsCount.put(Cell.Contents.CIRCLE, 0);
+        cellContentsValidator();
     }
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
         Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
         Cell clickedCell = getGameController().getModelBoard().getCellAt(clickedButtonCords);
-        if (clickedCell.isCell(containingCross().or(containingCircle()))) {
-            clickedCell.setCellContents(Cell.Contents.EMPTY);
-        } else {
-            clickedCell.setCellContents(Cell.Contents.CROSS);
-            crossCount++;
-        }
-        getGameController().refreshBoards();
+        cellContentsSetter(clickedCell, Cell.Contents.CROSS);
     }
 
     @Override
     public void onGameStateSecondaryClickHandler(Button button) {
         Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
         Cell clickedCell = getGameController().getModelBoard().getCellAt(clickedButtonCords);
+        cellContentsSetter(clickedCell, Cell.Contents.CIRCLE);
+    }
+
+    private void cellContentsSetter(Cell clickedCell, Cell.Contents contentsToSet) {
+        Cell.Contents currContents = clickedCell.getCellContents();
         if (clickedCell.isCell(containingCircle().or(containingCross()))) {
+            contentsCount.put(currContents, contentsCount.get(currContents)-1);
             clickedCell.setCellContents(Cell.Contents.EMPTY);
         } else {
-            clickedCell.setCellContents(Cell.Contents.CIRCLE);
-            circleCount++;
+            clickedCell.setCellContents(contentsToSet);
+            contentsCount.put(contentsToSet, contentsCount.get(contentsToSet)+1);
         }
         getGameController().refreshBoards();
+        cellContentsValidator();
+    }
+
+    private void cellContentsValidator() {
+        int circleCount = contentsCount.get(Cell.Contents.CIRCLE);
+        int crossCount = contentsCount.get(Cell.Contents.CROSS);
+        boolean isDisabled = crossCount > 0 && circleCount == crossCount;
+        getGameController().getUIWrapper().getRightButton().setDisable(!isDisabled);
     }
 
     @Override
