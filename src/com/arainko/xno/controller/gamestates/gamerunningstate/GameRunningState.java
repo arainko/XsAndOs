@@ -34,6 +34,8 @@ public class GameRunningState extends GameStateHandler {
     public void onGameStateSecondaryClickHandler(Button button) {
         if (currentInternalGameState != connectionBuilder)
             getConnectionDestroyer().onInternalGameStateClickHandler(button);
+        else if (currentInternalGameState == connectionBuilder)
+            getConnectionBuilder().onInternalGameStateSecondaryClickHandler(button);
     }
 
     @Override

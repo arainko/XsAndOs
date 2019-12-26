@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
@@ -51,7 +52,7 @@ public class GameSetupState extends GameStateHandler {
             clickedCell.setCellContents(contentsToSet);
             contentsCount.put(contentsToSet, contentsCount.get(contentsToSet)+1);
         }
-        getGameController().refreshBoards();
+        refreshBoardText();
         cellContentsValidator();
     }
 
@@ -70,5 +71,15 @@ public class GameSetupState extends GameStateHandler {
     @Override
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
         return event -> getGameController().setCurrentGameState(getGameController().getGameRunningState());
+    }
+
+    private void refreshBoardText() {
+        List<Cell> flattenedCells = getGameController().getModelBoard().getFlattenedBoardElements();
+        List<Button> flattenedButtons = getGameController().getViewBoard().getFlattenedBoardElements();
+        for (int i = 0; i < flattenedCells.size(); i++) {
+            String cellStr = flattenedCells.get(i).toString();
+            flattenedButtons.get(i).setText(cellStr);
+        }
+//        System.out.println(flattenedCells.size());
     }
 }

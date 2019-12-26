@@ -1,7 +1,9 @@
 package com.arainko.xno.abstracts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Board<T> {
     private int dimX;
@@ -39,6 +41,12 @@ public abstract class Board<T> {
 
     public List<List<T>> getBoardElements() {
         return boardElements;
+    }
+
+    public List<T> getFlattenedBoardElements() {
+        return getBoardElements().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
     
     public void printBoard() {

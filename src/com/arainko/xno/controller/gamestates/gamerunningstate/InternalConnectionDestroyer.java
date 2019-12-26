@@ -28,7 +28,8 @@ public class InternalConnectionDestroyer extends InternalGameStateHandler<GameRu
                     .findFirst()
                     .get();
 
-           getViewBoard().setButtonsColorAtCords(Cords.getCordList(connectionToRemove.getConnectionCells()), "default-button");
+           getViewBoard().setButtonsColorAtCords(
+                   Cords.getCordList(connectionToRemove.getConnectionCells()), "default-button");
            getModelBoard().removeConnection(connectionToRemove);
         }
     }

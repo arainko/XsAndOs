@@ -1,9 +1,7 @@
 package com.arainko.xno.view;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -35,10 +33,6 @@ public class SetupMenu extends VBox {
              this.getChildren().add(sizeButton);
              buttonList.add(sizeButton);
          }
-     }
-
-     public void setButtonsOnMouseClicked(EventHandler<MouseEvent> onMouseActionEvent) {
-         buttonList.forEach( button -> button.setOnMouseClicked(onMouseActionEvent));
      }
 
     public List<Button> getButtonList() {

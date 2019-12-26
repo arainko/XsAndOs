@@ -2,10 +2,8 @@ package com.arainko.xno.view;
 
 import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.helpers.Cords;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
@@ -43,12 +41,6 @@ public class ViewBoard extends Board<Button> {
             }
         }
         buttonGridPane.setAlignment(Pos.CENTER);
-    }
-
-    public void setButtonsOnMouseClicked(EventHandler<MouseEvent> onMouseActionEvent) {
-        getBoardElements().forEach(row -> row.forEach( button -> {
-            button.setOnMouseClicked(onMouseActionEvent);
-        }));
     }
 
     public void setButtonsColorAtCords(List<Cords> cordList, String styleId) {

@@ -18,20 +18,22 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     @Override
     public void onGameStateSet() {
         setupMenu = new SetupMenu();
-        setupButtonsAction();
+        getGameController().registerButtonsForGameState(setupMenu.getButtonList());
         getGameController().getUIWrapper().changeMainView(setupMenu);
     }
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
         int clickedDim = 5 + setupMenu.getButtonList().indexOf(button);
-        getGameController().setupBoards(clickedDim);
+        getGameController().setViewBoard(clickedDim,clickedDim);
+        getGameController().setModelBoard(clickedDim,clickedDim);
+        getGameController().registerButtonsForGameState(getGameController()
+                .getViewBoard()
+                .getFlattenedBoardElements());
         GridPane viewButtons = getGameController()
                 .getViewBoard()
                 .getButtonGridPane();
-
         getGameController().setCurrentGameState(getGameController().getGameSetupState());
-
         getGameController().getUIWrapper()
                 .changeMainView(viewButtons);
     }
@@ -46,10 +48,4 @@ public class GameBoardSizeSetupState extends GameStateHandler {
         return null;
     }
 
-    private void setupButtonsAction() {
-        setupMenu.setButtonsOnMouseClicked(event -> {
-            Button clickedButton = (Button) event.getSource();
-            this.onGameStatePrimaryClickHandler(clickedButton);
-        });
-    }
 }

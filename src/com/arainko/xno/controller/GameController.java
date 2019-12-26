@@ -10,6 +10,8 @@ import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 
+import java.util.List;
+
 public class GameController {
     UIWrapper UIWrapper;
 
@@ -30,28 +32,14 @@ public class GameController {
         setCurrentGameState(gameMainMenuState);
     }
 
-    public void refreshBoards() {
-        for (int i=0; i < modelBoard.getDimY(); i++)
-            for (int j=0; j < modelBoard.getDimX(); j++) {
-                String cellStr = modelBoard.getBoardElements().get(i).get(j).toString();
-                viewBoard.getBoardElements().get(i).get(j).setText(cellStr);
-            }
-    }
-
-    public void setupBoards(int squareDim) {
-        this.viewBoard = new ViewBoard(squareDim, squareDim);
-        this.modelBoard = new ModelBoard(squareDim, squareDim);
-        onGameBoardButtonSetup();
-    }
-
-    private void onGameBoardButtonSetup() {
-        viewBoard.setButtonsOnMouseClicked(mouseEvent -> {
+    public void registerButtonsForGameState(List<Button> buttonList) {
+        buttonList.forEach(button -> button.setOnMouseClicked(mouseEvent -> {
             Button currButton = (Button) mouseEvent.getSource();
             if (mouseEvent.getButton() == MouseButton.PRIMARY)
                 currentGameState.onGameStatePrimaryClickHandler(currButton);
             else if (mouseEvent.getButton() == MouseButton.SECONDARY)
                 currentGameState.onGameStateSecondaryClickHandler(currButton);
-        });
+        }));
     }
 
     public void setCurrentGameState(GameState currentGameState) {
@@ -59,6 +47,14 @@ public class GameController {
         currentGameState.onGameStateSet();
         UIWrapper.getLeftButton().setOnActionEnhanced(currentGameState.getLeftButtonActionEvent());
         UIWrapper.getRightButton().setOnActionEnhanced(currentGameState.getRightButtonActionEvent());
+    }
+
+    public void setModelBoard(int dimX, int dimY) {
+        this.modelBoard = new ModelBoard(dimX, dimY);
+    }
+
+    public void setViewBoard(int dimX, int dimY) {
+        this.viewBoard = new ViewBoard(dimX, dimY);
     }
 
     public GameState getGameMainMenuState() {
