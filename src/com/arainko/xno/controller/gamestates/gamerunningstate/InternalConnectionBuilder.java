@@ -22,7 +22,7 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
     }
 
     @Override
-    public void onInternalGameStateClickHandler(Button button) {
+    public void onInternalGameStatePrimaryClickHandler(Button button) {
         Cords clickedCords = getViewBoard().getButtonCords(button);
         Cell clickedCell = getModelBoard().getCellAt(clickedCords);
 
@@ -64,15 +64,17 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
 
         getModelBoard().addConnection(connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
-        connection = new Connection();
-        lastClickedNeighbors = new ArrayList<>();
-        getParentGameState().setCurrentInternalGameState(getParentGameState().getXOWatcher());
+        onStateExitCleanUp();
     }
 
     public void onStateAbortHandler() {
-        connection.getConnectionCells().forEach(cell -> cell.setConnectionFlag(false));
         getViewBoard().setButtonsColorAtCords(Cords.getCordList(connection.getConnectionCells()), "default-button");
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
+        connection.remove();
+        onStateExitCleanUp();
+    }
+
+    private void onStateExitCleanUp() {
         connection = new Connection();
         lastClickedNeighbors = new ArrayList<>();
         getParentGameState().setCurrentInternalGameState(getParentGameState().getXOWatcher());

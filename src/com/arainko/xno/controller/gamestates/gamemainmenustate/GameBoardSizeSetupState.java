@@ -39,6 +39,11 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     }
 
     @Override
+    public void onGameStateSecondaryClickHandler(Button button) {
+        //game state doesn't use secondary clicks
+    }
+
+    @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
         return null;
     }

@@ -7,9 +7,7 @@ import javafx.scene.control.Button;
 public interface GameState {
     void onGameStateSet();
     void onGameStatePrimaryClickHandler(Button button);
-    default void onGameStateSecondaryClickHandler(Button button) {
-        // in case a GameState doesn't use secondary clicks
-    }
+    void onGameStateSecondaryClickHandler(Button button);
     EventHandler<ActionEvent> getLeftButtonActionEvent();
     EventHandler<ActionEvent> getRightButtonActionEvent();
 }
