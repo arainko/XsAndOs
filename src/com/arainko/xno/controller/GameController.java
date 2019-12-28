@@ -4,8 +4,6 @@ import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetu
 import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
-import com.arainko.xno.controller.historian.Bundle;
-import com.arainko.xno.controller.historian.Historian;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.UIWrapper;
 import com.arainko.xno.view.ViewBoard;
@@ -16,7 +14,6 @@ import java.util.List;
 
 public class GameController {
     UIWrapper UIWrapper;
-    Historian historian;
 
     GameState gameMainMenuState;
     GameState gameSetupState;
@@ -32,7 +29,6 @@ public class GameController {
         this.gameMainMenuState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
         this.gameSetupState = new GameSetupState(this);
-        this.historian = new Historian(this);
         setCurrentGameState(gameMainMenuState);
     }
 
@@ -53,29 +49,12 @@ public class GameController {
         UIWrapper.getRightButton().setOnActionEnhanced(currentGameState.getRightButtonActionEvent());
     }
 
-    public void load(Bundle bundle) {
-        gameRunningState = bundle.getBundledGameRunningState();
-        viewBoard = bundle.getBundledViewBoard();
-        modelBoard = bundle.getBundledModelBoard();
-    }
-
-    public Historian getHistorian() {
-        return historian;
-    }
-
     public void setModelBoard(int dimX, int dimY) {
         this.modelBoard = new ModelBoard(dimX, dimY);
     }
 
-    public void setModelBoard(ModelBoard modelBoard) {
-        this.modelBoard = modelBoard;
-    }
     public void setViewBoard(int dimX, int dimY) {
         this.viewBoard = new ViewBoard(dimX, dimY);
-    }
-
-    public void setViewBoard(ViewBoard viewBoard) {
-        this.viewBoard = viewBoard;
     }
 
     public GameState getGameMainMenuState() {

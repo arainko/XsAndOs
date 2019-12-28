@@ -3,7 +3,6 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.GameController;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
-import com.arainko.xno.controller.historian.Bundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -27,8 +26,6 @@ public class GameRunningState extends GameStateHandler {
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
         getCurrentInternalGameState().onInternalGameStatePrimaryClickHandler(button);
-        Bundle bundle = new Bundle(getGameController().getModelBoard(), getGameController().getViewBoard(), this);
-        getGameController().getHistorian().addBundle(bundle);
     }
 
     @Override
@@ -38,7 +35,7 @@ public class GameRunningState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return event -> getGameController().getHistorian().revert();
+        return null;
     }
 
     @Override

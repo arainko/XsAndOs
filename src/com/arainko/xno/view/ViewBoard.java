@@ -62,4 +62,7 @@ public class ViewBoard extends Board<Button> {
         } throw new NoSuchElementException("Button not found.");
     }
 
+//   public ViewBoard getSavedState() {
+//
+//   }
 }

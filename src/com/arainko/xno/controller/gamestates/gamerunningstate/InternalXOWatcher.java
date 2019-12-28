@@ -6,8 +6,6 @@ import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 import javafx.scene.control.Button;
 
-import java.util.function.Predicate;
-
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
@@ -41,7 +39,7 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
         Cords clickedButtonCords = getViewBoard().getButtonCords(button);
         Cell clickedCell = getModelBoard().getCellAt(clickedButtonCords);
 
-        if (clickedCell.isCell(Predicate.not(notPartOfConnection()))) {
+        if (!clickedCell.isCell(notPartOfConnection())) {
             Connection connectionToRemove =  getModelBoard().getConnections().stream()
                     .filter(containingCell(clickedCell))
                     .findFirst()

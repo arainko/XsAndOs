@@ -13,7 +13,8 @@ import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodate
 import static com.arainko.xno.model.predicates.CellPredicates.notPartOfConnection;
 
 public class ModelBoard extends Board<Cell> {
-    private List<Connection> connections;
+    public List<Connection> connections;
+
     public ModelBoard(int dimX, int dimY) {
         super(dimX, dimY);
         connections = new ArrayList<>();
