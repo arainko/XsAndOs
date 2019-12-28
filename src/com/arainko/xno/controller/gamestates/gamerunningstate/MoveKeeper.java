@@ -2,6 +2,7 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.view.ViewBoard;
 
 import java.util.ArrayList;
@@ -19,6 +20,12 @@ public class MoveKeeper {
         this.keptConnectionCells = new ArrayList<>();
         this.currentIndex = 0;
     }
+
+    public void keepConnection(Connection connection) {
+        keptConnectionCells.add(connection.getConnectionCells());
+        currentIndex++;
+    }
+
 
 
 }

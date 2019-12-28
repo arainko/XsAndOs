@@ -1,7 +1,5 @@
 package com.arainko.xno.model.elements;
 
-import com.arainko.xno.helpers.Cords;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -21,6 +19,11 @@ public class Connection {
     public Connection() {
         connectionCells = new ArrayList<>();
         connectionTypes = new LinkedHashMap<>();
+    }
+
+    public Connection(List<Cell> connectionUnits) {
+        connectionUnits.forEach(this::addConnectionUnit);
+        setConnectionTypes();
     }
 
     public boolean isConnection(Predicate<Connection> pred) {
