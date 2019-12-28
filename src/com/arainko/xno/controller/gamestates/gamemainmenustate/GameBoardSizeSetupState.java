@@ -32,7 +32,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
                 .getFlattenedBoardElements());
         GridPane viewButtons = getGameController()
                 .getViewBoard()
-                .getButtonGridPane();
+                .getButtonGrid();
         getGameController().setCurrentGameState(getGameController().getGameSetupState());
         getGameController().getUIWrapper()
                 .changeMainView(viewButtons);

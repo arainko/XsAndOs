@@ -2,9 +2,7 @@ package com.arainko.xno.view;
 
 import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.helpers.Cords;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +10,11 @@ import java.util.NoSuchElementException;
 
 public class ViewBoard extends Board<Button> {
 
-    private GridPane buttonGridPane;
+    private ButtonGrid buttonGrid;
 
     public ViewBoard(int dimX, int dimY) {
         super(dimX, dimY);
-        buttonGridPane = new GridPane();
-        setButtonGridPane();
+        buttonGrid = new ButtonGrid(this.getBoardElements());
     }
 
     @Override
@@ -32,23 +29,12 @@ public class ViewBoard extends Board<Button> {
         }
     }
 
-    private void setButtonGridPane() {
-        for (int i=0; i < getDimY(); i++) {
-            for (Button button : getBoardElements().get(i)) {
-                button.setId("default-button");
-                button.setPrefSize(50, 50);
-                buttonGridPane.addRow(i, button);
-            }
-        }
-        buttonGridPane.setAlignment(Pos.CENTER);
-    }
-
     public void setButtonsColorAtCords(List<Cords> cordList, String styleId) {
         cordList.forEach( cord -> getButtonAt(cord).setId(styleId));
     }
 
-    public GridPane getButtonGridPane() {
-        return buttonGridPane;
+    public ButtonGrid getButtonGrid() {
+        return buttonGrid;
     }
 
     public Button getButtonAt(Cords cords) {
