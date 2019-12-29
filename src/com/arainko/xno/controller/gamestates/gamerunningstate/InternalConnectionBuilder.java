@@ -58,12 +58,14 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
     }
 
     private void onStateExitHandler() {
-        getViewBoard().setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()),
-                !connection.isConnection(upToWinCondition()) ? "wrong-button" : "right-button");
+        if (!connection.isConnection(upToWinCondition())) getViewBoard().setButtonsColorAtCords(
+                Cords.getCordList(connection.getConnectionCells()), "wrong-button");
+        else getViewBoard().setButtonsColorAtCords(
+                Cords.getCordList(connection.getConnectionCells()), "right-button");
 
         getModelBoard().addConnection(connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
+        getParentGameState().getMoveKeeper().keepConnection(connection);
         onStateExitCleanUp();
     }
 

@@ -22,6 +22,8 @@ public class Connection {
     }
 
     public Connection(List<Cell> connectionUnits) {
+        connectionCells = new ArrayList<>();
+        connectionTypes = new LinkedHashMap<>();
         connectionUnits.forEach(this::addConnectionUnit);
         setConnectionTypes();
     }
