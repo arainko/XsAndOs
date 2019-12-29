@@ -47,7 +47,10 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
 
             getViewBoard().setButtonsColorAtCords(
                     Cords.getCordList(connectionToRemove.getConnectionCells()), "default-button");
-            getParentGameState().getMoveKeeper().keepConnection(connectionToRemove);
+            getParentGameState().getMoveKeeper()
+                    .keepMove(connectionToRemove, MoveKeeper.Operation.REMOVE.getOpposite());
+            getParentGameState().getMoveKeeper().deleteFurtherMoves();
+
             getModelBoard().removeConnection(connectionToRemove);
         }
     }
