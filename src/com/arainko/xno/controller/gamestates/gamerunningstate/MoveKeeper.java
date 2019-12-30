@@ -1,5 +1,6 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
@@ -12,16 +13,16 @@ import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCe
 
 public class MoveKeeper {
     private class Move {
-        private List<Cell> cellList;
+        private List<Cords> cellCords;
         private Operation opType;
 
-        private Move(List<Cell> cellList, Operation opType) {
-            this.cellList = cellList;
+        private Move(List<Cords> cellCords, Operation opType) {
+            this.cellCords = cellCords;
             this.opType = opType.getOpposite();
         }
 
-        private List<Cell> getCellList() {
-            return cellList;
+        private List<Cords> getCellCords() {
+            return cellCords;
         }
 
         private Operation getOperationType() {
@@ -34,7 +35,7 @@ public class MoveKeeper {
 
         @Override
         public String toString() {
-            return opType.toString();
+            return opType.toString() /*+":\n"+ cellCords.toString()+"\n"*/;
         }
     }
     public enum Command {
@@ -58,12 +59,13 @@ public class MoveKeeper {
     }
 
     public void keepMove(Connection connection, Operation operation) {
-        keptMoves.add(new Move(connection.getConnectionCells(), operation));
+        keptMoves.add(new Move(Cords.getCordList(connection.getConnectionCells()), operation));
         currentIndex++;
-        System.out.println(currentIndex);
+        System.out.println("added:" + Cords.getCordList(connection.getConnectionCells()));
     }
 
     public void deleteFurtherMoves() {
+//        currentIndex--;
         this.keptMoves = keptMoves.stream()
                 .limit(currentIndex+1)
                 .collect(Collectors.toList());
@@ -73,43 +75,50 @@ public class MoveKeeper {
     }
 
     public void evaluateCommand(Command command) {
+        Move move;
+        switch (command) {
+            case UNDO:
+                move = getMove(currentIndex);
+                break;
+            default: // case REDO
+                move = getMove(currentIndex+1);
+                break;
+        }
+        operationTypeDelegator(move, move.getOperationType());
+        currentIndexUpdater(command);
+        move.switchOperationType();
+    }
+
+    private void operationTypeDelegator(Move move, Operation operation) {
+        switch (operation) {
+            case REMOVE:
+                removeConnection(move);
+                break;
+            case BUILD:
+                rebuildConnection(move);
+                break;
+        }
+    }
+
+    private void removeConnection(Move move) {
+        List<Cell> cells = boardManipulator
+                .getBoardCells(move.getCellCords());
+        Connection connectionToRemove = boardManipulator
+                .getBoardConnection(containingCell(cells.get(0)));
+        boardManipulator.handleConnectionRemoval(connectionToRemove);
+    }
+
+    private void rebuildConnection(Move move) {
+        List<Cell> cells = boardManipulator
+                .getBoardCells(move.getCellCords());
+        Connection connectionToRebuild = new Connection(cells);
+        boardManipulator.handleConnectionBuilding(connectionToRebuild);
+    }
+
+    private void currentIndexUpdater(Command command) {
         if (command == Command.REDO)
             currentIndex++;
-
-        Move move = keptMoves.get(currentIndex);
-
-        if (move.getOperationType() == Operation.REMOVE)
-            removeConnection(move.getCellList(), command);
-        else
-            rebuildConnection(move.getCellList(), command);
-
-        move.switchOperationType();
-        System.out.println(currentIndex);
-
-    }
-
-    private void removeConnection(List<Cell> connectionCells, Command command) {
-        Connection connectionToRemove = boardManipulator
-                .getBoardConnection(containingCell(connectionCells.get(0)));
-        boardManipulator.handleConnectionRemoval(connectionToRemove);
-        updateCurrentIndexBasedOnCommand(command);
-        System.out.println(currentIndex);
-
-    }
-
-    private void rebuildConnection(List<Cell> connectionCells, Command command) {
-        Connection connectionToRebuild = new Connection(connectionCells);
-        boardManipulator.handleConnectionBuilding(connectionToRebuild);
-        updateCurrentIndexBasedOnCommand(command);
-        System.out.println(currentIndex);
-
-    }
-
-    private void updateCurrentIndexBasedOnCommand(Command command) {
-        if (command == Command.UNDO)
-            currentIndex--;
-        System.out.println(currentIndex);
-
+        else currentIndex--;
     }
 
     public boolean areMoves(Predicate<MoveKeeper> pred) {
@@ -122,5 +131,9 @@ public class MoveKeeper {
 
     public int getKeptMovesSize() {
         return keptMoves.size();
+    }
+
+    private Move getMove(int index) {
+        return keptMoves.get(index);
     }
 }

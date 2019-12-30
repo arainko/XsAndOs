@@ -2,10 +2,12 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.board.ModelBoard;
+import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.view.ViewBoard;
 import javafx.scene.control.Button;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
@@ -44,5 +46,9 @@ public class BoardManipulator {
 
     public Button spoofButton() {
         return viewBoard.getFlattenedBoardElements().get(0);
+    }
+
+    public List<Cell> getBoardCells(List<Cords> cords) {
+        return modelBoard.getCellsAt(cords);
     }
 }

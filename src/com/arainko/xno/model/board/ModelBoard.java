@@ -47,6 +47,12 @@ public class ModelBoard extends Board<Cell> {
         return getBoardElements().get(cords.Y()).get(cords.X());
     }
 
+    public List<Cell> getCellsAt(List<Cords> cords) {
+        List<Cell> cells = new ArrayList<>();
+        cords.forEach(cord -> cells.add(getCellAt(cord)));
+        return cells;
+    }
+
     public List<Cords> getFreeNeighborsAt(Cords cords) {
         List<Cords> neighborList = new ArrayList<>();
         for (int i : new int[]{-1, 1}) {

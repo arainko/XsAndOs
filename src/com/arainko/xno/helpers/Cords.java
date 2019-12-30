@@ -23,4 +23,9 @@ public class Cords extends Element {
         cellList.forEach( cell -> outputList.add(cell.getCellCords()));
         return outputList;
     }
+
+    @Override
+    public String toString() {
+        return "("+X()+", "+Y()+")";
+    }
 }

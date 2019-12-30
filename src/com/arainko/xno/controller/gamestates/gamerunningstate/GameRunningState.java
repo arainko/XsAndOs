@@ -50,6 +50,7 @@ public class GameRunningState extends GameStateHandler {
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.UNDO);
                 arrowButtonsSupervisor();
+                System.out.println("Current index: " + moveKeeper.getCurrentIndex());
             }
         };
     }
@@ -63,6 +64,7 @@ public class GameRunningState extends GameStateHandler {
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.REDO);
                 arrowButtonsSupervisor();
+                System.out.println("Current index: " + moveKeeper.getCurrentIndex());
             }
         };
     }
