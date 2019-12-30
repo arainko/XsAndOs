@@ -3,7 +3,6 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.GameController;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
-import com.arainko.xno.helpers.Cords;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -14,6 +13,7 @@ public class GameRunningState extends GameStateHandler {
     private InternalGameState currentInternalGameState;
 
     private MoveKeeper moveKeeper;
+    private BoardManipulator boardManipulator;
 
     public GameRunningState(GameController gameController) {
         super(gameController);
@@ -23,7 +23,8 @@ public class GameRunningState extends GameStateHandler {
     public void onGameStateSet() {
         XOWatcher = new InternalXOWatcher(this);
         connectionBuilder = new InternalConnectionBuilder(this);
-        moveKeeper = new MoveKeeper(this);
+        boardManipulator = new BoardManipulator(getGameController().getModelBoard(), getGameController().getViewBoard());
+        moveKeeper = new MoveKeeper(boardManipulator);
         setCurrentInternalGameState(XOWatcher);
         arrowButtonsSupervisor();
     }
@@ -44,11 +45,10 @@ public class GameRunningState extends GameStateHandler {
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                getCurrentInternalGameState().onInternalGameStateSecondaryClickHandler(getGameController()
-                        .getViewBoard()
-                        .getButtonAt(new Cords(0,0)));
+                getCurrentInternalGameState()
+                        .onInternalGameStateSecondaryClickHandler(getBoardManipulator().spoofButton());
             } else {
-                getMoveKeeper().evaluateMoveType(MoveKeeper.MoveType.UNDO);
+                getMoveKeeper().evaluateCommand(MoveKeeper.Command.UNDO);
                 arrowButtonsSupervisor();
             }
         };
@@ -58,11 +58,10 @@ public class GameRunningState extends GameStateHandler {
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                getCurrentInternalGameState().onInternalGameStateSecondaryClickHandler(getGameController()
-                        .getViewBoard()
-                        .getButtonAt(new Cords(0,0)));
+                getCurrentInternalGameState()
+                        .onInternalGameStateSecondaryClickHandler(getBoardManipulator().spoofButton());
             } else {
-                getMoveKeeper().evaluateMoveType(MoveKeeper.MoveType.REDO);
+                getMoveKeeper().evaluateCommand(MoveKeeper.Command.REDO);
                 arrowButtonsSupervisor();
             }
         };
@@ -93,5 +92,9 @@ public class GameRunningState extends GameStateHandler {
 
     public MoveKeeper getMoveKeeper() {
         return moveKeeper;
+    }
+
+    public BoardManipulator getBoardManipulator() {
+        return boardManipulator;
     }
 }

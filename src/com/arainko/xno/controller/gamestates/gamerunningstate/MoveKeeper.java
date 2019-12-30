@@ -1,17 +1,14 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.helpers.Cords;
-import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.view.ViewBoard;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static com.arainko.xno.model.predicates.ConnectionPredicates.*;
+import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
 public class MoveKeeper {
     private class Move {
@@ -20,7 +17,7 @@ public class MoveKeeper {
 
         private Move(List<Cell> cellList, Operation opType) {
             this.cellList = cellList;
-            this.opType = opType;
+            this.opType = opType.getOpposite();
         }
 
         private List<Cell> getCellList() {
@@ -34,8 +31,13 @@ public class MoveKeeper {
         private void switchOperationType() {
             this.opType = opType.getOpposite();
         }
+
+        @Override
+        public String toString() {
+            return opType.toString();
+        }
     }
-    public enum MoveType {
+    public enum Command {
         UNDO, REDO
     }
     public enum Operation {
@@ -45,20 +47,18 @@ public class MoveKeeper {
         }
     }
 
-    private ViewBoard viewBoard;
-    private ModelBoard modelBoard;
+    private BoardManipulator boardManipulator;
     private List<Move> keptMoves;
     private int currentIndex;
 
-    public MoveKeeper(GameRunningState parentGameState) {
-        this.viewBoard = parentGameState.getGameController().getViewBoard();
-        this.modelBoard = parentGameState.getGameController().getModelBoard();
+    public MoveKeeper(BoardManipulator boardManipulator) {
+        this.boardManipulator = boardManipulator;
         this.keptMoves = new ArrayList<>();
         this.currentIndex = -1;
     }
 
-    public void keepMove(Connection connection, Operation opType) {
-        keptMoves.add(new Move(connection.getConnectionCells(), opType));
+    public void keepMove(Connection connection, Operation operation) {
+        keptMoves.add(new Move(connection.getConnectionCells(), operation));
         currentIndex++;
         System.out.println(currentIndex);
     }
@@ -67,48 +67,49 @@ public class MoveKeeper {
         this.keptMoves = keptMoves.stream()
                 .limit(currentIndex+1)
                 .collect(Collectors.toList());
+        System.out.println(keptMoves);
+        System.out.println(currentIndex);
+
     }
 
-    public void evaluateMoveType(MoveType type) {
-        if (type == MoveType.REDO)
+    public void evaluateCommand(Command command) {
+        if (command == Command.REDO)
             currentIndex++;
 
         Move move = keptMoves.get(currentIndex);
 
         if (move.getOperationType() == Operation.REMOVE)
-            removeConnection(move.getCellList(), type);
+            removeConnection(move.getCellList(), command);
         else
-            rebuildConnection(move.getCellList(), type);
+            rebuildConnection(move.getCellList(), command);
 
         move.switchOperationType();
+        System.out.println(currentIndex);
+
     }
 
-    private void removeConnection(List<Cell> connectionCells, MoveType type) {
-        Connection connectionToRemove =  modelBoard.getConnections().stream()
-                .filter(containingCell(connectionCells.get(0)))
-                .findFirst()
-                .get();
+    private void removeConnection(List<Cell> connectionCells, Command command) {
+        Connection connectionToRemove = boardManipulator
+                .getBoardConnection(containingCell(connectionCells.get(0)));
+        boardManipulator.handleConnectionRemoval(connectionToRemove);
+        updateCurrentIndexBasedOnCommand(command);
+        System.out.println(currentIndex);
 
-        viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connectionToRemove.getConnectionCells()), "default-button");
-        modelBoard.removeConnection(connectionToRemove);
-        moveTypeDelegator(type);
     }
 
-    private void rebuildConnection(List<Cell> connectionCells, MoveType type) {
-        Connection connection = new Connection(connectionCells);
-        if (!connection.isConnection(upToWinCondition())) viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()), "wrong-button");
-        else viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()), "right-button");
+    private void rebuildConnection(List<Cell> connectionCells, Command command) {
+        Connection connectionToRebuild = new Connection(connectionCells);
+        boardManipulator.handleConnectionBuilding(connectionToRebuild);
+        updateCurrentIndexBasedOnCommand(command);
+        System.out.println(currentIndex);
 
-        modelBoard.addConnection(connection);
-        moveTypeDelegator(type);
     }
 
-    private void moveTypeDelegator(MoveType type) {
-        if (type == MoveType.UNDO)
+    private void updateCurrentIndexBasedOnCommand(Command command) {
+        if (command == Command.UNDO)
             currentIndex--;
+        System.out.println(currentIndex);
+
     }
 
     public boolean areMoves(Predicate<MoveKeeper> pred) {
