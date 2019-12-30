@@ -1,11 +1,12 @@
 package com.arainko.xno.abstracts;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Board<T> {
+public abstract class Board<T> implements Serializable {
     private int dimX;
     private int dimY;
     private List<List<T>> boardElements;

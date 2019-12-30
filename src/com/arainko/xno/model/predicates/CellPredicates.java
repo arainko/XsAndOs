@@ -19,7 +19,7 @@ public class CellPredicates {
     }
 
     public static Predicate<Cell> notPartOfConnection() {
-        return c -> !c.isPartOfConnection();
+        return c -> !c.getConnectionFlag();
     }
 
     public static BiPredicate<Cell, Cell> nextToOnPaneY() {

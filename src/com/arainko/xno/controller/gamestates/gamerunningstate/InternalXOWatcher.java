@@ -42,9 +42,9 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
         if (!clickedCell.isCell(notPartOfConnection())) {
             Connection connectionToRemove = getParentGameState().getBoardManipulator()
                     .getBoardConnection(containingCell(clickedCell));
+            getParentGameState().getMoveKeeper().deleteFurtherMoves();
             getParentGameState().getMoveKeeper()
                     .keepMove(connectionToRemove, MoveKeeper.Operation.REMOVE);
-            getParentGameState().getMoveKeeper().deleteFurtherMoves();
             getParentGameState().getBoardManipulator()
                     .handleConnectionRemoval(connectionToRemove);
         }

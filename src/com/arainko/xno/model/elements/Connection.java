@@ -1,5 +1,6 @@
 package com.arainko.xno.model.elements;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 
-public class Connection {
+public class Connection implements Serializable {
     public enum Type {
         LINE, JOINT, END, NONE
     }

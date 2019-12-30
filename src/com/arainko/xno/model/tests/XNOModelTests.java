@@ -3,15 +3,15 @@ package com.arainko.xno.model.tests;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.io.*;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class XNOModelTests {
 
@@ -46,10 +46,19 @@ public class XNOModelTests {
         assertFalse(presetConnection1.isConnection(interferingWith(), presetConnection2));
     }
 
-//    @Test
-//    public void neighborGetterTest() {
-//        List<Cell> cells = modelBoard.getFreeNeighborsAt(5,5);
-//        cells.forEach(n -> System.out.println(n +" "+ n.getCordX()+" "+n.getCordY()));
-//    }
+    @Test
+    public void boardSerializationTest() throws IOException, ClassNotFoundException {
+        FileOutputStream fos = new FileOutputStream("demofile.txt");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(modelBoard);
+        oos.flush();
+        oos.close();
+        FileInputStream fis = new FileInputStream("demofile.txt");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        ModelBoard board2 = (ModelBoard) ois.readObject();
+        ois.close();
+        board2.printBoard();
+        Assertions.assertNotSame(modelBoard, board2);
+    }
 
 }

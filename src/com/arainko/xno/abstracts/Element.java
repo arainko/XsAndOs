@@ -1,8 +1,9 @@
 package com.arainko.xno.abstracts;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Element {
+public abstract class Element implements Serializable {
     private int cordX;
     private int cordY;
 

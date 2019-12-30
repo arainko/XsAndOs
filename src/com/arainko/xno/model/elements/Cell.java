@@ -10,7 +10,7 @@ public class Cell extends Element {
     public enum Contents {
         CROSS, CIRCLE, EMPTY
     }
-    private boolean isPartOfConnection;
+    private boolean connectionFlag;
     private Contents cellContents;
 
     public Cell(int cordX, int cordY) {
@@ -23,8 +23,8 @@ public class Cell extends Element {
         setCellContents(contents);
     }
 
-    public void setConnectionFlag(boolean partOfConnection) {
-        isPartOfConnection = partOfConnection;
+    public void setConnectionFlag(boolean connectionFlag) {
+        this.connectionFlag = connectionFlag;
     }
 
     public void setCellContents(Contents contents) {
@@ -39,8 +39,8 @@ public class Cell extends Element {
         return pred.test(this, that);
     }
 
-    public boolean isPartOfConnection() {
-        return isPartOfConnection;
+    public boolean getConnectionFlag() {
+        return connectionFlag;
     }
 
     public Contents getCellContents() {
@@ -64,7 +64,7 @@ public class Cell extends Element {
             case EMPTY:
                 cellString = " ";
         }
-        if (isPartOfConnection)
+        if (connectionFlag)
             return "(" + cellString + ")";
         else return cellString;
     }

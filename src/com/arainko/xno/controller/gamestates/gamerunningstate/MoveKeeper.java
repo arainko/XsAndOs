@@ -65,10 +65,11 @@ public class MoveKeeper {
     }
 
     public void deleteFurtherMoves() {
-//        currentIndex--;
-        this.keptMoves = keptMoves.stream()
-                .limit(currentIndex+1)
-                .collect(Collectors.toList());
+        if (currentIndex+1 != keptMoves.size()) {
+            this.keptMoves = keptMoves.stream()
+                    .limit(currentIndex+1)
+                    .collect(Collectors.toList());
+        }
         System.out.println(keptMoves);
         System.out.println(currentIndex);
 
