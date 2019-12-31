@@ -1,5 +1,7 @@
 package com.arainko.xno.abstracts;
 
+import com.arainko.xno.helpers.Cords;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,12 +34,14 @@ public abstract class Board<T> implements Serializable {
 
     public abstract void setBoardInitialState();
 
-    public int getDimX() {
-        return dimX;
+    public T getElementAt(Cords cords) {
+        return getBoardElements().get(cords.Y()).get(cords.X());
     }
 
-    public int getDimY() {
-        return dimY;
+    public List<T> getElementsAt(List<Cords> cordsList) {
+        return cordsList.stream()
+                .map(this::getElementAt)
+                .collect(Collectors.toList());
     }
 
     public List<List<T>> getBoardElements() {
@@ -49,7 +53,15 @@ public abstract class Board<T> implements Serializable {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
-    
+
+    public int getDimX() {
+        return dimX;
+    }
+
+    public int getDimY() {
+        return dimY;
+    }
+
     public void printBoard() {
         for (List<T> row : boardElements)
             System.out.println(row);

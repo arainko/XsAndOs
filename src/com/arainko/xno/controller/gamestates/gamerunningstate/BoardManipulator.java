@@ -49,6 +49,6 @@ public class BoardManipulator {
     }
 
     public List<Cell> getBoardCells(List<Cords> cords) {
-        return modelBoard.getCellsAt(cords);
+        return modelBoard.getElementsAt(cords);
     }
 }

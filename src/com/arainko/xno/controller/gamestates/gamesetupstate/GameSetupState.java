@@ -32,14 +32,14 @@ public class GameSetupState extends GameStateHandler {
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
         Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
-        Cell clickedCell = getGameController().getModelBoard().getCellAt(clickedButtonCords);
+        Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CROSS);
     }
 
     @Override
     public void onGameStateSecondaryClickHandler(Button button) {
         Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
-        Cell clickedCell = getGameController().getModelBoard().getCellAt(clickedButtonCords);
+        Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CIRCLE);
     }
 

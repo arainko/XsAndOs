@@ -1,5 +1,6 @@
 package com.arainko.xno.model.tests;
 
+import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.util.function.Function;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
@@ -59,6 +61,15 @@ public class XNOModelTests {
         ois.close();
         board2.printBoard();
         Assertions.assertNotSame(modelBoard, board2);
+    }
+
+    @Test
+    public void computeCellTest() {
+        Function<Cell, Cords> cellCordsFunction = cell -> new Cords(cell.getCordX(), cell.getCordY());
+        Function<Cell, String> cellStringFunction = Cell::toString;
+        Cell cell = modelBoard.getElementAt(new Cords(1,1));
+        Cords cos = cell.convertCell(cellCordsFunction);
+        System.out.println(cos);
     }
 
 }

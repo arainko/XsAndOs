@@ -23,7 +23,7 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
 
         Cell clickedCell = getParentGameState().getGameController()
                 .getModelBoard()
-                .getCellAt(clickedButtonCords);
+                .getElementAt(clickedButtonCords);
 
         boolean isXO = clickedCell
                 .isCell((containingCircle().or(containingCross())).and(notPartOfConnection()));
@@ -37,7 +37,7 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
     @Override
     public void onInternalGameStateSecondaryClickHandler(Button button) {
         Cords clickedButtonCords = getViewBoard().getButtonCords(button);
-        Cell clickedCell = getModelBoard().getCellAt(clickedButtonCords);
+        Cell clickedCell = getModelBoard().getElementAt(clickedButtonCords);
 
         if (!clickedCell.isCell(notPartOfConnection())) {
             Connection connectionToRemove = getParentGameState().getBoardManipulator()

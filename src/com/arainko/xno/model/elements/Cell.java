@@ -1,9 +1,9 @@
 package com.arainko.xno.model.elements;
 
 import com.arainko.xno.abstracts.Element;
-import com.arainko.xno.helpers.Cords;
 
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Cell extends Element {
@@ -12,11 +12,6 @@ public class Cell extends Element {
     }
     private boolean connectionFlag;
     private Contents cellContents;
-
-    public Cell(int cordX, int cordY) {
-        super(cordX, cordY);
-        setCellContents(Contents.EMPTY);
-    }
 
     public Cell(int cordX, int cordY, Contents contents) {
         super(cordX, cordY);
@@ -39,16 +34,16 @@ public class Cell extends Element {
         return pred.test(this, that);
     }
 
+    public <T> T convertCell(Function<Cell, T> cellFunction) {
+        return cellFunction.apply(this);
+    }
+
     public boolean getConnectionFlag() {
         return connectionFlag;
     }
 
     public Contents getCellContents() {
         return cellContents;
-    }
-
-    public Cords getCellCords() {
-        return new Cords(this.getCordX(), this.getCordY());
     }
 
     @Override

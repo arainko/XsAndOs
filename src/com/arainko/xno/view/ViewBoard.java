@@ -30,15 +30,11 @@ public class ViewBoard extends Board<Button> {
     }
 
     public void setButtonsColorAtCords(List<Cords> cordList, String styleId) {
-        cordList.forEach( cord -> getButtonAt(cord).setId(styleId));
+        cordList.forEach(cord -> getElementAt(cord).setId(styleId));
     }
 
     public ButtonGrid getButtonGrid() {
         return buttonGrid;
-    }
-
-    public Button getButtonAt(Cords cords) {
-        return getBoardElements().get(cords.Y()).get(cords.X());
     }
 
     public Cords getButtonCords(Button button) {
@@ -48,7 +44,4 @@ public class ViewBoard extends Board<Button> {
         } throw new NoSuchElementException("Button not found.");
     }
 
-//   public ViewBoard getSavedState() {
-//
-//   }
 }
