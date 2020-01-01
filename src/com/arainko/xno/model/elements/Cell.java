@@ -3,7 +3,6 @@ package com.arainko.xno.model.elements;
 import com.arainko.xno.abstracts.Element;
 
 import java.util.function.BiPredicate;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Cell extends Element {
@@ -32,10 +31,6 @@ public class Cell extends Element {
 
     public boolean isCell(BiPredicate<Cell, Cell> pred, Cell that) {
         return pred.test(this, that);
-    }
-
-    public <T> T convertCell(Function<Cell, T> cellFunction) {
-        return cellFunction.apply(this);
     }
 
     public boolean getConnectionFlag() {

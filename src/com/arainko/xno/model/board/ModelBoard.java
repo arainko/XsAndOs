@@ -1,14 +1,12 @@
 package com.arainko.xno.model.board;
 
 import com.arainko.xno.abstracts.Board;
-import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodateCords;
 import static com.arainko.xno.model.predicates.CellPredicates.notPartOfConnection;
@@ -31,22 +29,26 @@ public class ModelBoard extends Board<Cell> {
         }
     }
 
+    @Override
+    public Cords getElementCords(Cell cell) {
+        return cell.getCords();
+    }
+
     public boolean isBoard(Predicate<ModelBoard> pred) {
         return pred.test(this);
     }
 
     public List<Cords> getFreeNeighborsAt(Cords cords) {
         List<Cords> neighborList = new ArrayList<>();
-        IntStream.of(-1, 1).forEach(i -> {
-            Cords paneXCords = new Cords(cords.X() + i, cords.Y());
-            Cords paneYCords = new Cords(cords.X(), cords.Y() + i);
-            if (isBoard(ableToAccommodateCords(paneXCords))
-                    && getElementAt(paneXCords).isCell(notPartOfConnection()))
-                neighborList.add(paneXCords);
-            if (isBoard(ableToAccommodateCords(paneYCords))
-                    && getElementAt(paneYCords).isCell(notPartOfConnection()))
-                neighborList.add(paneYCords);
-        });
+        for (int i : new int[]{-1, 1}) {
+            if (isBoard(ableToAccommodateCords(cords.X() + i, cords.Y()))
+                    && getElementAt(new Cords(cords.X() + i, cords.Y())).isCell(notPartOfConnection()))
+                neighborList.add(new Cords(cords.X() + i, cords.Y()));
+
+            if (isBoard(ableToAccommodateCords(cords.X(), cords.Y() + i))
+                    && getElementAt(new Cords(cords.X(), cords.Y() + i)).isCell(notPartOfConnection()))
+                neighborList.add(new Cords(cords.X(), cords.Y() + i));
+        }
         return neighborList;
     }
 

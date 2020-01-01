@@ -1,15 +1,12 @@
-package com.arainko.xno.view;
+package com.arainko.xno.view.board;
 
 import com.arainko.xno.abstracts.Board;
-import com.arainko.xno.helpers.Cords;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ViewBoard extends Board<Button> {
-
     private ButtonGrid buttonGrid;
 
     public ViewBoard(int dimX, int dimY) {
@@ -36,12 +33,4 @@ public class ViewBoard extends Board<Button> {
     public ButtonGrid getButtonGrid() {
         return buttonGrid;
     }
-
-    public Cords getButtonCords(Button button) {
-        for (int i = 0; i < getDimY(); i++) {
-            if (getBoardElements().get(i).contains(button))
-                return new Cords(getBoardElements().get(i).indexOf(button), i);
-        } throw new NoSuchElementException("Button not found.");
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.arainko.xno.controller;
+package com.arainko.xno.controller.game;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Game Board");
         GameController gc = new GameController();
         Scene scene = new Scene(gc.getUIWrapper(), 600, 600);

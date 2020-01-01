@@ -1,11 +1,10 @@
 package com.arainko.xno.abstracts;
 
-import com.arainko.xno.helpers.Cords;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public abstract class Board<T> implements Serializable {
@@ -44,6 +43,19 @@ public abstract class Board<T> implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    public Cords getElementCords(T element) {
+        for (int i = 0; i < getDimY(); i++) {
+            if (getBoardElements().get(i).contains(element))
+                return new Cords(getBoardElements().get(i).indexOf(element), i);
+        } throw new NoSuchElementException("Element not found.");
+    }
+
+    public List<Cords> getElementsCords(List<T> elementList) {
+        return elementList.stream()
+                .map(this::getElementCords)
+                .collect(Collectors.toList());
+    }
+
     public List<List<T>> getBoardElements() {
         return boardElements;
     }
@@ -65,5 +77,23 @@ public abstract class Board<T> implements Serializable {
     public void printBoard() {
         for (List<T> row : boardElements)
             System.out.println(row);
+    }
+
+    public static class Cords extends Element {
+        public Cords(int cordX, int cordY) {
+            super(cordX, cordY);
+        }
+
+        public int X() {
+            return this.getCordX();
+        }
+        public int Y() {
+            return this.getCordY();
+        }
+
+        @Override
+        public String toString() {
+            return "("+X()+", "+Y()+")";
+        }
     }
 }

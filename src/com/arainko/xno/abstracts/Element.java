@@ -32,6 +32,10 @@ public abstract class Element implements Serializable {
         return cordY;
     }
 
+    public Board.Cords getCords() {
+        return new Board.Cords(getCordX(), getCordY());
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Element))

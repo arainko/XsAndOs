@@ -1,8 +1,8 @@
 package com.arainko.xno.controller.gamestates.gamemainmenustate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
-import com.arainko.xno.controller.GameController;
-import com.arainko.xno.view.SetupMenu;
+import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.view.ui.SetupMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

@@ -1,7 +1,7 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
-import com.arainko.xno.controller.GameController;
+import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -50,7 +50,6 @@ public class GameRunningState extends GameStateHandler {
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.UNDO);
                 arrowButtonsSupervisor();
-                System.out.println("Current index: " + moveKeeper.getCurrentIndex());
             }
         };
     }
@@ -64,16 +63,15 @@ public class GameRunningState extends GameStateHandler {
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.REDO);
                 arrowButtonsSupervisor();
-                System.out.println("Current index: " + moveKeeper.getCurrentIndex());
             }
         };
     }
 
     private void arrowButtonsSupervisor() {
         getGameController().getUIWrapper().getLeftButton()
-                .setDisable(!getMoveKeeper().areMoves(keeper -> keeper.getCurrentIndex() > -1));
+                .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() > -1));
         getGameController().getUIWrapper().getRightButton()
-                .setDisable(!getMoveKeeper().areMoves(keeper -> keeper.getCurrentIndex()+1 < keeper.getKeptMovesSize()));
+                .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() + 1 < keeper.getKeptMovesSize()));
     }
 
     public void setCurrentInternalGameState(InternalGameState currentInternalGameState) {

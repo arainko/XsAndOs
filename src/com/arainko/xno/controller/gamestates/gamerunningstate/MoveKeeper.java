@@ -1,6 +1,5 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
 public class MoveKeeper {
@@ -59,9 +59,8 @@ public class MoveKeeper {
     }
 
     public void keepMove(Connection connection, Operation operation) {
-        keptMoves.add(new Move(Cords.getCordList(connection.getConnectionCells()), operation));
+        keptMoves.add(new Move(boardManipulator.getBoardCords(connection.getConnectionCells()), operation));
         currentIndex++;
-        System.out.println("added:" + Cords.getCordList(connection.getConnectionCells()));
     }
 
     public void deleteFurtherMoves() {
@@ -70,21 +69,10 @@ public class MoveKeeper {
                     .limit(currentIndex+1)
                     .collect(Collectors.toList());
         }
-        System.out.println(keptMoves);
-        System.out.println(currentIndex);
-
     }
 
     public void evaluateCommand(Command command) {
-        Move move;
-        switch (command) {
-            case UNDO:
-                move = getMove(currentIndex);
-                break;
-            default: // case REDO
-                move = getMove(currentIndex+1);
-                break;
-        }
+        Move move = command == Command.UNDO ? getMove(currentIndex) : getMove(currentIndex + 1);
         operationTypeDelegator(move, move.getOperationType());
         currentIndexUpdater(command);
         move.switchOperationType();
@@ -122,8 +110,8 @@ public class MoveKeeper {
         else currentIndex--;
     }
 
-    public boolean areMoves(Predicate<MoveKeeper> pred) {
-        return pred.test(this);
+    public boolean keeperPred(Predicate<MoveKeeper> pred) {
+        return !pred.test(this);
     }
 
     public int getCurrentIndex() {

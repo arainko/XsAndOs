@@ -1,4 +1,4 @@
-package com.arainko.xno.view;
+package com.arainko.xno.view.ui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

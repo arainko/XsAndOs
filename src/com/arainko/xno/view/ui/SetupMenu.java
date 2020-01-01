@@ -1,4 +1,4 @@
-package com.arainko.xno.view;
+package com.arainko.xno.view.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

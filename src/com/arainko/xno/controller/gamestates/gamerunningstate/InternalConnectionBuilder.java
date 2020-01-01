@@ -1,7 +1,7 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
-import com.arainko.xno.helpers.Cords;
+import com.arainko.xno.abstracts.Board.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 import javafx.scene.control.Button;
@@ -23,7 +23,7 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
 
     @Override
     public void onInternalGameStatePrimaryClickHandler(Button button) {
-        Cords clickedCords = getViewBoard().getButtonCords(button);
+        Cords clickedCords = getViewBoard().getElementCords(button);
         Cell clickedCell = getModelBoard().getElementAt(clickedCords);
 
         if (connection.isConnection(empty()))
@@ -59,16 +59,15 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
 
     private void onStateExitHandler() {
         getParentGameState().getMoveKeeper().deleteFurtherMoves();
-        getParentGameState().getMoveKeeper()
-                .keepMove(connection, MoveKeeper.Operation.BUILD);
-
+        getParentGameState().getMoveKeeper().keepMove(connection, MoveKeeper.Operation.BUILD);
         getParentGameState().getBoardManipulator().handleConnectionBuilding(connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
         onStateExitCleanUp();
     }
 
     public void onStateAbortHandler() {
-        getViewBoard().setButtonsColorAtCords(Cords.getCordList(connection.getConnectionCells()), "default-button");
+        List<Cords> cordsToColorAt = getModelBoard().getElementsCords(connection.getConnectionCells());
+        getViewBoard().setButtonsColorAtCords(cordsToColorAt, "default-button");
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
         connection.remove();
         onStateExitCleanUp();

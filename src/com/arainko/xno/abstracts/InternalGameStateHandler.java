@@ -2,7 +2,7 @@ package com.arainko.xno.abstracts;
 
 import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
 import com.arainko.xno.model.board.ModelBoard;
-import com.arainko.xno.view.ViewBoard;
+import com.arainko.xno.view.board.ViewBoard;
 
 public abstract class InternalGameStateHandler<T extends GameStateHandler> implements InternalGameState {
     private T parentGameState;

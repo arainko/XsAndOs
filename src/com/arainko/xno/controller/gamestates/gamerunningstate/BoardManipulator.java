@@ -1,15 +1,15 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
-import com.arainko.xno.helpers.Cords;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.view.ViewBoard;
+import com.arainko.xno.view.board.ViewBoard;
 import javafx.scene.control.Button;
 
 import java.util.List;
 import java.util.function.Predicate;
 
+import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
 public class BoardManipulator {
@@ -29,18 +29,18 @@ public class BoardManipulator {
     }
 
     public void handleConnectionBuilding(Connection connection) {
-        if (!connection.isConnection(upToWinCondition()))
-            viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()), "wrong-button");
-        else
-            viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()), "right-button");
+        List<Cords> connectionCords = getBoardCords(connection.getConnectionCells());
+        if (!connection.isConnection(upToWinCondition())) {
+            viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
+        } else {
+            viewBoard.setButtonsColorAtCords(connectionCords, "right-button");
+        }
         modelBoard.addConnection(connection);
     }
 
     public void handleConnectionRemoval(Connection connection) {
-        viewBoard.setButtonsColorAtCords(
-                Cords.getCordList(connection.getConnectionCells()), "default-button");
+        List<Cords> connectionCords = getBoardCords(connection.getConnectionCells());
+        viewBoard.setButtonsColorAtCords(connectionCords, "default-button");
         modelBoard.removeConnection(connection);
     }
 
@@ -51,4 +51,5 @@ public class BoardManipulator {
     public List<Cell> getBoardCells(List<Cords> cords) {
         return modelBoard.getElementsAt(cords);
     }
+    public List<Cords> getBoardCords(List<Cell> cells) { return modelBoard.getElementsCords(cells); }
 }

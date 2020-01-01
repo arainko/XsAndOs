@@ -1,12 +1,12 @@
-package com.arainko.xno.controller;
+package com.arainko.xno.controller.game;
 
 import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetupState;
 import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.gamestates.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
-import com.arainko.xno.view.UIWrapper;
-import com.arainko.xno.view.ViewBoard;
+import com.arainko.xno.view.ui.UIWrapper;
+import com.arainko.xno.view.board.ViewBoard;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 

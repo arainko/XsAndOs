@@ -1,8 +1,8 @@
 package com.arainko.xno.controller.gamestates.gamesetupstate;
 
+import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.abstracts.GameStateHandler;
-import com.arainko.xno.controller.GameController;
-import com.arainko.xno.helpers.Cords;
+import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.model.elements.Cell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,14 +31,14 @@ public class GameSetupState extends GameStateHandler {
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
-        Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
+        Board.Cords clickedButtonCords = getGameController().getViewBoard().getElementCords(button);
         Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CROSS);
     }
 
     @Override
     public void onGameStateSecondaryClickHandler(Button button) {
-        Cords clickedButtonCords = getGameController().getViewBoard().getButtonCords(button);
+        Board.Cords clickedButtonCords = getGameController().getViewBoard().getElementCords(button);
         Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CIRCLE);
     }
@@ -80,6 +80,5 @@ public class GameSetupState extends GameStateHandler {
             String cellStr = flattenedCells.get(i).toString();
             flattenedButtons.get(i).setText(cellStr);
         }
-//        System.out.println(flattenedCells.size());
     }
 }
