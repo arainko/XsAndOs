@@ -2,7 +2,7 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
-import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
+import com.arainko.xno.controller.interfaces.InternalGameState;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

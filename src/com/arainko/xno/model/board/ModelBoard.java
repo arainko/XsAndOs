@@ -29,11 +29,6 @@ public class ModelBoard extends Board<Cell> {
         }
     }
 
-    @Override
-    public Cords getElementCords(Cell cell) {
-        return cell.getCords();
-    }
-
     public boolean isBoard(Predicate<ModelBoard> pred) {
         return pred.test(this);
     }

@@ -88,6 +88,8 @@
     -fx-spacing: 20px;
 }
 
-#disabled-button {
-
+#header-text {
+    -fx-font-size: 80px;
+    -fx-font-smoothing-type: lcd;
+    -fx-font-weight:  bold;
 }

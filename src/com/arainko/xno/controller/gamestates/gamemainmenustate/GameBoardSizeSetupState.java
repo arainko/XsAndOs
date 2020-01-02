@@ -2,7 +2,7 @@ package com.arainko.xno.controller.gamestates.gamemainmenustate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
-import com.arainko.xno.view.ui.SetupMenu;
+import com.arainko.xno.view.menus.SetupMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -33,7 +33,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
         GridPane viewButtons = getGameController()
                 .getViewBoard()
                 .getButtonGrid();
-        getGameController().setCurrentGameState(getGameController().getGameSetupState());
+        getGameController().setCurrentGameState(GameController.State.XO_PLACING);
         getGameController().getUIWrapper()
                 .changeMainView(viewButtons);
     }
@@ -45,7 +45,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return null;
+        return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
     }
 
     @Override

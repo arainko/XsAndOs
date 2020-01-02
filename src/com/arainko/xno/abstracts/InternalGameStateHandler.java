@@ -1,6 +1,6 @@
 package com.arainko.xno.abstracts;
 
-import com.arainko.xno.controller.gamestates.interfaces.InternalGameState;
+import com.arainko.xno.controller.interfaces.InternalGameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
 

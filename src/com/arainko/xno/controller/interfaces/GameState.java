@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.interfaces;
+package com.arainko.xno.controller.interfaces;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 
 public interface GameState {
     void onGameStateSet();
-    void onGameStatePrimaryClickHandler(Button button);
-    void onGameStateSecondaryClickHandler(Button button);
+    <T extends Button> void onGameStatePrimaryClickHandler(T button);
+    <T extends Button> void onGameStateSecondaryClickHandler(T button);
     EventHandler<ActionEvent> getLeftButtonActionEvent();
     EventHandler<ActionEvent> getRightButtonActionEvent();
 }

@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public abstract class Board<T> implements Serializable {
+public abstract class Board<T extends BoardElement> implements Serializable {
     private int dimX;
     private int dimY;
     private List<List<T>> boardElements;
@@ -33,6 +32,10 @@ public abstract class Board<T> implements Serializable {
 
     public abstract void setBoardInitialState();
 
+    public Cords getElementCords(T element) {
+        return element.getCords();
+    }
+
     public T getElementAt(Cords cords) {
         return getBoardElements().get(cords.Y()).get(cords.X());
     }
@@ -41,13 +44,6 @@ public abstract class Board<T> implements Serializable {
         return cordsList.stream()
                 .map(this::getElementAt)
                 .collect(Collectors.toList());
-    }
-
-    public Cords getElementCords(T element) {
-        for (int i = 0; i < getDimY(); i++) {
-            if (getBoardElements().get(i).contains(element))
-                return new Cords(getBoardElements().get(i).indexOf(element), i);
-        } throw new NoSuchElementException("Element not found.");
     }
 
     public List<Cords> getElementsCords(List<T> elementList) {

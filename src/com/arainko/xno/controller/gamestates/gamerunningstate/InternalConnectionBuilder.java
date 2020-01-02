@@ -4,6 +4,7 @@ import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.abstracts.Board.Cords;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.view.board.BoardButton;
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
 
     @Override
     public void onInternalGameStatePrimaryClickHandler(Button button) {
-        Cords clickedCords = getViewBoard().getElementCords(button);
+        Cords clickedCords = getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getModelBoard().getElementAt(clickedCords);
 
         if (connection.isConnection(empty()))

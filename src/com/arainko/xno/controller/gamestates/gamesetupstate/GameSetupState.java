@@ -1,9 +1,9 @@
 package com.arainko.xno.controller.gamestates.gamesetupstate;
 
-import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.model.elements.Cell;
+import com.arainko.xno.view.board.BoardButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
 
@@ -31,14 +32,14 @@ public class GameSetupState extends GameStateHandler {
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
-        Board.Cords clickedButtonCords = getGameController().getViewBoard().getElementCords(button);
+        Cords clickedButtonCords = getGameController().getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CROSS);
     }
 
     @Override
     public void onGameStateSecondaryClickHandler(Button button) {
-        Board.Cords clickedButtonCords = getGameController().getViewBoard().getElementCords(button);
+        Cords clickedButtonCords = getGameController().getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getGameController().getModelBoard().getElementAt(clickedButtonCords);
         cellContentsSetter(clickedCell, Cell.Contents.CIRCLE);
     }
@@ -65,17 +66,17 @@ public class GameSetupState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(getGameController().getGameMainMenuState());
+        return event -> getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
     }
 
     @Override
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(getGameController().getGameRunningState());
+        return event -> getGameController().setCurrentGameState(GameController.State.GAME_RUNNING);
     }
 
     private void refreshBoardText() {
         List<Cell> flattenedCells = getGameController().getModelBoard().getFlattenedBoardElements();
-        List<Button> flattenedButtons = getGameController().getViewBoard().getFlattenedBoardElements();
+        List<BoardButton> flattenedButtons = getGameController().getViewBoard().getFlattenedBoardElements();
         for (int i = 0; i < flattenedCells.size(); i++) {
             String cellStr = flattenedCells.get(i).toString();
             flattenedButtons.get(i).setText(cellStr);

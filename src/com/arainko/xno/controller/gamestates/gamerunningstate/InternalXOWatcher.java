@@ -3,6 +3,7 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.view.board.BoardButton;
 import javafx.scene.control.Button;
 
 import static com.arainko.xno.abstracts.Board.Cords;
@@ -10,16 +11,15 @@ import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
 public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState> {
-
     public InternalXOWatcher(GameRunningState parentGameState) {
         super(parentGameState);
     }
 
     @Override
-    public void onInternalGameStatePrimaryClickHandler(Button button) {
+    public <T extends Button> void onInternalGameStatePrimaryClickHandler(T button) {
         Cords clickedButtonCords = getParentGameState().getGameController()
             .getViewBoard()
-            .getElementCords(button);
+            .getElementCords((BoardButton) button);
 
         Cell clickedCell = getParentGameState().getGameController()
                 .getModelBoard()
@@ -35,8 +35,8 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
     }
 
     @Override
-    public void onInternalGameStateSecondaryClickHandler(Button button) {
-        Cords clickedButtonCords = getViewBoard().getElementCords(button);
+    public <T extends Button> void onInternalGameStateSecondaryClickHandler(T button) {
+        Cords clickedButtonCords = getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getModelBoard().getElementAt(clickedButtonCords);
 
         if (!clickedCell.isCell(notPartOfConnection())) {

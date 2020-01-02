@@ -1,11 +1,12 @@
 package com.arainko.xno.model.elements;
 
+import com.arainko.xno.abstracts.BoardElement;
 import com.arainko.xno.abstracts.Element;
 
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-public class Cell extends Element {
+public class Cell extends Element implements BoardElement {
     public enum Contents {
         CROSS, CIRCLE, EMPTY
     }
