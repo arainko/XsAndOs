@@ -2,26 +2,45 @@ package com.arainko.xno.controller.gamestates.gamemainmenustate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.helpers.Bundler;
+import com.arainko.xno.view.menus.LoadMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class GameLoaderState extends GameStateHandler {
-    String savefileDirPath;
+    LoadMenu loadMenu;
+    String saveFileDirPath;
     public GameLoaderState(GameController gameController) {
         super(gameController);
     }
 
     @Override
     public void onGameStateSet() {
-        savefileDirPath = System.getProperty("user.home")+"/.xnosaves";
-        new File(savefileDirPath).mkdir();
+        saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
+        new File(saveFileDirPath).mkdir();
+        loadMenu = new LoadMenu();
+        getGameController().registerButtonsForGameState(loadMenu.getButtonList());
+        getGameController().getUIWrapper().changeMainView(loadMenu);
     }
 
     @Override
     public <T extends Button> void onGameStatePrimaryClickHandler(T button) {
+        try {
+            FileInputStream fis = new FileInputStream(saveFileDirPath + "/bundle.xno");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Bundler.Bundle savedBundle = (Bundler.Bundle) ois.readObject();
+            ois.close();
+            getGameController().getBundler().loadBundle(savedBundle);
+            getGameController().setCurrentGameState(GameController.State.GAME_RUNNING);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

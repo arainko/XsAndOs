@@ -47,6 +47,13 @@ public class ModelBoard extends Board<Cell> {
         return neighborList;
     }
 
+    public Connection getSpecificConnection(Predicate<Connection> pred) {
+        return getConnections().stream()
+                .filter(pred)
+                .findFirst()
+                .get();
+    }
+
     public void addConnection(Connection connection) {
         connections.add(connection);
     }

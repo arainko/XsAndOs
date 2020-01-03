@@ -55,8 +55,6 @@ public class Cell extends Element implements BoardElement {
             case EMPTY:
                 cellString = " ";
         }
-        if (connectionFlag)
-            return "(" + cellString + ")";
-        else return cellString;
+        return cellString;
     }
 }

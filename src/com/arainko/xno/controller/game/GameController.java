@@ -1,10 +1,10 @@
 package com.arainko.xno.controller.game;
 
 import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetupState;
+import com.arainko.xno.controller.gamestates.gamemainmenustate.GameLoaderState;
 import com.arainko.xno.controller.gamestates.gamemainmenustate.GameMainMenu;
 import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
-import com.arainko.xno.controller.helpers.BoardManipulator;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.interfaces.GameState;
@@ -18,11 +18,12 @@ import java.util.List;
 
 public class GameController {
     public enum State {
-        MAIN_MENU, BOARD_SIZE, XO_PLACING, GAME_RUNNING
+        MAIN_MENU, LOADER, BOARD_SIZE, XO_PLACING, GAME_RUNNING
     }
     UIWrapper UIWrapper;
 
     GameState gameMainMenuState;
+    GameState gameLoaderState;
     GameState gameBoardSizeSetupState;
     GameState gameSetupState;
     GameState gameRunningState;
@@ -32,13 +33,13 @@ public class GameController {
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
     private MoveKeeper moveKeeper;
-    private BoardManipulator boardManipulator;
     private Bundler bundler;
 
     public GameController() {
         this.UIWrapper = new UIWrapper();
         this.bundler = new Bundler(this);
         this.gameMainMenuState = new GameMainMenu(this);
+        this.gameLoaderState = new GameLoaderState(this);
         this.gameBoardSizeSetupState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
         this.gameSetupState = new GameSetupState(this);
@@ -72,6 +73,8 @@ public class GameController {
                 return gameSetupState;
             case GAME_RUNNING:
                 return gameRunningState;
+            case LOADER:
+                return gameLoaderState;
             default:
                 return currentGameState;
         }
@@ -85,20 +88,12 @@ public class GameController {
         this.viewBoard = viewBoard;
     }
 
-    public void setBoardManipulator(BoardManipulator boardManipulator) {
-        this.boardManipulator = boardManipulator;
-    }
-
     public void setMoveKeeper(MoveKeeper moveKeeper) {
         this.moveKeeper = moveKeeper;
     }
 
     public MoveKeeper getMoveKeeper() {
         return moveKeeper;
-    }
-
-    public BoardManipulator getBoardManipulator() {
-        return boardManipulator;
     }
 
     public Bundler getBundler() {

@@ -2,7 +2,6 @@ package com.arainko.xno.controller.gamestates.gamemainmenustate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
-import com.arainko.xno.controller.helpers.BoardManipulator;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
@@ -46,11 +45,9 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     private void setupGameController(int clickedDim) {
         ViewBoard viewBoard = new ViewBoard(clickedDim, clickedDim);
         ModelBoard modelBoard = new ModelBoard(clickedDim, clickedDim);
-        BoardManipulator boardManipulator = new BoardManipulator(modelBoard, viewBoard);
-        MoveKeeper moveKeeper = new MoveKeeper(boardManipulator);
+        MoveKeeper moveKeeper = new MoveKeeper(modelBoard, viewBoard);
         getGameController().setViewBoard(viewBoard);
         getGameController().setModelBoard(modelBoard);
-        getGameController().setBoardManipulator(boardManipulator);
         getGameController().setMoveKeeper(moveKeeper);
         getGameController().registerButtonsForGameState(getGameController()
                 .getViewBoard()

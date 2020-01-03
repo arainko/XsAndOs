@@ -1,36 +1,20 @@
 package com.arainko.xno.controller.helpers;
 
+import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.view.board.BoardButton;
 import com.arainko.xno.view.board.ViewBoard;
-import javafx.scene.control.Button;
 
-import java.io.Serializable;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
-public class BoardManipulator implements Serializable {
-    private ModelBoard modelBoard;
-    private ViewBoard viewBoard;
-
-    public BoardManipulator(ModelBoard modelBoard, ViewBoard viewBoard) {
-        this.modelBoard = modelBoard;
-        this.viewBoard = viewBoard;
-    }
-
-    public Connection getBoardConnection(Predicate<Connection> pred) {
-        return modelBoard.getConnections().stream()
-                .filter(pred)
-                .findFirst()
-                .get();
-    }
-
-    public void handleConnectionBuilding(Connection connection) {
-        List<Cords> connectionCords = getBoardCords(connection.getConnectionCells());
+public class BoardManipulator {
+    public static void handleConnectionBuilding(ModelBoard modelBoard, ViewBoard viewBoard, Connection connection) {
+        List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
         if (!connection.isConnection(upToWinCondition())) {
             viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
         } else {
@@ -39,18 +23,29 @@ public class BoardManipulator implements Serializable {
         modelBoard.addConnection(connection);
     }
 
-    public void handleConnectionRemoval(Connection connection) {
-        List<Cords> connectionCords = getBoardCords(connection.getConnectionCells());
+    public static void handleConnectionRemoval(ModelBoard modelBoard, ViewBoard viewBoard, Connection connection) {
+        List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
         viewBoard.setButtonsColorAtCords(connectionCords, "default-button");
         modelBoard.removeConnection(connection);
     }
 
-    public Button spoofButton() {
-        return viewBoard.getFlattenedBoardElements().get(0);
+    public static ViewBoard rebuildBoard(ModelBoard modelBoard, GameController gameController) {
+        ViewBoard viewBoard = new ViewBoard(modelBoard.getDimX(), modelBoard.getDimY());
+        modelBoard.getConnections().forEach(connection -> {
+            List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
+            if (!connection.isConnection(upToWinCondition())) {
+                viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
+            } else {
+                viewBoard.setButtonsColorAtCords(connectionCords, "right-button");
+            }
+        });
+        List<Cell> flattenedCells = modelBoard.getFlattenedBoardElements();
+        List<BoardButton> flattenedButtons = viewBoard.getFlattenedBoardElements();
+        for (int i = 0; i < flattenedCells.size(); i++) {
+            String cellStr = flattenedCells.get(i).toString();
+            flattenedButtons.get(i).setText(cellStr);
+        }
+        gameController.registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
+        return viewBoard;
     }
-
-    public List<Cell> getBoardCells(List<Cords> cords) {
-        return modelBoard.getElementsAt(cords);
-    }
-    public List<Cords> getBoardCords(List<Cell> cells) { return modelBoard.getElementsCords(cells); }
 }

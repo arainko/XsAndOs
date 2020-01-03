@@ -1,7 +1,9 @@
 package com.arainko.xno.controller.helpers;
 
+import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
+import com.arainko.xno.view.board.ViewBoard;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,8 +14,8 @@ import java.util.stream.Collectors;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
-public class MoveKeeper implements Serializable {
-    public class Move implements Serializable {
+public class MoveKeeper {
+    public static class Move implements Serializable {
         private List<Cords> cellCords;
         private Operation opType;
 
@@ -49,18 +51,28 @@ public class MoveKeeper implements Serializable {
         }
     }
 
-    private BoardManipulator boardManipulator;
+    private ModelBoard modelBoard;
+    private ViewBoard viewBoard;
     private List<Move> keptMoves;
     private int currentIndex;
 
-    public MoveKeeper(BoardManipulator boardManipulator) {
-        this.boardManipulator = boardManipulator;
+    public MoveKeeper(ModelBoard modelBoard, ViewBoard viewBoard) {
+        this.modelBoard = modelBoard;
+        this.viewBoard = viewBoard;
         this.keptMoves = new ArrayList<>();
         this.currentIndex = -1;
     }
 
+    public MoveKeeper(ModelBoard modelBoard, ViewBoard viewBoard, List<Move> moveHistory, int currentIndex) {
+        this.modelBoard = modelBoard;
+        this.viewBoard = viewBoard;
+        this.keptMoves = moveHistory;
+        this.currentIndex = currentIndex;
+    }
+
     public void keepMove(Connection connection, Operation operation) {
-        keptMoves.add(new Move(boardManipulator.getBoardCords(connection.getConnectionCells()), operation));
+        List<Cords> cordsToKeep = modelBoard.getElementsCords(connection.getConnectionCells());
+        keptMoves.add(new Move(cordsToKeep, operation));
         currentIndex++;
     }
 
@@ -91,18 +103,18 @@ public class MoveKeeper implements Serializable {
     }
 
     private void removeConnection(Move move) {
-        List<Cell> cells = boardManipulator
-                .getBoardCells(move.getCellCords());
-        Connection connectionToRemove = boardManipulator
-                .getBoardConnection(containingCell(cells.get(0)));
-        boardManipulator.handleConnectionRemoval(connectionToRemove);
+        List<Cell> cells = modelBoard
+                .getElementsAt(move.getCellCords());
+        Connection connectionToRemove = modelBoard
+                .getSpecificConnection(containingCell(cells.get(0)));
+        BoardManipulator.handleConnectionRemoval(modelBoard, viewBoard, connectionToRemove);
     }
 
     private void rebuildConnection(Move move) {
-        List<Cell> cells = boardManipulator
-                .getBoardCells(move.getCellCords());
+        List<Cell> cells = modelBoard
+                .getElementsAt(move.getCellCords());
         Connection connectionToRebuild = new Connection(cells);
-        boardManipulator.handleConnectionBuilding(connectionToRebuild);
+        BoardManipulator.handleConnectionBuilding(modelBoard, viewBoard, connectionToRebuild);
     }
 
     private void currentIndexUpdater(Command command) {
@@ -119,20 +131,12 @@ public class MoveKeeper implements Serializable {
         return currentIndex;
     }
 
-    public int getKeptMovesSize() {
-        return keptMoves.size();
-    }
-
     public List<Move> getKeptMoves() {
         return keptMoves;
     }
 
-    public void setKeptMoves(List<Move> moves) {
-        this.keptMoves = moves;
-    }
-
-    public void setCurrentIndex(int index) {
-
+    public int getKeptMovesSize() {
+        return keptMoves.size();
     }
 
     private Move getMove(int index) {

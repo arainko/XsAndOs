@@ -28,7 +28,8 @@ public class GameMainMenu extends GameStateHandler {
                 getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
                 break;
             case LOAD:
-                //TODO: Implement save file loader.
+                getGameController().setCurrentGameState(GameController.State.LOADER);
+                break;
         }
     }
 }

@@ -2,7 +2,6 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
-import com.arainko.xno.controller.helpers.BoardManipulator;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.interfaces.InternalGameState;
 import javafx.event.ActionEvent;
@@ -17,7 +16,6 @@ public class GameRunningState extends GameStateHandler {
     private InternalGameState currentInternalGameState;
 
     private MoveKeeper moveKeeper;
-    private BoardManipulator boardManipulator;
 
     public GameRunningState(GameController gameController) {
         super(gameController);
@@ -27,9 +25,14 @@ public class GameRunningState extends GameStateHandler {
     public void onGameStateSet() {
         XOWatcher = new InternalXOWatcher(this);
         connectionBuilder = new InternalConnectionBuilder(this);
-        boardManipulator = getGameController().getBoardManipulator();
         moveKeeper = getGameController().getMoveKeeper();
         setCurrentInternalGameState(XOWatcher);
+        getGameController().registerButtonsForGameState(getGameController()
+                .getViewBoard()
+                .getFlattenedBoardElements());
+        getGameController().getUIWrapper().changeMainView(getGameController()
+                .getViewBoard()
+                .getButtonGrid());
 
         Button btn = new Button("TEST");
         btn.setOnAction(event -> {
@@ -57,10 +60,13 @@ public class GameRunningState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
+        Button spoofedButton = getGameController()
+                .getViewBoard()
+                .getFlattenedBoardElements()
+                .get(0);
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                getCurrentInternalGameState()
-                        .onInternalGameStateSecondaryClickHandler(getBoardManipulator().spoofButton());
+                connectionBuilder.onInternalGameStateSecondaryClickHandler(spoofedButton);
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.UNDO);
                 arrowButtonsSupervisor();
@@ -70,10 +76,13 @@ public class GameRunningState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
+        Button spoofedButton = getGameController()
+                .getViewBoard()
+                .getFlattenedBoardElements()
+                .get(0);
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                getCurrentInternalGameState()
-                        .onInternalGameStateSecondaryClickHandler(getBoardManipulator().spoofButton());
+                connectionBuilder.onInternalGameStateSecondaryClickHandler(spoofedButton);
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.REDO);
                 arrowButtonsSupervisor();
@@ -106,9 +115,5 @@ public class GameRunningState extends GameStateHandler {
 
     public MoveKeeper getMoveKeeper() {
         return moveKeeper;
-    }
-
-    public BoardManipulator getBoardManipulator() {
-        return boardManipulator;
     }
 }

@@ -2,6 +2,7 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.abstracts.Board.Cords;
+import com.arainko.xno.controller.helpers.BoardManipulator;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -62,12 +63,12 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
     private void onStateExitHandler() {
         getParentGameState().getMoveKeeper().deleteFurtherMoves();
         getParentGameState().getMoveKeeper().keepMove(connection, MoveKeeper.Operation.BUILD);
-        getParentGameState().getBoardManipulator().handleConnectionBuilding(connection);
+        BoardManipulator.handleConnectionBuilding(getModelBoard(), getViewBoard(), connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
         onStateExitCleanUp();
     }
 
-    public void onStateAbortHandler() {
+    private void onStateAbortHandler() {
         List<Cords> cordsToColorAt = getModelBoard().getElementsCords(connection.getConnectionCells());
         getViewBoard().setButtonsColorAtCords(cordsToColorAt, "default-button");
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");

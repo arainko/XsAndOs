@@ -5,29 +5,32 @@ import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
 
 import java.io.*;
+import java.util.List;
 
-public class Bundler implements Serializable {
-    public class Bundle implements Serializable {
+import static com.arainko.xno.controller.helpers.MoveKeeper.*;
+
+public class Bundler {
+    public static class Bundle implements Serializable {
         private ModelBoard modelBoard;
-        private ViewBoard viewBoard;
-        private MoveKeeper moveKeeper;
+        private List<Move> moveHistory;
+        private int currentHistoryIndex;
 
-        public Bundle(ModelBoard modelBoard, ViewBoard viewBoard, MoveKeeper moveKeeper) {
+        public Bundle(ModelBoard modelBoard, MoveKeeper moveKeeper) {
             this.modelBoard = modelBoard;
-            this.viewBoard = viewBoard;
-            this.moveKeeper = moveKeeper;
+            this.moveHistory = moveKeeper.getKeptMoves();
+            this.currentHistoryIndex = moveKeeper.getCurrentIndex();
         }
 
-        public ModelBoard getModelBoard() {
+        public ModelBoard getBundledModelBoard() {
             return modelBoard;
         }
 
-        public ViewBoard getViewBoard() {
-            return viewBoard;
+        public List<Move> getBundledMoveHistory() {
+            return moveHistory;
         }
 
-        public MoveKeeper getMoveKeeper() {
-            return moveKeeper;
+        public int getBundledHistoryIndex() {
+            return currentHistoryIndex;
         }
     }
     private GameController gameController;
@@ -42,16 +45,18 @@ public class Bundler implements Serializable {
     public void saveBundle() throws IOException, ClassNotFoundException {
         ModelBoard modelBoard = gameController.getModelBoard();
         ViewBoard viewBoard = gameController.getViewBoard();
-        BoardManipulator boardManipulator = gameController.getBoardManipulator();
         MoveKeeper moveKeeper = gameController.getMoveKeeper();
-        saveBundleToFile(new Bundle(modelBoard, viewBoard, boardManipulator, moveKeeper));
+        saveBundleToFile(new Bundle(modelBoard, moveKeeper));
     }
 
     public void loadBundle(Bundle bundle) {
-        gameController.setModelBoard(bundle.getModelBoard());
-        gameController.setViewBoard(bundle.getViewBoard());
-        gameController.setBoardManipulator(bundle.getBoardManipulator());
-        gameController.setMoveKeeper(bundle.getMoveKeeper());
+        ModelBoard modelBoard = bundle.getBundledModelBoard();
+        ViewBoard viewBoard = BoardManipulator.rebuildBoard(modelBoard, gameController);
+        List<Move> moveHistory = bundle.getBundledMoveHistory();
+        int currentHistoryIndex = bundle.getBundledHistoryIndex();
+        gameController.setModelBoard(modelBoard);
+        gameController.setViewBoard(viewBoard);
+        gameController.setMoveKeeper(new MoveKeeper(modelBoard, viewBoard, moveHistory, currentHistoryIndex));
     }
 
     private void saveBundleToFile(Bundle bundle) {
@@ -61,11 +66,7 @@ public class Bundler implements Serializable {
             oos.writeObject(bundle);
             oos.flush();
             oos.close();
-            FileInputStream fis = new FileInputStream(saveFileDirPath + "/bundle.xno");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Bundle savedBundle = (Bundle) ois.readObject();
-            ois.close();
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
