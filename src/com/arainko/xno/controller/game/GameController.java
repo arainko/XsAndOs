@@ -4,10 +4,13 @@ import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetu
 import com.arainko.xno.controller.gamestates.gamemainmenustate.GameMainMenu;
 import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
+import com.arainko.xno.controller.helpers.BoardManipulator;
+import com.arainko.xno.controller.helpers.Bundler;
+import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
-import com.arainko.xno.view.ui.UIWrapper;
 import com.arainko.xno.view.board.ViewBoard;
+import com.arainko.xno.view.ui.UIWrapper;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 
@@ -17,7 +20,6 @@ public class GameController {
     public enum State {
         MAIN_MENU, BOARD_SIZE, XO_PLACING, GAME_RUNNING
     }
-
     UIWrapper UIWrapper;
 
     GameState gameMainMenuState;
@@ -29,9 +31,13 @@ public class GameController {
 
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
+    private MoveKeeper moveKeeper;
+    private BoardManipulator boardManipulator;
+    private Bundler bundler;
 
     public GameController() {
         this.UIWrapper = new UIWrapper();
+        this.bundler = new Bundler(this);
         this.gameMainMenuState = new GameMainMenu(this);
         this.gameBoardSizeSetupState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
@@ -71,12 +77,32 @@ public class GameController {
         }
     }
 
-    public void setModelBoard(int dimX, int dimY) {
-        this.modelBoard = new ModelBoard(dimX, dimY);
+    public void setModelBoard(ModelBoard modelBoard) {
+        this.modelBoard = modelBoard;
     }
 
-    public void setViewBoard(int dimX, int dimY) {
-        this.viewBoard = new ViewBoard(dimX, dimY);
+    public void setViewBoard(ViewBoard viewBoard) {
+        this.viewBoard = viewBoard;
+    }
+
+    public void setBoardManipulator(BoardManipulator boardManipulator) {
+        this.boardManipulator = boardManipulator;
+    }
+
+    public void setMoveKeeper(MoveKeeper moveKeeper) {
+        this.moveKeeper = moveKeeper;
+    }
+
+    public MoveKeeper getMoveKeeper() {
+        return moveKeeper;
+    }
+
+    public BoardManipulator getBoardManipulator() {
+        return boardManipulator;
+    }
+
+    public Bundler getBundler() {
+        return bundler;
     }
 
     public UIWrapper getUIWrapper() {

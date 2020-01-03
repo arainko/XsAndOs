@@ -1,5 +1,7 @@
 package com.arainko.xno.abstracts;
 
-public interface BoardElement {
+import java.io.Serializable;
+
+public interface BoardElement extends Serializable {
     Board.Cords getCords();
 }

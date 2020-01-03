@@ -3,11 +3,11 @@ package com.arainko.xno.model.tests;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
@@ -48,18 +48,27 @@ public class XNOModelTests {
 
     @Test
     public void boardSerializationTest() throws IOException, ClassNotFoundException {
-        FileOutputStream fos = new FileOutputStream("demofile.txt");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(modelBoard);
-        oos.flush();
-        oos.close();
-        FileInputStream fis = new FileInputStream("demofile.txt");
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        ModelBoard board2 = (ModelBoard) ois.readObject();
-        ois.close();
-        board2.printBoard();
-        Assertions.assertNotSame(modelBoard, board2);
+//        ViewBoard viewBoard = new ViewBoard(5,5);
+//        FileOutputStream fos = new FileOutputStream("demofile.txt");
+//        ObjectOutputStream oos = new ObjectOutputStream(fos);
+//        oos.writeObject(viewBoard);
+//        oos.flush();
+//        oos.close();
+//        FileInputStream fis = new FileInputStream("demofile.txt");
+//        ObjectInputStream ois = new ObjectInputStream(fis);
+//        ViewBoard board2 = (ViewBoard) ois.readObject();
+//        ois.close();
+//        board2.printBoard();
+//        Assertions.assertNotSame(modelBoard, board2);
     }
 
+    @Test
+    public void fileTest() throws IOException {
+        String savefileDirPah = System.getProperty("user.home")+"/.xnosaves";
+        new File(savefileDirPah).mkdir();
+//        FileWriter fw = new FileWriter(new File(savedir, "test"));
+//        FileReader fr = new FileReader(new File(savedir, "test"));
+//        System.out.println(savedir.getAbsolutePath());
+    }
 
 }

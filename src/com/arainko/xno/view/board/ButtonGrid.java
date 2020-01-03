@@ -3,9 +3,10 @@ package com.arainko.xno.view.board;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ButtonGrid extends GridPane {
+public class ButtonGrid extends GridPane implements Serializable {
     public ButtonGrid(List<List<BoardButton>> buttons) {
         setButtonGrid(buttons);
         this.setAlignment(Pos.CENTER);

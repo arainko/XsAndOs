@@ -4,8 +4,6 @@ import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.view.menus.MainMenu;
 import com.arainko.xno.view.menus.MenuButton;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class GameMainMenu extends GameStateHandler {
@@ -32,20 +30,5 @@ public class GameMainMenu extends GameStateHandler {
             case LOAD:
                 //TODO: Implement save file loader.
         }
-    }
-
-    @Override
-    public <T extends Button> void onGameStateSecondaryClickHandler(T button) {
-
-    }
-
-    @Override
-    public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return null;
-    }
-
-    @Override
-    public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        return null;
     }
 }

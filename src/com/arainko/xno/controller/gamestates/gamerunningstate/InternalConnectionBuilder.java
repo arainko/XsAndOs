@@ -2,6 +2,7 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.abstracts.Board.Cords;
+import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.view.board.BoardButton;

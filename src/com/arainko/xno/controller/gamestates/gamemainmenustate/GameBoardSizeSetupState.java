@@ -2,6 +2,10 @@ package com.arainko.xno.controller.gamestates.gamemainmenustate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.helpers.BoardManipulator;
+import com.arainko.xno.controller.helpers.MoveKeeper;
+import com.arainko.xno.model.board.ModelBoard;
+import com.arainko.xno.view.board.ViewBoard;
 import com.arainko.xno.view.menus.SetupMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,11 +29,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
         int clickedDim = 5 + setupMenu.getButtonList().indexOf(button);
-        getGameController().setViewBoard(clickedDim,clickedDim);
-        getGameController().setModelBoard(clickedDim,clickedDim);
-        getGameController().registerButtonsForGameState(getGameController()
-                .getViewBoard()
-                .getFlattenedBoardElements());
+        setupGameController(clickedDim);
         GridPane viewButtons = getGameController()
                 .getViewBoard()
                 .getButtonGrid();
@@ -39,18 +39,23 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     }
 
     @Override
-    public void onGameStateSecondaryClickHandler(Button button) {
-        //game state doesn't use secondary clicks
-    }
-
-    @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
         return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
     }
 
-    @Override
-    public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        return null;
+    private void setupGameController(int clickedDim) {
+        ViewBoard viewBoard = new ViewBoard(clickedDim, clickedDim);
+        ModelBoard modelBoard = new ModelBoard(clickedDim, clickedDim);
+        BoardManipulator boardManipulator = new BoardManipulator(modelBoard, viewBoard);
+        MoveKeeper moveKeeper = new MoveKeeper(boardManipulator);
+        getGameController().setViewBoard(viewBoard);
+        getGameController().setModelBoard(modelBoard);
+        getGameController().setBoardManipulator(boardManipulator);
+        getGameController().setMoveKeeper(moveKeeper);
+        getGameController().registerButtonsForGameState(getGameController()
+                .getViewBoard()
+                .getFlattenedBoardElements());
     }
+
 
 }

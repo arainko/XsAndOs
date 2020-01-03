@@ -2,10 +2,14 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.helpers.BoardManipulator;
+import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.interfaces.InternalGameState;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+
+import java.io.IOException;
 
 public class GameRunningState extends GameStateHandler {
     private InternalGameState XOWatcher;
@@ -23,9 +27,19 @@ public class GameRunningState extends GameStateHandler {
     public void onGameStateSet() {
         XOWatcher = new InternalXOWatcher(this);
         connectionBuilder = new InternalConnectionBuilder(this);
-        boardManipulator = new BoardManipulator(getGameController().getModelBoard(), getGameController().getViewBoard());
-        moveKeeper = new MoveKeeper(boardManipulator);
+        boardManipulator = getGameController().getBoardManipulator();
+        moveKeeper = getGameController().getMoveKeeper();
         setCurrentInternalGameState(XOWatcher);
+
+        Button btn = new Button("TEST");
+        btn.setOnAction(event -> {
+            try {
+                getGameController().getBundler().saveBundle();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+        getGameController().getUIWrapper().setBottom(btn);
         arrowButtonsSupervisor();
     }
 

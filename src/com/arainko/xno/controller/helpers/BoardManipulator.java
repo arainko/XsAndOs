@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.gamerunningstate;
+package com.arainko.xno.controller.helpers;
 
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
@@ -6,13 +6,14 @@ import com.arainko.xno.model.elements.Connection;
 import com.arainko.xno.view.board.ViewBoard;
 import javafx.scene.control.Button;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.function.Predicate;
 
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
-public class BoardManipulator {
+public class BoardManipulator implements Serializable {
     private ModelBoard modelBoard;
     private ViewBoard viewBoard;
 

@@ -1,8 +1,9 @@
-package com.arainko.xno.controller.gamestates.gamerunningstate;
+package com.arainko.xno.controller.helpers;
 
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -11,8 +12,8 @@ import java.util.stream.Collectors;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
-public class MoveKeeper {
-    private class Move {
+public class MoveKeeper implements Serializable {
+    public class Move implements Serializable {
         private List<Cords> cellCords;
         private Operation opType;
 
@@ -120,6 +121,18 @@ public class MoveKeeper {
 
     public int getKeptMovesSize() {
         return keptMoves.size();
+    }
+
+    public List<Move> getKeptMoves() {
+        return keptMoves;
+    }
+
+    public void setKeptMoves(List<Move> moves) {
+        this.keptMoves = moves;
+    }
+
+    public void setCurrentIndex(int index) {
+
     }
 
     private Move getMove(int index) {

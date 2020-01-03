@@ -5,7 +5,7 @@ import com.arainko.xno.abstracts.Board;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewBoard extends Board<BoardButton> {
+public class ViewBoard extends Board<BoardButton>{
     private ButtonGrid buttonGrid;
 
     public ViewBoard(int dimX, int dimY) {
