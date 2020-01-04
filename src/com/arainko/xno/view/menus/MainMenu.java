@@ -16,7 +16,6 @@ public class MainMenu extends Menu<MenuButton> {
                 300, 30,
                 MenuButton.Functionality.LOAD);
         addButtons(createButton, loadButton);
-        this.getChildren().addAll(createButton, loadButton);
     }
 
     private void setupInfoText() {

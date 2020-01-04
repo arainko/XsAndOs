@@ -17,12 +17,21 @@ public abstract class Menu<T extends Button> extends VBox {
         this.setAlignment(Pos.CENTER);
     }
 
-    public void addButtons(T... buttons){
-        buttonList.addAll(Arrays.asList(buttons));
+    @SafeVarargs
+    public final void addButtons(T... buttons) {
+        List<T> listButtons = Arrays.asList(buttons);
+        buttonList.addAll(listButtons);
+        this.getChildren().addAll(listButtons);
+    }
+
+    public void addButtons(List<T> buttons) {
+        buttonList.addAll(buttons);
+        this.getChildren().addAll(buttons);
     }
 
     public void addButton(T button) {
         buttonList.add(button);
+        this.getChildren().add(button);
     }
 
     public List<T> getButtonList() {

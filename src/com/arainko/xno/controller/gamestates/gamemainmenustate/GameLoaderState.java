@@ -7,7 +7,6 @@ import com.arainko.xno.view.menus.LoadMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class GameLoaderState extends GameStateHandler {
-    private ScrollPane scrollPane;
     private LoadMenu loadMenu;
     private String saveFileDirPath;
     public GameLoaderState(GameController gameController) {
@@ -26,10 +24,9 @@ public class GameLoaderState extends GameStateHandler {
     public void onGameStateSet() {
         saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
         new File(saveFileDirPath).mkdir();
-        loadMenu = new LoadMenu();
-        scrollPane = new ScrollPane(loadMenu);
+        LoadMenu loadMenu = new LoadMenu();
         getGameController().registerButtonsForGameState(loadMenu.getButtonList());
-        getGameController().getUIWrapper().setCenter(scrollPane);
+        getGameController().getUIWrapper().setCenter(loadMenu.getWrapper());
     }
 
     @Override

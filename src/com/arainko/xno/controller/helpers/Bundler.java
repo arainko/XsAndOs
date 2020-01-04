@@ -47,7 +47,7 @@ public class Bundler {
 
     public void saveBundle() {
         LocalDateTime now = LocalDateTime.now();
-        String filename = "/" + DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").format(now) + ".xno";
+        String filename = "/" + DateTimeFormatter.ofPattern("dd-MM-yyyy-HHmmss").format(now) + ".xno";
         Bundle bundle = new Bundle(gameController);
         try {
             FileOutputStream fos = new FileOutputStream(saveFileDirPath + filename);

@@ -17,7 +17,6 @@ public class SetupMenu extends Menu<MenuButton> {
      private void setupButtons() {
          for (int i = 5; i <= 10; i++) {
              MenuButton sizeButton = new MenuButton(i + "x" + i, 150, 30);
-             this.getChildren().add(sizeButton);
              addButton(sizeButton);
          }
      }
