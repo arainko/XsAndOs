@@ -32,6 +32,13 @@ public class Boards {
         return viewBoard;
     }
 
+    public static ViewBoard rebuildBoard(ModelBoard modelBoard) {
+        ViewBoard viewBoard = new ViewBoard(modelBoard.getDimX(), modelBoard.getDimY());
+        modelBoard.getConnections().forEach(connection -> lightUpConnectionCords(modelBoard, viewBoard, connection));
+        refreshBoardText(modelBoard, viewBoard);
+        return viewBoard;
+    }
+
     public static void refreshBoardText(ModelBoard modelBoard, ViewBoard viewBoard) {
         List<Cell> flattenedCells = modelBoard.getFlattenedBoardElements();
         List<BoardButton> flattenedButtons = viewBoard.getFlattenedBoardElements();

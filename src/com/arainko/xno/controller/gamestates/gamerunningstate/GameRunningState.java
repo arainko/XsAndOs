@@ -8,8 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-import java.io.IOException;
-
 public class GameRunningState extends GameStateHandler {
     private InternalGameState XOWatcher;
     private InternalGameState connectionBuilder;
@@ -36,11 +34,7 @@ public class GameRunningState extends GameStateHandler {
 
         Button btn = new Button("TEST");
         btn.setOnAction(event -> {
-            try {
-                getGameController().getBundler().saveBundle();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            getGameController().getBundler().saveBundle();
         });
         getGameController().getUIWrapper().setBottom(btn);
         arrowButtonsSupervisor();

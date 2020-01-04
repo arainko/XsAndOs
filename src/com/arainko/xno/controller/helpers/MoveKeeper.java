@@ -38,7 +38,7 @@ public class MoveKeeper {
 
         @Override
         public String toString() {
-            return opType.toString() /*+":\n"+ cellCords.toString()+"\n"*/;
+            return opType.toString() +":\n"+ cellCords.toString()+"\n";
         }
     }
     public enum Command {

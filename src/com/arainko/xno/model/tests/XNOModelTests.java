@@ -6,8 +6,9 @@ import com.arainko.xno.model.elements.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.interferingWith;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
@@ -63,12 +64,10 @@ public class XNOModelTests {
     }
 
     @Test
-    public void fileTest() throws IOException {
-        String savefileDirPah = System.getProperty("user.home")+"/.xnosaves";
-        new File(savefileDirPah).mkdir();
-//        FileWriter fw = new FileWriter(new File(savedir, "test"));
-//        FileReader fr = new FileReader(new File(savedir, "test"));
-//        System.out.println(savedir.getAbsolutePath());
+    public void dateTest() {
+        LocalDateTime now = LocalDateTime.now();
+        String date = DateTimeFormatter.ofPattern("ddMMyyyyHHmmss").format(now);
+        System.out.println(date);
     }
 
 }

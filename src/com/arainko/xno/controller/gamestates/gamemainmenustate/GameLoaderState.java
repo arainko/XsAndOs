@@ -7,6 +7,7 @@ import com.arainko.xno.view.menus.LoadMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class GameLoaderState extends GameStateHandler {
+    private ScrollPane scrollPane;
     private LoadMenu loadMenu;
     private String saveFileDirPath;
     public GameLoaderState(GameController gameController) {
@@ -25,14 +27,15 @@ public class GameLoaderState extends GameStateHandler {
         saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
         new File(saveFileDirPath).mkdir();
         loadMenu = new LoadMenu();
+        scrollPane = new ScrollPane(loadMenu);
         getGameController().registerButtonsForGameState(loadMenu.getButtonList());
-        getGameController().getUIWrapper().changeMainView(loadMenu);
+        getGameController().getUIWrapper().setCenter(scrollPane);
     }
 
     @Override
     public <T extends Button> void onGameStatePrimaryClickHandler(T button) {
         try {
-            FileInputStream fis = new FileInputStream(saveFileDirPath + "/bundle.xno");
+            FileInputStream fis = new FileInputStream(saveFileDirPath + "/" + button.getText());
             ObjectInputStream ois = new ObjectInputStream(fis);
             Bundler.Bundle savedBundle = (Bundler.Bundle) ois.readObject();
             ois.close();
@@ -51,7 +54,7 @@ public class GameLoaderState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return null;
+        return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
     }
 
     @Override
