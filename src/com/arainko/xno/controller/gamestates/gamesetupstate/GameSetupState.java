@@ -2,14 +2,16 @@ package com.arainko.xno.controller.gamestates.gamesetupstate;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.helpers.Boards;
+import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.board.BoardButton;
+import com.arainko.xno.view.board.ViewBoard;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.arainko.xno.abstracts.Board.Cords;
@@ -17,7 +19,7 @@ import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
 
 public class GameSetupState extends GameStateHandler {
-    Map<Cell.Contents, Integer> contentsCount;
+    private Map<Cell.Contents, Integer> contentsCount;
     public GameSetupState(GameController gameController) {
         super(gameController);
     }
@@ -45,6 +47,8 @@ public class GameSetupState extends GameStateHandler {
     }
 
     private void cellContentsSetter(Cell clickedCell, Cell.Contents contentsToSet) {
+        ModelBoard modelBoard = getGameController().getModelBoard();
+        ViewBoard viewBoard = getGameController().getViewBoard();
         Cell.Contents currContents = clickedCell.getCellContents();
         if (clickedCell.isCell(containingCircle().or(containingCross()))) {
             contentsCount.put(currContents, contentsCount.get(currContents)-1);
@@ -53,7 +57,7 @@ public class GameSetupState extends GameStateHandler {
             clickedCell.setCellContents(contentsToSet);
             contentsCount.put(contentsToSet, contentsCount.get(contentsToSet)+1);
         }
-        refreshBoardText();
+        Boards.refreshBoardText(modelBoard, viewBoard);
         cellContentsValidator();
     }
 
@@ -74,12 +78,4 @@ public class GameSetupState extends GameStateHandler {
         return event -> getGameController().setCurrentGameState(GameController.State.GAME_RUNNING);
     }
 
-    private void refreshBoardText() {
-        List<Cell> flattenedCells = getGameController().getModelBoard().getFlattenedBoardElements();
-        List<BoardButton> flattenedButtons = getGameController().getViewBoard().getFlattenedBoardElements();
-        for (int i = 0; i < flattenedCells.size(); i++) {
-            String cellStr = flattenedCells.get(i).toString();
-            flattenedButtons.get(i).setText(cellStr);
-        }
-    }
 }

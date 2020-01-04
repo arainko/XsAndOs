@@ -1,7 +1,7 @@
 package com.arainko.xno.controller.gamestates.gamerunningstate;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
-import com.arainko.xno.controller.helpers.BoardManipulator;
+import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -47,7 +47,7 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
             getParentGameState().getMoveKeeper().deleteFurtherMoves();
             getParentGameState().getMoveKeeper()
                     .keepMove(connectionToRemove, MoveKeeper.Operation.REMOVE);
-            BoardManipulator.handleConnectionRemoval(getModelBoard(), getViewBoard(), connectionToRemove);
+            Boards.handleConnectionRemoval(getModelBoard(), getViewBoard(), connectionToRemove);
         }
     }
 }

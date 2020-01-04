@@ -12,14 +12,9 @@ import java.util.List;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
-public class BoardManipulator {
+public class Boards {
     public static void handleConnectionBuilding(ModelBoard modelBoard, ViewBoard viewBoard, Connection connection) {
-        List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
-        if (!connection.isConnection(upToWinCondition())) {
-            viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
-        } else {
-            viewBoard.setButtonsColorAtCords(connectionCords, "right-button");
-        }
+        lightUpConnectionCords(modelBoard, viewBoard, connection);
         modelBoard.addConnection(connection);
     }
 
@@ -31,21 +26,27 @@ public class BoardManipulator {
 
     public static ViewBoard rebuildBoard(ModelBoard modelBoard, GameController gameController) {
         ViewBoard viewBoard = new ViewBoard(modelBoard.getDimX(), modelBoard.getDimY());
-        modelBoard.getConnections().forEach(connection -> {
-            List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
-            if (!connection.isConnection(upToWinCondition())) {
-                viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
-            } else {
-                viewBoard.setButtonsColorAtCords(connectionCords, "right-button");
-            }
-        });
+        modelBoard.getConnections().forEach(connection -> lightUpConnectionCords(modelBoard, viewBoard, connection));
+        refreshBoardText(modelBoard, viewBoard);
+        gameController.registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
+        return viewBoard;
+    }
+
+    public static void refreshBoardText(ModelBoard modelBoard, ViewBoard viewBoard) {
         List<Cell> flattenedCells = modelBoard.getFlattenedBoardElements();
         List<BoardButton> flattenedButtons = viewBoard.getFlattenedBoardElements();
         for (int i = 0; i < flattenedCells.size(); i++) {
             String cellStr = flattenedCells.get(i).toString();
             flattenedButtons.get(i).setText(cellStr);
         }
-        gameController.registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
-        return viewBoard;
+    }
+
+    private static void lightUpConnectionCords(ModelBoard modelBoard, ViewBoard viewBoard, Connection connection) {
+        List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
+        if (!connection.isConnection(upToWinCondition())) {
+            viewBoard.setButtonsColorAtCords(connectionCords, "wrong-button");
+        } else {
+            viewBoard.setButtonsColorAtCords(connectionCords, "right-button");
+        }
     }
 }

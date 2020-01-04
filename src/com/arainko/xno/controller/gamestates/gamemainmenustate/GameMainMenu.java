@@ -7,7 +7,7 @@ import com.arainko.xno.view.menus.MenuButton;
 import javafx.scene.control.Button;
 
 public class GameMainMenu extends GameStateHandler {
-    MainMenu mainMenu;
+    private MainMenu mainMenu;
 
     public GameMainMenu(GameController gameController) {
         super(gameController);

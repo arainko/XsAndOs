@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 public class GameBoardSizeSetupState extends GameStateHandler {
-    SetupMenu setupMenu;
+    private SetupMenu setupMenu;
 
     public GameBoardSizeSetupState(GameController gameController) {
         super(gameController);

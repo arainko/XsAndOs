@@ -107,14 +107,14 @@ public class MoveKeeper {
                 .getElementsAt(move.getCellCords());
         Connection connectionToRemove = modelBoard
                 .getSpecificConnection(containingCell(cells.get(0)));
-        BoardManipulator.handleConnectionRemoval(modelBoard, viewBoard, connectionToRemove);
+        Boards.handleConnectionRemoval(modelBoard, viewBoard, connectionToRemove);
     }
 
     private void rebuildConnection(Move move) {
         List<Cell> cells = modelBoard
                 .getElementsAt(move.getCellCords());
         Connection connectionToRebuild = new Connection(cells);
-        BoardManipulator.handleConnectionBuilding(modelBoard, viewBoard, connectionToRebuild);
+        Boards.handleConnectionBuilding(modelBoard, viewBoard, connectionToRebuild);
     }
 
     private void currentIndexUpdater(Command command) {

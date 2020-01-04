@@ -60,13 +60,9 @@ public class GameRunningState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        Button spoofedButton = getGameController()
-                .getViewBoard()
-                .getFlattenedBoardElements()
-                .get(0);
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                connectionBuilder.onInternalGameStateSecondaryClickHandler(spoofedButton);
+                ((InternalConnectionBuilder) connectionBuilder).onStateAbortHandler();
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.UNDO);
                 arrowButtonsSupervisor();
@@ -76,13 +72,9 @@ public class GameRunningState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        Button spoofedButton = getGameController()
-                .getViewBoard()
-                .getFlattenedBoardElements()
-                .get(0);
         return event -> {
             if (getCurrentInternalGameState() == connectionBuilder) {
-                connectionBuilder.onInternalGameStateSecondaryClickHandler(spoofedButton);
+                ((InternalConnectionBuilder) connectionBuilder).onStateAbortHandler();
             } else {
                 getMoveKeeper().evaluateCommand(MoveKeeper.Command.REDO);
                 arrowButtonsSupervisor();

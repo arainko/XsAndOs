@@ -42,16 +42,15 @@ public class Bundler {
         new File(saveFileDirPath).mkdir();
     }
 
-    public void saveBundle() throws IOException, ClassNotFoundException {
+    public void saveBundle() {
         ModelBoard modelBoard = gameController.getModelBoard();
-        ViewBoard viewBoard = gameController.getViewBoard();
         MoveKeeper moveKeeper = gameController.getMoveKeeper();
         saveBundleToFile(new Bundle(modelBoard, moveKeeper));
     }
 
     public void loadBundle(Bundle bundle) {
         ModelBoard modelBoard = bundle.getBundledModelBoard();
-        ViewBoard viewBoard = BoardManipulator.rebuildBoard(modelBoard, gameController);
+        ViewBoard viewBoard = Boards.rebuildBoard(modelBoard, gameController);
         List<Move> moveHistory = bundle.getBundledMoveHistory();
         int currentHistoryIndex = bundle.getBundledHistoryIndex();
         gameController.setModelBoard(modelBoard);
