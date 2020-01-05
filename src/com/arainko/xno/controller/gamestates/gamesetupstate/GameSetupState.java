@@ -26,6 +26,9 @@ public class GameSetupState extends GameStateHandler {
 
     @Override
     public void onGameStateSet() {
+        ViewBoard viewBoard = getGameController().getViewBoard();
+        getGameController().registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
+        getGameController().getUIWrapper().changeMainView(viewBoard.getButtonGrid());
         contentsCount = new HashMap<>();
         contentsCount.put(Cell.Contents.CROSS, 0);
         contentsCount.put(Cell.Contents.CIRCLE, 0);

@@ -33,9 +33,7 @@ public class GameRunningState extends GameStateHandler {
                 .getButtonGrid());
 
         Button btn = new Button("TEST");
-        btn.setOnAction(event -> {
-            getGameController().getBundler().saveBundle();
-        });
+        btn.setOnAction(event -> getGameController().getBundler().saveBundle());
         getGameController().getUIWrapper().setBottom(btn);
         arrowButtonsSupervisor();
     }

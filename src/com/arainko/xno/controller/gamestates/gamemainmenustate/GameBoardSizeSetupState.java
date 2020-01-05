@@ -9,32 +9,24 @@ import com.arainko.xno.view.menus.SetupMenu;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 
 public class GameBoardSizeSetupState extends GameStateHandler {
-    private SetupMenu setupMenu;
-
     public GameBoardSizeSetupState(GameController gameController) {
         super(gameController);
     }
 
     @Override
     public void onGameStateSet() {
-        setupMenu = new SetupMenu();
+        SetupMenu setupMenu = new SetupMenu();
         getGameController().registerButtonsForGameState(setupMenu.getButtonList());
         getGameController().getUIWrapper().changeMainView(setupMenu);
     }
 
     @Override
     public void onGameStatePrimaryClickHandler(Button button) {
-        int clickedDim = 5 + setupMenu.getButtonList().indexOf(button);
+        int clickedDim = Integer.parseInt(String.valueOf(button.getText().charAt(0)));
         setupGameController(clickedDim);
-        GridPane viewButtons = getGameController()
-                .getViewBoard()
-                .getButtonGrid();
         getGameController().setCurrentGameState(GameController.State.XO_PLACING);
-        getGameController().getUIWrapper()
-                .changeMainView(viewButtons);
     }
 
     @Override
@@ -42,16 +34,13 @@ public class GameBoardSizeSetupState extends GameStateHandler {
         return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
     }
 
-    private void setupGameController(int clickedDim) {
-        ViewBoard viewBoard = new ViewBoard(clickedDim, clickedDim);
-        ModelBoard modelBoard = new ModelBoard(clickedDim, clickedDim);
+    private void setupGameController(int boardDim) {
+        ViewBoard viewBoard = new ViewBoard(boardDim, boardDim);
+        ModelBoard modelBoard = new ModelBoard(boardDim, boardDim);
         MoveKeeper moveKeeper = new MoveKeeper(modelBoard, viewBoard);
         getGameController().setViewBoard(viewBoard);
         getGameController().setModelBoard(modelBoard);
         getGameController().setMoveKeeper(moveKeeper);
-        getGameController().registerButtonsForGameState(getGameController()
-                .getViewBoard()
-                .getFlattenedBoardElements());
     }
 
 

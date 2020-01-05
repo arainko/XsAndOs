@@ -1,6 +1,5 @@
 package com.arainko.xno.controller.helpers;
 
-import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -22,14 +21,6 @@ public class Boards {
         List<Cords> connectionCords = modelBoard.getElementsCords(connection.getConnectionCells());
         viewBoard.setButtonsColorAtCords(connectionCords, "default-button");
         modelBoard.removeConnection(connection);
-    }
-
-    public static ViewBoard rebuildBoard(ModelBoard modelBoard, GameController gameController) {
-        ViewBoard viewBoard = new ViewBoard(modelBoard.getDimX(), modelBoard.getDimY());
-        modelBoard.getConnections().forEach(connection -> lightUpConnectionCords(modelBoard, viewBoard, connection));
-        refreshBoardText(modelBoard, viewBoard);
-        gameController.registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
-        return viewBoard;
     }
 
     public static ViewBoard rebuildBoard(ModelBoard modelBoard) {

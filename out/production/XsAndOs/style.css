@@ -93,3 +93,16 @@
     -fx-font-smoothing-type: lcd;
     -fx-font-weight:  bold;
 }
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}

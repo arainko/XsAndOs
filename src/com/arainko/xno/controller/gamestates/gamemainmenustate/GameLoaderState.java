@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 public class GameLoaderState extends GameStateHandler {
-    private LoadMenu loadMenu;
     private String saveFileDirPath;
     public GameLoaderState(GameController gameController) {
         super(gameController);

@@ -1,9 +1,9 @@
 package com.arainko.xno.view.ui;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 public class UIWrapper extends BorderPane {
     private ArrowButton leftButton;
@@ -19,8 +19,8 @@ public class UIWrapper extends BorderPane {
         this.setRight(rightButton);
     }
 
-    public void changeMainView(Pane pane) {
-        this.setCenter(pane);
+    public void changeMainView(Node node) {
+        this.setCenter(node);
     }
 
     public ArrowButton getLeftButton() {
