@@ -96,7 +96,7 @@
 
 #help-text {
     -fx-font-size: 30px;
-    -fx-fill: white;
+    -fx-fill: #dddddd;
 }
 
 .scroll-pane > .viewport {

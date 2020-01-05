@@ -3,7 +3,7 @@ package com.arainko.xno.controller.interfaces;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public interface ViewComponent {
+public interface ArrowButtonHandler {
     default EventHandler<ActionEvent> getLeftButtonActionEvent() {
         return null;
     }

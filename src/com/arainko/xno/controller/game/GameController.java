@@ -7,6 +7,7 @@ import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
+import com.arainko.xno.controller.interfaces.ArrowButtonHandler;
 import com.arainko.xno.controller.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
@@ -59,8 +60,12 @@ public class GameController {
     public void setCurrentGameState(State gameState) {
         this.currentGameState = getState(gameState);
         currentGameState.onGameStateSet();
-        UIWrapper.getLeftButton().setOnActionEnhanced(currentGameState.getLeftButtonActionEvent());
-        UIWrapper.getRightButton().setOnActionEnhanced(currentGameState.getRightButtonActionEvent());
+        serCurrentArrowButtonComponent(getState(gameState));
+    }
+
+    public void serCurrentArrowButtonComponent(ArrowButtonHandler component) {
+        UIWrapper.getLeftButton().setOnActionHandler(component.getLeftButtonActionEvent());
+        UIWrapper.getRightButton().setOnActionHandler(component.getRightButtonActionEvent());
     }
 
     private GameState getState(State gameState) {

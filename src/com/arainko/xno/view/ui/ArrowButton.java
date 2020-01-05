@@ -13,7 +13,7 @@ public class ArrowButton extends Button {
         this.setAlignment(Pos.CENTER);
     }
 
-    public void setOnActionEnhanced(EventHandler<ActionEvent> event) {
+    public void setOnActionHandler(EventHandler<ActionEvent> event) {
         this.setOnAction(event);
         this.setVisible(event != null);
     }
