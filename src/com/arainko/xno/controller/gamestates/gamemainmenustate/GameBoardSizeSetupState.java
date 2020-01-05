@@ -23,7 +23,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     }
 
     @Override
-    public void onGameStatePrimaryClickHandler(Button button) {
+    public void onPrimaryClickHandler(Button button) {
         int clickedDim = Integer.parseInt(String.valueOf(button.getText().charAt(0)));
         setupGameController(clickedDim);
         getGameController().setCurrentGameState(GameController.State.XO_PLACING);

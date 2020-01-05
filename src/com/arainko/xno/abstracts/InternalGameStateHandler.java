@@ -1,10 +1,10 @@
 package com.arainko.xno.abstracts;
 
-import com.arainko.xno.controller.interfaces.InternalGameState;
+import com.arainko.xno.controller.interfaces.ClickHandler;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
 
-public abstract class InternalGameStateHandler<T extends GameStateHandler> implements InternalGameState {
+public abstract class InternalGameStateHandler<T extends GameStateHandler> implements ClickHandler {
     private T parentGameState;
 
     public InternalGameStateHandler(T parentGameState) {

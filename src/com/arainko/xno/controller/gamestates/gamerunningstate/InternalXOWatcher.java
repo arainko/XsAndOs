@@ -18,7 +18,7 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
     }
 
     @Override
-    public <T extends Button> void onInternalGameStatePrimaryClickHandler(T button) {
+    public <T extends Button> void onPrimaryClickHandler(T button) {
         Cords clickedButtonCords = getParentGameState().getGameController()
             .getViewBoard()
             .getElementCords((BoardButton) button);
@@ -32,12 +32,12 @@ public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState
 
         if (isXO) {
             getParentGameState().setCurrentInternalGameState(getParentGameState().getConnectionBuilder());
-            getParentGameState().getCurrentInternalGameState().onInternalGameStatePrimaryClickHandler(button);
+            getParentGameState().getCurrentInternalGameState().onPrimaryClickHandler(button);
         }
     }
 
     @Override
-    public <T extends Button> void onInternalGameStateSecondaryClickHandler(T button) {
+    public <T extends Button> void onSecondaryClickHandler(T button) {
         Cords clickedButtonCords = getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getModelBoard().getElementAt(clickedButtonCords);
 

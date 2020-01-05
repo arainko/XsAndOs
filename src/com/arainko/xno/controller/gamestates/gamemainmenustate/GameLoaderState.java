@@ -29,7 +29,7 @@ public class GameLoaderState extends GameStateHandler {
     }
 
     @Override
-    public <T extends Button> void onGameStatePrimaryClickHandler(T button) {
+    public <T extends Button> void onPrimaryClickHandler(T button) {
         try {
             FileInputStream fis = new FileInputStream(saveFileDirPath + "/" + button.getText());
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -44,7 +44,7 @@ public class GameLoaderState extends GameStateHandler {
     }
 
     @Override
-    public <T extends Button> void onGameStateSecondaryClickHandler(T button) {
+    public <T extends Button> void onSecondaryClickHandler(T button) {
 
     }
 

@@ -94,6 +94,11 @@
     -fx-font-weight:  bold;
 }
 
+#help-text {
+    -fx-font-size: 30px;
+    -fx-fill: white;
+}
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }

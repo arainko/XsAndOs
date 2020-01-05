@@ -25,7 +25,7 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
     }
 
     @Override
-    public void onInternalGameStatePrimaryClickHandler(Button button) {
+    public void onPrimaryClickHandler(Button button) {
         Cords clickedCords = getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getModelBoard().getElementAt(clickedCords);
 
@@ -36,7 +36,7 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
     }
 
     @Override
-    public void onInternalGameStateSecondaryClickHandler(Button button) {
+    public void onSecondaryClickHandler(Button button) {
         onStateAbortHandler();
     }
 

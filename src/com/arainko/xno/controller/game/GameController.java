@@ -50,9 +50,9 @@ public class GameController {
         buttonList.forEach(button -> button.setOnMouseClicked(mouseEvent -> {
             T currButton = (T) mouseEvent.getSource();
             if (mouseEvent.getButton() == MouseButton.PRIMARY)
-                currentGameState.onGameStatePrimaryClickHandler(currButton);
+                currentGameState.onPrimaryClickHandler(currButton);
             else if (mouseEvent.getButton() == MouseButton.SECONDARY)
-                currentGameState.onGameStateSecondaryClickHandler(currButton);
+                currentGameState.onSecondaryClickHandler(currButton);
         }));
     }
 

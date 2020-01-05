@@ -3,15 +3,15 @@ package com.arainko.xno.controller.gamestates.gamerunningstate;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.MoveKeeper;
-import com.arainko.xno.controller.interfaces.InternalGameState;
+import com.arainko.xno.controller.interfaces.ClickHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class GameRunningState extends GameStateHandler {
-    private InternalGameState XOWatcher;
-    private InternalGameState connectionBuilder;
-    private InternalGameState currentInternalGameState;
+    private ClickHandler XOWatcher;
+    private ClickHandler connectionBuilder;
+    private ClickHandler currentInternalGameState;
 
     private MoveKeeper moveKeeper;
 
@@ -39,14 +39,14 @@ public class GameRunningState extends GameStateHandler {
     }
 
     @Override
-    public void onGameStatePrimaryClickHandler(Button button) {
-        getCurrentInternalGameState().onInternalGameStatePrimaryClickHandler(button);
+    public void onPrimaryClickHandler(Button button) {
+        getCurrentInternalGameState().onPrimaryClickHandler(button);
         arrowButtonsSupervisor();
     }
 
     @Override
-    public void onGameStateSecondaryClickHandler(Button button) {
-        getCurrentInternalGameState().onInternalGameStateSecondaryClickHandler(button);
+    public void onSecondaryClickHandler(Button button) {
+        getCurrentInternalGameState().onSecondaryClickHandler(button);
         arrowButtonsSupervisor();
     }
 
@@ -81,19 +81,19 @@ public class GameRunningState extends GameStateHandler {
                 .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() + 1 < keeper.getKeptMovesSize()));
     }
 
-    public void setCurrentInternalGameState(InternalGameState currentInternalGameState) {
+    public void setCurrentInternalGameState(ClickHandler currentInternalGameState) {
         this.currentInternalGameState = currentInternalGameState;
     }
 
-    public InternalGameState getXOWatcher() {
+    public ClickHandler getXOWatcher() {
         return XOWatcher;
     }
 
-    public InternalGameState getConnectionBuilder() {
+    public ClickHandler getConnectionBuilder() {
         return connectionBuilder;
     }
 
-    public InternalGameState getCurrentInternalGameState() {
+    public ClickHandler getCurrentInternalGameState() {
         return currentInternalGameState;
     }
 

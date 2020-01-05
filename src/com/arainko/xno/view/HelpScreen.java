@@ -1,21 +1,26 @@
 package com.arainko.xno.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 public class HelpScreen extends VBox {
     public HelpScreen() {
         setupHelpScreen();
+        this.setAlignment(Pos.CENTER);
     }
 
     private void setupHelpScreen() {
-        Text header = new Text("GAME RULES:");
-        Text point1 = new Text("- connect every X and O with a line that contains a SINGLE 90 degree joint");
-        Text point2 = new Text("- the lines cannot intersect");
+        Text header = new Text("RULES");
+        Text point1 = new Text("connect every X and O\n" +
+                "with a line that contains only a\n" +
+                "SINGLE 90 degree joint and\n" +
+                "that doesn't intersect with\n" +
+                "other lines");
         header.setId("header-text");
-        point1.setId("menu-text");
-        point2.setId("menu-text");
-        getChildren().addAll(header, point1, point2);
-//        Text point3 = new Text("- the lines cannot intersect");
+        point1.setId("help-text");
+        point1.setTextAlignment(TextAlignment.CENTER);
+        getChildren().addAll(header, point1);
     }
 }
