@@ -5,6 +5,7 @@ import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.view.screens.HelpScreen;
 import com.arainko.xno.view.screens.MainMenuScreen;
+import com.arainko.xno.view.screens.MainMenuScreen.MainMenuButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -19,14 +20,14 @@ public class GameMainMenu extends GameStateHandler {
 
     public GameMainMenu(GameController gameController) {
         super(gameController);
-        mainMenuHandler = this;
-        rulesScreenHandler = getRulesScreenHandler();
-        controlsScreenHandler = getControlsScreenHandler();
     }
 
     @Override
     public void onGameStateSet() {
         mainMenuScreen = new MainMenuScreen();
+        mainMenuHandler = this;
+        rulesScreenHandler = getRulesScreenHandler();
+        controlsScreenHandler = getControlsScreenHandler();
         rulesHelpScreen = new HelpScreen("RULES", HelpScreen.Type.RULES);
         controlsHelpScreen = new HelpScreen("CONTROLS", HelpScreen.Type.CONTROLS);
         getGameController().registerButtonsForGameState(mainMenuScreen.getButtonList());
@@ -35,7 +36,7 @@ public class GameMainMenu extends GameStateHandler {
 
     @Override
     public <T extends Button> void onPrimaryClickHandler(T button) {
-        MainMenuScreen.MainMenuButton clickedButton = (MainMenuScreen.MainMenuButton) button;
+        MainMenuButton clickedButton = (MainMenuButton) button;
         switch (clickedButton.getButtonFunctionality()) {
             case CREATE:
                 getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
