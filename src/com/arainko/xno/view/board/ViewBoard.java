@@ -1,6 +1,7 @@
 package com.arainko.xno.view.board;
 
 import com.arainko.xno.abstracts.Board;
+import com.arainko.xno.view.buttons.BoardButton;
 
 import java.util.ArrayList;
 import java.util.List;

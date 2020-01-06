@@ -1,17 +1,20 @@
-package com.arainko.xno.controller.gamestates.gamerunningstate;
+package com.arainko.xno.controller.gamestates.gamerunning;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.abstracts.Board.Cords;
+import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.view.board.BoardButton;
+import com.arainko.xno.view.buttons.BoardButton;
 import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.arainko.xno.model.predicates.BoardPredicates.done;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.*;
 
 public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunningState> {
@@ -65,6 +68,8 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
         getParentGameState().getMoveKeeper().keepMove(connection, MoveKeeper.Operation.BUILD);
         Boards.handleConnectionBuilding(getModelBoard(), getViewBoard(), connection);
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
+        if (getModelBoard().isBoard(done()))
+            getParentGameState().getGameController().setCurrentGameState(GameController.State.END);
         onStateExitCleanUp();
     }
 

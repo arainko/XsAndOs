@@ -1,9 +1,9 @@
-package com.arainko.xno.controller.gamestates.gamemainmenustate;
+package com.arainko.xno.controller.gamestates.mainmenu;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Bundler;
-import com.arainko.xno.view.menus.LoadMenu;
+import com.arainko.xno.view.screens.LoadScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -23,9 +23,9 @@ public class GameLoaderState extends GameStateHandler {
     public void onGameStateSet() {
         saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
         new File(saveFileDirPath).mkdir();
-        LoadMenu loadMenu = new LoadMenu();
-        getGameController().registerButtonsForGameState(loadMenu.getButtonList());
-        getGameController().getUIWrapper().setCenter(loadMenu.getWrapper());
+        LoadScreen loadScreen = new LoadScreen();
+        getGameController().registerButtonsForGameState(loadScreen.getButtonList());
+        getGameController().getUIWrapper().setCenter(loadScreen.getWrapper());
     }
 
     @Override

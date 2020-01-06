@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.gamerunningstate;
+package com.arainko.xno.controller.gamestates.gamerunning;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;

@@ -5,7 +5,7 @@ import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
-import com.arainko.xno.view.board.BoardButton;
+import com.arainko.xno.view.buttons.BoardButton;
 import com.arainko.xno.view.board.ViewBoard;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

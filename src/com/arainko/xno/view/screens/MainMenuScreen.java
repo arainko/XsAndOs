@@ -1,8 +1,9 @@
-package com.arainko.xno.view.menus;
+package com.arainko.xno.view.screens;
 
+import com.arainko.xno.view.buttons.MenuButton;
 import javafx.scene.text.Text;
 
-public class MainMenu extends Menu<MainMenu.MainMenuButton> {
+public class MainMenuScreen extends Screen<MainMenuScreen.MainMenuButton> {
     public static class MainMenuButton extends MenuButton {
         public enum Functionality {
             CREATE, LOAD, HELP
@@ -20,7 +21,7 @@ public class MainMenu extends Menu<MainMenu.MainMenuButton> {
 
     }
 
-    public MainMenu() {
+    public MainMenuScreen() {
         setupInfoText();
         setupButtons();
     }

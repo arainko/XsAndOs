@@ -1,11 +1,11 @@
-package com.arainko.xno.controller.gamestates.gamerunningstate;
+package com.arainko.xno.controller.gamestates.gamerunning;
 
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.view.board.BoardButton;
+import com.arainko.xno.view.buttons.BoardButton;
 import javafx.scene.control.Button;
 
 import static com.arainko.xno.abstracts.Board.Cords;

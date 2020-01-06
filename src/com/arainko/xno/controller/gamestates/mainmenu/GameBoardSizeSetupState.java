@@ -1,11 +1,11 @@
-package com.arainko.xno.controller.gamestates.gamemainmenustate;
+package com.arainko.xno.controller.gamestates.mainmenu;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
-import com.arainko.xno.view.menus.SetupMenu;
+import com.arainko.xno.view.screens.SetupScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -17,14 +17,14 @@ public class GameBoardSizeSetupState extends GameStateHandler {
 
     @Override
     public void onGameStateSet() {
-        SetupMenu setupMenu = new SetupMenu();
+        SetupScreen setupMenu = new SetupScreen();
         getGameController().registerButtonsForGameState(setupMenu.getButtonList());
         getGameController().getUIWrapper().changeMainView(setupMenu);
     }
 
     @Override
     public void onPrimaryClickHandler(Button button) {
-        int clickedDim = Integer.parseInt(String.valueOf(button.getText().charAt(0)));
+        int clickedDim = ((SetupScreen.SizeButton) button).getDimContainer();
         setupGameController(clickedDim);
         getGameController().setCurrentGameState(GameController.State.XO_PLACING);
     }

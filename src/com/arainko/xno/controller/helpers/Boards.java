@@ -3,7 +3,7 @@ package com.arainko.xno.controller.helpers;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
-import com.arainko.xno.view.board.BoardButton;
+import com.arainko.xno.view.buttons.BoardButton;
 import com.arainko.xno.view.board.ViewBoard;
 
 import java.util.List;

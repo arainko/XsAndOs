@@ -1,5 +1,6 @@
 package com.arainko.xno.view.board;
 
+import com.arainko.xno.view.buttons.BoardButton;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 

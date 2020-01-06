@@ -1,4 +1,4 @@
-package com.arainko.xno.view.menus;
+package com.arainko.xno.view.screens;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Menu<T extends Button> extends VBox {
+public abstract class Screen<T extends Button> extends VBox {
     private List<T> buttonList;
 
-    public Menu() {
+    public Screen() {
         buttonList = new ArrayList<>();
         this.setId("setup-menu");
         this.setAlignment(Pos.CENTER);

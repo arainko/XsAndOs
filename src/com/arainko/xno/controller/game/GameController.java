@@ -1,13 +1,14 @@
 package com.arainko.xno.controller.game;
 
-import com.arainko.xno.controller.gamestates.gamemainmenustate.GameBoardSizeSetupState;
-import com.arainko.xno.controller.gamestates.gamemainmenustate.GameLoaderState;
-import com.arainko.xno.controller.gamestates.gamemainmenustate.GameMainMenu;
-import com.arainko.xno.controller.gamestates.gamerunningstate.GameRunningState;
+import com.arainko.xno.controller.gamestates.gamesetupstate.GameEndState;
+import com.arainko.xno.controller.gamestates.mainmenu.GameBoardSizeSetupState;
+import com.arainko.xno.controller.gamestates.mainmenu.GameLoaderState;
+import com.arainko.xno.controller.gamestates.mainmenu.GameMainMenu;
+import com.arainko.xno.controller.gamestates.gamerunning.GameRunningState;
 import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
-import com.arainko.xno.controller.interfaces.ArrowButtonHandler;
+import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.controller.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
@@ -19,22 +20,22 @@ import java.util.List;
 
 public class GameController {
     public enum State {
-        MAIN_MENU, LOADER, BOARD_SIZE, XO_PLACING, GAME_RUNNING
+        MAIN_MENU, LOADER, BOARD_SIZE, XO_PLACING, GAME_RUNNING, END
     }
-    UIWrapper UIWrapper;
 
     GameState gameMainMenuState;
     GameState gameLoaderState;
     GameState gameBoardSizeSetupState;
     GameState gameSetupState;
     GameState gameRunningState;
-//    GameState gameEndState;
+    GameState gameEndState;
     GameState currentGameState;
 
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
     private MoveKeeper moveKeeper;
     private Bundler bundler;
+    private UIWrapper UIWrapper;
 
     public GameController() {
         this.UIWrapper = new UIWrapper();
@@ -44,6 +45,7 @@ public class GameController {
         this.gameBoardSizeSetupState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
         this.gameSetupState = new GameSetupState(this);
+        this.gameEndState = new GameEndState(this);
         setCurrentGameState(State.MAIN_MENU);
     }
 
@@ -60,10 +62,10 @@ public class GameController {
     public void setCurrentGameState(State gameState) {
         this.currentGameState = getState(gameState);
         currentGameState.onGameStateSet();
-        serCurrentArrowButtonComponent(getState(gameState));
+        setCurrentNavButtonHandler(getState(gameState));
     }
 
-    public void serCurrentArrowButtonComponent(ArrowButtonHandler component) {
+    public void setCurrentNavButtonHandler(NavButtonHandler component) {
         UIWrapper.getLeftButton().setOnActionHandler(component.getLeftButtonActionEvent());
         UIWrapper.getRightButton().setOnActionHandler(component.getRightButtonActionEvent());
     }
@@ -80,6 +82,8 @@ public class GameController {
                 return gameRunningState;
             case LOADER:
                 return gameLoaderState;
+            case END:
+                return gameEndState;
             default:
                 return currentGameState;
         }

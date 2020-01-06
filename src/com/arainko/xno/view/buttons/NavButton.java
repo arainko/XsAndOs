@@ -1,12 +1,12 @@
-package com.arainko.xno.view.ui;
+package com.arainko.xno.view.buttons;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
-public class ArrowButton extends Button {
-    public ArrowButton(String text) {
+public class NavButton extends Button {
+    public NavButton(String text) {
         super(text);
         this.setId("menu-button");
         this.setPrefHeight(300);

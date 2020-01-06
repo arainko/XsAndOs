@@ -1,5 +1,6 @@
-package com.arainko.xno.view.menus;
+package com.arainko.xno.view.screens;
 
+import com.arainko.xno.view.buttons.MenuButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.text.Text;
 
@@ -8,12 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LoadMenu extends Menu<MenuButton> {
+public class LoadScreen extends Screen<MenuButton> {
     private ScrollPane wrapper;
     private Text infoText;
     private String saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
 
-    public LoadMenu() {
+    public LoadScreen() {
         setupInfoText();
         setupButtons();
         setupWrapper();

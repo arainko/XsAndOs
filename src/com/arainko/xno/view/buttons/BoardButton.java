@@ -1,4 +1,4 @@
-package com.arainko.xno.view.board;
+package com.arainko.xno.view.buttons;
 
 import com.arainko.xno.abstracts.BoardElement;
 import javafx.scene.control.Button;
