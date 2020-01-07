@@ -73,7 +73,11 @@ public class GameSetupState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
+        return event -> {
+            getGameController().getUIWrapper().getLeftButton().setDisable(false);
+            getGameController().getUIWrapper().getRightButton().setDisable(false);
+            getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
+        };
     }
 
     @Override

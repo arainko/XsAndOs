@@ -5,13 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws IOException, ClassNotFoundException {
-        primaryStage.setTitle("Game Board");
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Xs and Os");
         GameController gc = new GameController();
         Scene scene = new Scene(gc.getUIWrapper(), 600, 600);
         scene.setFill(Color.rgb(66,66,66));

@@ -65,9 +65,9 @@ public class GameController {
         setCurrentNavButtonHandler(getState(gameState));
     }
 
-    public void setCurrentNavButtonHandler(NavButtonHandler component) {
-        UIWrapper.getLeftButton().setOnActionHandler(component.getLeftButtonActionEvent());
-        UIWrapper.getRightButton().setOnActionHandler(component.getRightButtonActionEvent());
+    public void setCurrentNavButtonHandler(NavButtonHandler handler) {
+        UIWrapper.getLeftButton().setOnActionHandler(handler.getLeftButtonActionEvent());
+        UIWrapper.getRightButton().setOnActionHandler(handler.getRightButtonActionEvent());
     }
 
     private GameState getState(State gameState) {

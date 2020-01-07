@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+import static com.arainko.xno.model.predicates.BoardPredicates.done;
+
 public class GameRunningState extends GameStateHandler {
     private ClickHandler XOWatcher;
     private ClickHandler connectionBuilder;
@@ -42,6 +44,11 @@ public class GameRunningState extends GameStateHandler {
     public void onPrimaryClickHandler(Button button) {
         getCurrentInternalGameState().onPrimaryClickHandler(button);
         arrowButtonsSupervisor();
+        if (getGameController().getModelBoard().isBoard(done())) {
+            getGameController().getUIWrapper().getLeftButton().setDisable(false);
+            getGameController().getUIWrapper().getRightButton().setDisable(false);
+            getGameController().setCurrentGameState(GameController.State.END);
+        }
     }
 
     @Override
