@@ -1,6 +1,7 @@
 package com.arainko.xno.controller.gamestates.gamerunning;
 
 import com.arainko.xno.abstracts.Board.Cords;
+import com.arainko.xno.abstracts.Element;
 import com.arainko.xno.abstracts.InternalGameStateHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.arainko.xno.model.predicates.ConnectionPredicates.empty;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.ended;
@@ -18,10 +20,12 @@ import static com.arainko.xno.model.predicates.ConnectionPredicates.ended;
 public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunningState> {
     private List<Cords> lastClickedNeighbors;
     private Connection connection;
+    private List<Cords> pausedConnectionCords;
 
     public InternalConnectionBuilder(GameRunningState parentGameState) {
         super(parentGameState);
         connection = new Connection();
+        pausedConnectionCords = new ArrayList<>();
         lastClickedNeighbors = new ArrayList<>();
     }
 
@@ -75,6 +79,18 @@ public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunn
         getViewBoard().setButtonsColorAtCords(lastClickedNeighbors, "default-button");
         connection.remove();
         onStateExitCleanUp();
+    }
+
+    public void pauseState() {
+        pausedConnectionCords = connection.getConnectionCells().stream()
+                .map(Element::getCords)
+                .collect(Collectors.toList());
+        connection.remove();
+    }
+
+    public void resumeState() {
+        connection = new Connection(getModelBoard().getElementsAt(pausedConnectionCords));
+        pausedConnectionCords = new ArrayList<>();
     }
 
     private void onStateExitCleanUp() {

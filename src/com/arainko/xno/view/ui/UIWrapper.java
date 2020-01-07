@@ -9,15 +9,18 @@ import javafx.scene.layout.BorderPane;
 public class UIWrapper extends BorderPane {
     private NavButton leftButton;
     private NavButton rightButton;
+    private GameButtonBar gameButtonBar;
 
     public UIWrapper() {
         this.setBackground(Background.EMPTY);
         leftButton = new NavButton("<");
         rightButton = new NavButton(">");
+        gameButtonBar = new GameButtonBar();
         BorderPane.setAlignment(leftButton, Pos.CENTER);
         BorderPane.setAlignment(rightButton, Pos.CENTER);
         this.setLeft(leftButton);
         this.setRight(rightButton);
+        this.setTop(gameButtonBar);
     }
 
     public void changeMainView(Node node) {
@@ -30,5 +33,9 @@ public class UIWrapper extends BorderPane {
 
     public NavButton getRightButton() {
         return rightButton;
+    }
+
+    public GameButtonBar getGameButtonBar() {
+        return gameButtonBar;
     }
 }

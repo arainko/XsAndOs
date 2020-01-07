@@ -8,7 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+import java.util.List;
+
 import static com.arainko.xno.model.predicates.BoardPredicates.done;
+import static com.arainko.xno.view.ui.GameButtonBar.BarButton;
 
 public class GameRunningState extends GameStateHandler {
     private ClickHandler XOWatcher;
@@ -33,11 +36,14 @@ public class GameRunningState extends GameStateHandler {
         getGameController().getUIWrapper().changeMainView(getGameController()
                 .getViewBoard()
                 .getButtonGrid());
-
-        Button btn = new Button("TEST");
-        btn.setOnAction(event -> getGameController().getBundler().saveBundle());
-        getGameController().getUIWrapper().setBottom(btn);
+        setupGameButtonBar();
         arrowButtonsSupervisor();
+    }
+
+    private void onGameStateExit() {
+        getGameController().getUIWrapper().getLeftButton().setDisable(false);
+        getGameController().getUIWrapper().getRightButton().setDisable(false);
+        getGameController().getUIWrapper().getGameButtonBar().setVisible(false);
     }
 
     @Override
@@ -45,8 +51,7 @@ public class GameRunningState extends GameStateHandler {
         getCurrentInternalGameState().onPrimaryClickHandler(button);
         arrowButtonsSupervisor();
         if (getGameController().getModelBoard().isBoard(done())) {
-            getGameController().getUIWrapper().getLeftButton().setDisable(false);
-            getGameController().getUIWrapper().getRightButton().setDisable(false);
+            onGameStateExit();
             getGameController().setCurrentGameState(GameController.State.END);
         }
     }
@@ -86,6 +91,28 @@ public class GameRunningState extends GameStateHandler {
                 .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() > -1));
         getGameController().getUIWrapper().getRightButton()
                 .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() + 1 < keeper.getKeptMovesSize()));
+    }
+
+    private void setupGameButtonBar() {
+        getGameController().getUIWrapper().getGameButtonBar().setVisible(true);
+        List<BarButton> buttonList = getGameController().getUIWrapper()
+                .getGameButtonBar()
+                .getButtonList();
+        for (BarButton button : buttonList) {
+            if (button.getFunctionality() == BarButton.Functionality.SAVE)
+                button.setOnAction(event -> {
+                if (currentInternalGameState == connectionBuilder) {
+                    ((InternalConnectionBuilder) connectionBuilder).pauseState();
+                    getGameController().getBundler().saveBundle();
+                    ((InternalConnectionBuilder) connectionBuilder).resumeState();
+                } else getGameController().getBundler().saveBundle();
+            });
+            else if (button.getFunctionality() == BarButton.Functionality.MAIN_MENU)
+                button.setOnAction(event -> {
+                onGameStateExit();
+                getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
+            });
+        }
     }
 
     public void setCurrentInternalGameState(ClickHandler currentInternalGameState) {
