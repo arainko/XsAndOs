@@ -1,5 +1,6 @@
 package com.arainko.tests;
 
+import com.arainko.xno.abstracts.Board;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.model.elements.Connection;
@@ -8,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static com.arainko.xno.abstracts.Board.*;
+import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodateCords;
+import static com.arainko.xno.model.predicates.BoardPredicates.done;
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -74,9 +78,29 @@ public class ModelTests {
 
         assertTrue(cell1.isCell(connectedByJoint(), new Cell(1,1, Cell.Contents.EMPTY)));
         assertFalse(cell1.isCell(connectedByJoint(), new Cell(1,0, Cell.Contents.EMPTY)));
-        assertFalse(cell1.isCell(nextToOnPlaneX(), new Cell(1,0, Cell.Contents.EMPTY)));
 
+        assertTrue(cell1.isCell(nextToOnPlaneX(), new Cell(1,0, Cell.Contents.EMPTY)));
+        assertTrue(cell1.isCell(nextToOnPlaneY(), new Cell(0,1, Cell.Contents.EMPTY)));
+        assertFalse(cell1.isCell(nextToOnPlaneY(), new Cell(1,1, Cell.Contents.EMPTY)));
+        assertFalse(cell1.isCell(nextToOnPlaneX(), new Cell(1,1, Cell.Contents.EMPTY)));
+    }
 
+    @Test
+    public void boardPredicatesTest() {
+        List<Cords> cordList = List.of(new Cords(0,0), new Cords(1,0), new Cords(2,0),
+                new Cords(2,1), new Cords(2,2));
+        modelBoard.getElementAt(new Cords(0,0)).setCellContents(Cell.Contents.CIRCLE);
+        modelBoard.getElementAt(new Cords(2,2)).setCellContents(Cell.Contents.CROSS);
+        List<Cell> connectionCells = modelBoard.getElementsAt(cordList);
+        exampleConnection = new Connection(connectionCells);
+
+        assertFalse(modelBoard.isBoard(ableToAccommodateCords(-1, 10)));
+        assertFalse(modelBoard.isBoard(ableToAccommodateCords(5, 20)));
+        assertTrue(modelBoard.isBoard(ableToAccommodateCords(5, 5)));
+
+        assertFalse(modelBoard.isBoard(done()));
+        modelBoard.addConnection(exampleConnection);
+        assertTrue(modelBoard.isBoard(done()));
     }
 
 }

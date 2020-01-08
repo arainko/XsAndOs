@@ -13,7 +13,7 @@ import static com.arainko.xno.model.predicates.CellPredicates.partOfConnection;
 import static java.util.function.Predicate.not;
 
 public class ModelBoard extends Board<Cell> {
-    public List<Connection> connections;
+    private List<Connection> connections;
 
     public ModelBoard(int dimX, int dimY) {
         super(dimX, dimY);

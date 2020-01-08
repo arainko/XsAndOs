@@ -21,7 +21,7 @@ public class BoardPredicates {
             long goodConnectionsCount = b.getConnections().stream()
                     .filter(upToWinCondition())
                     .count();
-            return crossCount == goodConnectionsCount;
+            return goodConnectionsCount != 0 && crossCount == goodConnectionsCount;
         };
     }
 }
