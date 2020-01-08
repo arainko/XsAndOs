@@ -2,7 +2,7 @@ package com.arainko.xno.controller.gamestates.gamerunning;
 
 import com.arainko.xno.abstracts.Board.Cords;
 import com.arainko.xno.abstracts.Element;
-import com.arainko.xno.abstracts.InternalGameStateHandler;
+import com.arainko.xno.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.empty;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.ended;
 
-public class InternalConnectionBuilder extends InternalGameStateHandler<GameRunningState> {
+public class InternalConnectionBuilder extends InternalClickHandler<GameRunningState> {
     private List<Cords> lastClickedNeighbors;
     private Connection connection;
     private List<Cords> pausedConnectionCords;

@@ -1,6 +1,6 @@
 package com.arainko.xno.controller.gamestates.gamerunning;
 
-import com.arainko.xno.abstracts.InternalGameStateHandler;
+import com.arainko.xno.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
@@ -12,7 +12,7 @@ import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
-public class InternalXOWatcher extends InternalGameStateHandler<GameRunningState> {
+public class InternalXOWatcher extends InternalClickHandler<GameRunningState> {
     public InternalXOWatcher(GameRunningState parentGameState) {
         super(parentGameState);
     }
