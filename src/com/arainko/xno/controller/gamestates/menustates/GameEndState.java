@@ -1,14 +1,12 @@
-package com.arainko.xno.controller.gamestates.gamesetupstate;
+package com.arainko.xno.controller.gamestates.menustates;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.view.screens.EndGameScreen;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-import static com.arainko.xno.view.screens.EndGameScreen.*;
+import static com.arainko.xno.view.screens.EndGameScreen.EndGameMenuButton;
 
 public class GameEndState extends GameStateHandler {
     public GameEndState(GameController gameController) {

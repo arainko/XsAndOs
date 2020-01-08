@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.gamesetupstate;
+package com.arainko.xno.controller.gamestates.boardstates;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -18,9 +18,9 @@ import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
 
-public class GameSetupState extends GameStateHandler {
+public class GameXOPlacingState extends GameStateHandler {
     private Map<Cell.Contents, Integer> contentsCount;
-    public GameSetupState(GameController gameController) {
+    public GameXOPlacingState(GameController gameController) {
         super(gameController);
     }
 

@@ -1,11 +1,11 @@
 package com.arainko.xno.controller.game;
 
-import com.arainko.xno.controller.gamestates.gamesetupstate.GameEndState;
-import com.arainko.xno.controller.gamestates.mainmenu.GameBoardSizeSetupState;
-import com.arainko.xno.controller.gamestates.mainmenu.GameLoaderState;
-import com.arainko.xno.controller.gamestates.mainmenu.GameMainMenu;
-import com.arainko.xno.controller.gamestates.gamerunning.GameRunningState;
-import com.arainko.xno.controller.gamestates.gamesetupstate.GameSetupState;
+import com.arainko.xno.controller.gamestates.menustates.GameEndState;
+import com.arainko.xno.controller.gamestates.menustates.GameBoardSizeSetupState;
+import com.arainko.xno.controller.gamestates.menustates.GameLoaderState;
+import com.arainko.xno.controller.gamestates.menustates.GameMainMenu;
+import com.arainko.xno.controller.gamestates.boardstates.GameRunningState;
+import com.arainko.xno.controller.gamestates.boardstates.GameXOPlacingState;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.interfaces.NavButtonHandler;
@@ -44,7 +44,7 @@ public class GameController {
         this.gameLoaderState = new GameLoaderState(this);
         this.gameBoardSizeSetupState = new GameBoardSizeSetupState(this);
         this.gameRunningState = new GameRunningState(this);
-        this.gameSetupState = new GameSetupState(this);
+        this.gameSetupState = new GameXOPlacingState(this);
         this.gameEndState = new GameEndState(this);
         setCurrentGameState(State.MAIN_MENU);
     }

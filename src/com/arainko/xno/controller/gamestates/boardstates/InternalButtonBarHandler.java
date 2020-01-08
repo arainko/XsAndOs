@@ -1,22 +1,17 @@
-package com.arainko.xno.controller.gamestates.gamerunning;
+package com.arainko.xno.controller.gamestates.boardstates;
 
 import com.arainko.xno.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.game.GameController;
-import com.arainko.xno.view.ui.GameButtonBar;
 import javafx.scene.control.Button;
 
-import static com.arainko.xno.view.ui.GameButtonBar.*;
+import static com.arainko.xno.view.ui.GameButtonBar.BarButton;
 
 public class InternalButtonBarHandler extends InternalClickHandler<GameRunningState> {
 
-    private GameButtonBar gameButtonBar;
     private InternalConnectionBuilder connectionBuilder;
 
     public InternalButtonBarHandler(GameRunningState parentGameState) {
         super(parentGameState);
-        gameButtonBar = parentGameState.getGameController()
-                .getUIWrapper()
-                .getGameButtonBar();
         connectionBuilder = (InternalConnectionBuilder) getParentGameState().getConnectionBuilder();
     }
 

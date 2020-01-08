@@ -1,7 +1,8 @@
-package com.arainko.xno.controller.gamestates.mainmenu;
+package com.arainko.xno.controller.gamestates.menustates;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.helpers.NavButtonHandlerFactory;
 import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.view.screens.HelpScreen;
 import com.arainko.xno.view.screens.MainMenuScreen;
@@ -52,23 +53,13 @@ public class GameMainMenu extends GameStateHandler {
     }
 
     private NavButtonHandler getRulesScreenHandler() {
-        return new NavButtonHandler() {
-            @Override
-            public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-                return event -> {
-                    getGameController().getUIWrapper().changeMainView(mainMenuScreen);
-                    getGameController().setCurrentNavButtonHandler(mainMenuHandler);
-                };
-            }
-
-            @Override
-            public EventHandler<ActionEvent> getRightButtonActionEvent() {
-                return event -> {
-                    getGameController().getUIWrapper().changeMainView(controlsHelpScreen);
-                    getGameController().setCurrentNavButtonHandler(controlsScreenHandler);
-                };
-            }
-        };
+        return controlsScreenHandler = NavButtonHandlerFactory
+                .getLeftButtonHandler(getGameController(),
+                        rulesHelpScreen, rulesScreenHandler);
+        rulesScreenHandler = NavButtonHandlerFactory
+                .getLeftRightButtonHandler(getGameController(),
+                        mainMenuScreen, mainMenuHandler,
+                        controlsHelpScreen, controlsScreenHandler);
     }
 
     private NavButtonHandler getControlsScreenHandler() {

@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.mainmenu;
+package com.arainko.xno.controller.gamestates.menustates;
 
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;

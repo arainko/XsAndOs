@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.gamerunning;
+package com.arainko.xno.controller.gamestates.boardstates;
 
 import com.arainko.xno.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
