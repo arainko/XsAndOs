@@ -2,7 +2,7 @@ package com.arainko.xno.controller.gamestates.boardstates;
 
 import com.arainko.xno.abstracts.Board.Cords;
 import com.arainko.xno.abstracts.Element;
-import com.arainko.xno.abstracts.InternalClickHandler;
+import com.arainko.xno.controller.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;

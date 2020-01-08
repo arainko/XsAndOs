@@ -7,8 +7,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class Board<T extends BoardElement> implements Serializable {
+    public static class Cords extends Element {
+        public Cords(int cordX, int cordY) {
+            super(cordX, cordY);
+        }
+
+        public int X() {
+            return this.getCordX();
+        }
+        public int Y() {
+            return this.getCordY();
+        }
+
+        @Override
+        public String toString() {
+            return "("+X()+", "+Y()+")";
+        }
+    }
     private int dimX;
     private int dimY;
+
     private List<List<T>> boardElements;
 
     public Board(int dimX, int dimY) {
@@ -73,23 +91,5 @@ public abstract class Board<T extends BoardElement> implements Serializable {
     public void printBoard() {
         for (List<T> row : boardElements)
             System.out.println(row);
-    }
-
-    public static class Cords extends Element {
-        public Cords(int cordX, int cordY) {
-            super(cordX, cordY);
-        }
-
-        public int X() {
-            return this.getCordX();
-        }
-        public int Y() {
-            return this.getCordY();
-        }
-
-        @Override
-        public String toString() {
-            return "("+X()+", "+Y()+")";
-        }
     }
 }

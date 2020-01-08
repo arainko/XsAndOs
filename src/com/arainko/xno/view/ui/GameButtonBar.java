@@ -18,6 +18,8 @@ public class GameButtonBar extends HBox {
     private void setupButtons() {
         MenuButton saveButton = new MenuButton("Save", MenuButton.Functionality.SAVE, 50, 30);
         MenuButton mainMenuButton = new MenuButton("Main Menu", MenuButton.Functionality.MAIN_MENU, 75, 30);
+        saveButton.setId("bar-button");
+        mainMenuButton.setId("bar-button");
         getChildren().addAll(saveButton, mainMenuButton);
         buttonList.add(saveButton);
         buttonList.add(mainMenuButton);

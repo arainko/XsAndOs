@@ -1,6 +1,6 @@
 package com.arainko.xno.controller.gamestates.boardstates;
 
-import com.arainko.xno.abstracts.InternalClickHandler;
+import com.arainko.xno.controller.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.model.elements.Cell;
@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
+import static java.util.function.Predicate.not;
 
 public class InternalXOWatcher extends InternalClickHandler<GameRunningState> {
     public InternalXOWatcher(GameRunningState parentGameState) {
@@ -28,7 +29,7 @@ public class InternalXOWatcher extends InternalClickHandler<GameRunningState> {
                 .getElementAt(clickedButtonCords);
 
         boolean isXO = clickedCell
-                .isCell((containingCircle().or(containingCross())).and(notPartOfConnection()));
+                .isCell((containingCircle().or(containingCross())).and(not(partOfConnection())));
 
         if (isXO) {
             getParentGameState().setCurrentInternalGameState(getParentGameState().getConnectionBuilder());
@@ -41,7 +42,7 @@ public class InternalXOWatcher extends InternalClickHandler<GameRunningState> {
         Cords clickedButtonCords = getViewBoard().getElementCords((BoardButton) button);
         Cell clickedCell = getModelBoard().getElementAt(clickedButtonCords);
 
-        if (!clickedCell.isCell(notPartOfConnection())) {
+        if (clickedCell.isCell(partOfConnection())) {
             Connection connectionToRemove = getModelBoard()
                     .getSpecificConnection(containingCell(clickedCell));
             getParentGameState().getMoveKeeper().deleteFurtherMoves();

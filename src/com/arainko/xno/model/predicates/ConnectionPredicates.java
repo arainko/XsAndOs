@@ -54,13 +54,4 @@ public class ConnectionPredicates {
         return conn -> conn.getConnectionCells().contains(cell);
     }
 
-    public static Predicate<Connection> withCell(Predicate<Cell> cellPred) {
-        return conn -> conn.getConnectionCells().stream()
-                .anyMatch(cellPred);
-    }
-
-    public static BiPredicate<Connection, Connection> interferingWith() {
-        return (conn1, conn2) -> !Collections.disjoint(conn1.getConnectionCells(), conn2.getConnectionCells());
-    }
-
 }

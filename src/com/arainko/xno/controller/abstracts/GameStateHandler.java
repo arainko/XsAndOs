@@ -1,4 +1,4 @@
-package com.arainko.xno.abstracts;
+package com.arainko.xno.controller.abstracts;
 
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.interfaces.GameState;

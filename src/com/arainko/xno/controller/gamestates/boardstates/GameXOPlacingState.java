@@ -1,6 +1,6 @@
 package com.arainko.xno.controller.gamestates.boardstates;
 
-import com.arainko.xno.abstracts.GameStateHandler;
+import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Boards;
 import com.arainko.xno.controller.helpers.StateManager;

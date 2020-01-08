@@ -1,7 +1,6 @@
 package com.arainko.xno.controller.gamestates.boardstates;
 
-import com.arainko.xno.abstracts.InternalClickHandler;
-import com.arainko.xno.controller.game.GameController;
+import com.arainko.xno.controller.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.view.buttons.MenuButton;
 import javafx.scene.control.Button;

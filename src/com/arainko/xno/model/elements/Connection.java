@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import static com.arainko.xno.model.predicates.CellPredicates.*;
+import static java.util.function.Predicate.not;
 
 public class Connection implements Serializable {
     public enum Type {
@@ -33,12 +33,8 @@ public class Connection implements Serializable {
         return pred.test(this);
     }
 
-    public boolean isConnection(BiPredicate<Connection, Connection> pred, Connection that) {
-        return pred.test(this, that);
-    }
-
     public void addConnectionUnit(Cell cell) {
-        if (cell.isCell(notPartOfConnection())){
+        if (cell.isCell(not(partOfConnection()))){
             connectionCells.add(cell);
             connectionTypes.put(cell, Type.NONE);
             cell.setConnectionFlag(true);
@@ -55,7 +51,7 @@ public class Connection implements Serializable {
         for (int i = 1; i < connectionCells.size()-1; i++) {
             Cell currCell = connectionCells.get(i);
             Cell nextCell = connectionCells.get(i+1);
-            if (currCell.isCell(nextToOnPaneX(), nextCell) || currCell.isCell(nextToOnPaneY(), nextCell))
+            if (currCell.isCell(nextToOnPlaneX(), nextCell) || currCell.isCell(nextToOnPlaneY(), nextCell))
                 connectionTypes.put(currCell, Type.LINE);
         }
     }

@@ -1,5 +1,6 @@
-package com.arainko.xno.abstracts;
+package com.arainko.xno.controller.abstracts;
 
+import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.interfaces.ClickHandler;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
