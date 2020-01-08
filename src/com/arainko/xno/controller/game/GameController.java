@@ -8,6 +8,8 @@ import com.arainko.xno.controller.gamestates.boardstates.GameRunningState;
 import com.arainko.xno.controller.gamestates.boardstates.GameXOPlacingState;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
+import com.arainko.xno.controller.helpers.StateManager;
+import com.arainko.xno.controller.helpers.StateManager.State;
 import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.controller.interfaces.GameState;
 import com.arainko.xno.model.board.ModelBoard;
@@ -19,33 +21,19 @@ import javafx.scene.input.MouseButton;
 import java.util.List;
 
 public class GameController {
-    public enum State {
-        MAIN_MENU, LOADER, BOARD_SIZE, XO_PLACING, GAME_RUNNING, END
-    }
-
-    GameState gameMainMenuState;
-    GameState gameLoaderState;
-    GameState gameBoardSizeSetupState;
-    GameState gameSetupState;
-    GameState gameRunningState;
-    GameState gameEndState;
-    GameState currentGameState;
-
+    private UIWrapper UIWrapper;
     private ViewBoard viewBoard;
     private ModelBoard modelBoard;
+    private StateManager stateManager;
     private MoveKeeper moveKeeper;
     private Bundler bundler;
-    private UIWrapper UIWrapper;
+
+    private GameState currentGameState;
 
     public GameController() {
         this.UIWrapper = new UIWrapper();
+        this.stateManager = new StateManager(this);
         this.bundler = new Bundler(this);
-        this.gameMainMenuState = new GameMainMenu(this);
-        this.gameLoaderState = new GameLoaderState(this);
-        this.gameBoardSizeSetupState = new GameBoardSizeSetupState(this);
-        this.gameRunningState = new GameRunningState(this);
-        this.gameSetupState = new GameXOPlacingState(this);
-        this.gameEndState = new GameEndState(this);
         setCurrentGameState(State.MAIN_MENU);
     }
 
@@ -60,33 +48,14 @@ public class GameController {
     }
 
     public void setCurrentGameState(State gameState) {
-        this.currentGameState = getState(gameState);
+        this.currentGameState = stateManager.getState(gameState);
         currentGameState.onGameStateSet();
-        setCurrentNavButtonHandler(getState(gameState));
+        setCurrentNavButtonHandler(stateManager.getState(gameState));
     }
 
     public void setCurrentNavButtonHandler(NavButtonHandler handler) {
         UIWrapper.getLeftButton().setOnActionHandler(handler.getLeftButtonActionEvent());
         UIWrapper.getRightButton().setOnActionHandler(handler.getRightButtonActionEvent());
-    }
-
-    private GameState getState(State gameState) {
-        switch (gameState) {
-            case MAIN_MENU:
-                return gameMainMenuState;
-            case BOARD_SIZE:
-                return gameBoardSizeSetupState;
-            case XO_PLACING:
-                return gameSetupState;
-            case GAME_RUNNING:
-                return gameRunningState;
-            case LOADER:
-                return gameLoaderState;
-            case END:
-                return gameEndState;
-            default:
-                return currentGameState;
-        }
     }
 
     public void setModelBoard(ModelBoard modelBoard) {
@@ -119,6 +88,10 @@ public class GameController {
 
     public ModelBoard getModelBoard() {
         return modelBoard;
+    }
+
+    public GameState getCurrentGameState() {
+        return currentGameState;
     }
 }
 

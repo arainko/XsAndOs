@@ -3,6 +3,7 @@ package com.arainko.xno.controller.gamestates.menustates;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Bundler;
+import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.view.screens.LoadScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,7 +37,7 @@ public class GameLoaderState extends GameStateHandler {
             Bundler.Bundle savedBundle = (Bundler.Bundle) ois.readObject();
             ois.close();
             getGameController().getBundler().loadBundle(savedBundle);
-            getGameController().setCurrentGameState(GameController.State.GAME_RUNNING);
+            getGameController().setCurrentGameState(StateManager.State.GAME_RUNNING);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -50,7 +51,7 @@ public class GameLoaderState extends GameStateHandler {
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
+        return event -> getGameController().setCurrentGameState(StateManager.State.MAIN_MENU);
     }
 
     @Override

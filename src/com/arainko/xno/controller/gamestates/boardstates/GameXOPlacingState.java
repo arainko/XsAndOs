@@ -3,6 +3,7 @@ package com.arainko.xno.controller.gamestates.boardstates;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.Boards;
+import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.model.elements.Cell;
 import com.arainko.xno.view.buttons.BoardButton;
@@ -76,13 +77,13 @@ public class GameXOPlacingState extends GameStateHandler {
         return event -> {
             getGameController().getUIWrapper().getLeftButton().setDisable(false);
             getGameController().getUIWrapper().getRightButton().setDisable(false);
-            getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
+            getGameController().setCurrentGameState(StateManager.State.BOARD_SIZE);
         };
     }
 
     @Override
     public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(GameController.State.GAME_RUNNING);
+        return event -> getGameController().setCurrentGameState(StateManager.State.GAME_RUNNING);
     }
 
 }

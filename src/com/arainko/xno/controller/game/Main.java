@@ -12,11 +12,10 @@ public class Main extends Application {
         primaryStage.setTitle("Xs and Os");
         GameController gc = new GameController();
         Scene scene = new Scene(gc.getUIWrapper(), 600, 600);
-        scene.setFill(Color.rgb(66,66,66));
+        scene.setFill(Color.rgb(45, 50, 54));
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

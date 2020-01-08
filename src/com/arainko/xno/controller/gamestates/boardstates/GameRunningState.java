@@ -3,6 +3,7 @@ package com.arainko.xno.controller.gamestates.boardstates;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.MoveKeeper;
+import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.controller.interfaces.ClickHandler;
 import com.arainko.xno.view.ui.GameButtonBar;
 import javafx.event.ActionEvent;
@@ -59,7 +60,7 @@ public class GameRunningState extends GameStateHandler {
         }
         if (getGameController().getModelBoard().isBoard(done())) {
             onGameStateExit();
-            getGameController().setCurrentGameState(GameController.State.END);
+            getGameController().setCurrentGameState(StateManager.State.END);
         }
     }
 

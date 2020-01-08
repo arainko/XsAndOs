@@ -7,23 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameButtonBar extends HBox {
-    public static class BarButton extends MenuButton {
-        public enum Functionality {
-            SAVE, MAIN_MENU
-        }
-        private Functionality functionality;
-
-        public BarButton(String text, Functionality functionality, int sizeX, int sizeY) {
-            super(text, sizeX, sizeY);
-            this.functionality = functionality;
-            this.setId("bar-button");
-        }
-
-        public Functionality getFunctionality() {
-            return functionality;
-        }
-    }
-    List<BarButton> buttonList;
+    List<MenuButton> buttonList;
 
     public GameButtonBar() {
         buttonList = new ArrayList<>();
@@ -32,14 +16,14 @@ public class GameButtonBar extends HBox {
     }
 
     private void setupButtons() {
-        BarButton saveButton = new BarButton("Save", BarButton.Functionality.SAVE, 50, 30);
-        BarButton mainMenuButton = new BarButton("Main Menu", BarButton.Functionality.MAIN_MENU, 75, 30);
+        MenuButton saveButton = new MenuButton("Save", MenuButton.Functionality.SAVE, 50, 30);
+        MenuButton mainMenuButton = new MenuButton("Main Menu", MenuButton.Functionality.MAIN_MENU, 75, 30);
         getChildren().addAll(saveButton, mainMenuButton);
         buttonList.add(saveButton);
         buttonList.add(mainMenuButton);
     }
 
-    public List<BarButton> getButtonList() {
+    public List<MenuButton> getButtonList() {
         return buttonList;
     }
 }

@@ -3,6 +3,7 @@ package com.arainko.xno.controller.gamestates.menustates;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.MoveKeeper;
+import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
 import com.arainko.xno.view.screens.SetupScreen;
@@ -26,12 +27,12 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     public void onPrimaryClickHandler(Button button) {
         int clickedDim = ((SetupScreen.SizeButton) button).getDimContainer();
         setupGameController(clickedDim);
-        getGameController().setCurrentGameState(GameController.State.XO_PLACING);
+        getGameController().setCurrentGameState(StateManager.State.XO_PLACING);
     }
 
     @Override
     public EventHandler<ActionEvent> getLeftButtonActionEvent() {
-        return event -> getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
+        return event -> getGameController().setCurrentGameState(StateManager.State.MAIN_MENU);
     }
 
     private void setupGameController(int boardDim) {

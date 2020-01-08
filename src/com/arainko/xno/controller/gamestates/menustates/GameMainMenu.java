@@ -3,10 +3,11 @@ package com.arainko.xno.controller.gamestates.menustates;
 import com.arainko.xno.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
 import com.arainko.xno.controller.helpers.NavButtonHandlerFactory;
+import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.controller.interfaces.NavButtonHandler;
+import com.arainko.xno.view.buttons.MenuButton;
 import com.arainko.xno.view.screens.HelpScreen;
 import com.arainko.xno.view.screens.MainMenuScreen;
-import com.arainko.xno.view.screens.MainMenuScreen.MainMenuButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -37,13 +38,13 @@ public class GameMainMenu extends GameStateHandler {
 
     @Override
     public <T extends Button> void onPrimaryClickHandler(T button) {
-        MainMenuButton clickedButton = (MainMenuButton) button;
-        switch (clickedButton.getButtonFunctionality()) {
-            case CREATE:
-                getGameController().setCurrentGameState(GameController.State.BOARD_SIZE);
+        MenuButton clickedButton = (MenuButton) button;
+        switch (clickedButton.getFunctionality()) {
+            case CREATE_BOARD:
+                getGameController().setCurrentGameState(StateManager.State.BOARD_SIZE);
                 break;
-            case LOAD:
-                getGameController().setCurrentGameState(GameController.State.LOADER);
+            case LOAD_BOARD:
+                getGameController().setCurrentGameState(StateManager.State.LOADER);
                 break;
             case HELP:
                 getGameController().getUIWrapper().changeMainView(rulesHelpScreen);
@@ -53,13 +54,24 @@ public class GameMainMenu extends GameStateHandler {
     }
 
     private NavButtonHandler getRulesScreenHandler() {
-        return controlsScreenHandler = NavButtonHandlerFactory
-                .getLeftButtonHandler(getGameController(),
-                        rulesHelpScreen, rulesScreenHandler);
-        rulesScreenHandler = NavButtonHandlerFactory
-                .getLeftRightButtonHandler(getGameController(),
-                        mainMenuScreen, mainMenuHandler,
-                        controlsHelpScreen, controlsScreenHandler);
+        return new NavButtonHandler() {
+            @Override
+            public EventHandler<ActionEvent> getLeftButtonActionEvent() {
+                return event -> {
+                    getGameController().getUIWrapper().changeMainView(mainMenuScreen);
+                    getGameController().setCurrentNavButtonHandler(mainMenuHandler);
+                };
+            }
+
+            @Override
+            public EventHandler<ActionEvent> getRightButtonActionEvent() {
+                return event -> {
+                    getGameController().getUIWrapper().changeMainView(controlsHelpScreen);
+                    getGameController().setCurrentNavButtonHandler(controlsScreenHandler);
+                };
+            }
+        };
+
     }
 
     private NavButtonHandler getControlsScreenHandler() {
