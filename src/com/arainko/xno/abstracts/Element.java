@@ -3,6 +3,8 @@ package com.arainko.xno.abstracts;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static com.arainko.xno.abstracts.Board.*;
+
 public abstract class Element implements Serializable {
     private int cordX;
     private int cordY;
@@ -15,13 +17,13 @@ public abstract class Element implements Serializable {
     private void setCordX(int cordX) {
         if (cordX >= 0)
             this.cordX = cordX;
-        else throw new IllegalStateException("Negative value: cordX = " + cordX);
+        else throw new IllegalArgumentException("Negative value: cordX = " + cordX);
     }
 
     private void setCordY(int cordY) {
         if (cordY >= 0)
             this.cordY = cordY;
-        else throw new IllegalStateException("Negative value: cordY = " + cordY);
+        else throw new IllegalArgumentException("Negative value: cordY = " + cordY);
     }
 
     public int getCordX() {
@@ -32,8 +34,8 @@ public abstract class Element implements Serializable {
         return cordY;
     }
 
-    public Board.Cords getCords() {
-        return new Board.Cords(getCordX(), getCordY());
+    public Cords getCords() {
+        return new Cords(getCordX(), getCordY());
     }
 
     @Override

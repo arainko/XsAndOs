@@ -39,13 +39,13 @@ public abstract class Board<T extends BoardElement> implements Serializable {
     private void setDimX(int dimX) {
         if (dimX > 0)
             this.dimX = dimX;
-        else throw new IllegalStateException("Negative or zero value: dimX = " + dimX);
+        else throw new IllegalArgumentException("Negative or zero value: dimX = " + dimX);
     }
 
     private void setDimY(int dimY) {
         if (dimY > 0)
             this.dimY = dimY;
-        else throw new IllegalStateException("Negative or zero value: dimY = " + dimY);
+        else throw new IllegalArgumentException("Negative or zero value: dimY = " + dimY);
     }
 
     public abstract void setBoardInitialState();

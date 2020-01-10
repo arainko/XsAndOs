@@ -90,8 +90,4 @@ public class Connection implements Serializable {
         return connectionTypes;
     }
 
-    public void print() {
-        for (Type cell : connectionTypes.values())
-            System.out.println(cell);
-    }
 }
