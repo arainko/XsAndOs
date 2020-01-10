@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.boardstates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.Boards;
@@ -12,6 +12,9 @@ import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.*;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 import static java.util.function.Predicate.not;
+
+/* This InternalClickHandler decides whether a tile the user clicked is an X or an O,
+* its secondary click behavior is removing selected connections */
 
 public class InternalXOWatcher extends InternalClickHandler<GameRunningState> {
     public InternalXOWatcher(GameRunningState parentGameState) {

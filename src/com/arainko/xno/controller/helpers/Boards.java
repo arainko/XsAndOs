@@ -11,6 +11,9 @@ import java.util.List;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.upToWinCondition;
 
+/* Helper class with static methods to help reduce some clutter from GameStates that often make use
+* of methods declared below. */
+
 public class Boards {
     public static void handleConnectionBuilding(ModelBoard modelBoard, ViewBoard viewBoard, Connection connection) {
         lightUpConnectionCords(modelBoard, viewBoard, connection);

@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.boardstates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.abstracts.Board.Cords;
 import com.arainko.xno.abstracts.Element;
@@ -17,10 +17,15 @@ import java.util.stream.Collectors;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.empty;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.ended;
 
+/* This InternalClickHandler handles actions after the user clicks either X or O i.e:
+* - lighting up the 'neighbor' tiles that give the use a cue where to click
+* - keeping track of clicked tiles to turn them into a connection
+* - placing the connection on board and checking if it's correct */
+
 public class InternalConnectionBuilder extends InternalClickHandler<GameRunningState> {
     private List<Cords> lastClickedNeighbors;
-    private Connection connection;
     private List<Cords> pausedConnectionCords;
+    private Connection connection;
 
     public InternalConnectionBuilder(GameRunningState parentGameState) {
         super(parentGameState);

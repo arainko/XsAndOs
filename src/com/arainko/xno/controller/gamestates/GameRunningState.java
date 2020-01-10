@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.boardstates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -11,6 +11,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 import static com.arainko.xno.model.predicates.BoardPredicates.done;
+
+/* This GameStateHandler controls the flow of the game itself while also
+* providing ClickHandlers for its InternalClickHandlers and the GameButtonBar.
+*
+* NavButtonHandlers provided in this GameState allow the user to traverse the history of
+* moves he made while playing the game. */
 
 public class GameRunningState extends GameStateHandler {
     private ClickHandler XOWatcher;
@@ -33,10 +39,10 @@ public class GameRunningState extends GameStateHandler {
         moveKeeper = getGameController().getMoveKeeper();
         gameButtonBar = getGameController().getUIWrapper().getGameButtonBar();
         setCurrentInternalGameState(XOWatcher);
-        getGameController().registerButtonsForGameState(getGameController()
+        getGameController().registerButtonsForClickHandler(getGameController()
                 .getViewBoard()
                 .getFlattenedBoardElements());
-        getGameController().registerButtonsForGameState(gameButtonBar.getButtonList());
+        getGameController().registerButtonsForClickHandler(gameButtonBar.getButtonList());
         getGameController().getUIWrapper().changeMainView(getGameController()
                 .getViewBoard()
                 .getButtonGrid());
@@ -100,28 +106,6 @@ public class GameRunningState extends GameStateHandler {
         getGameController().getUIWrapper().getRightButton()
                 .setDisable(getMoveKeeper().keeperPred(keeper -> keeper.getCurrentIndex() + 1 < keeper.getKeptMovesSize()));
     }
-
-//    private void setupGameButtonBar() {
-//        getGameController().getUIWrapper().getGameButtonBar().setVisible(true);
-//        List<BarButton> buttonList = getGameController().getUIWrapper()
-//                .getGameButtonBar()
-//                .getButtonList();
-//        for (BarButton button : buttonList) {
-//            if (button.getFunctionality() == BarButton.Functionality.SAVE)
-//                button.setOnAction(event -> {
-//                if (currentInternalGameState == connectionBuilder) {
-//                    ((InternalConnectionBuilder) connectionBuilder).pauseState();
-//                    getGameController().getBundler().saveBundle();
-//                    ((InternalConnectionBuilder) connectionBuilder).resumeState();
-//                } else getGameController().getBundler().saveBundle();
-//            });
-//            else if (button.getFunctionality() == BarButton.Functionality.MAIN_MENU)
-//                button.setOnAction(event -> {
-//                onGameStateExit();
-//                getGameController().setCurrentGameState(GameController.State.MAIN_MENU);
-//            });
-//        }
-//    }
 
     public void setCurrentInternalGameState(ClickHandler currentInternalGameState) {
         this.currentInternalGameState = currentInternalGameState;

@@ -11,6 +11,13 @@ import java.util.List;
 
 import static com.arainko.xno.controller.helpers.MoveKeeper.Move;
 
+/* Bundler is responsible for saving/loading of the current game state to/from file.
+* To store the game state it uses a Bundle which is an object
+* that consists of a ModelBoard and MoveKeeper's move history and current history index.
+* Current game state and history can then be easily rebuilt using only these 3 objects.
+*
+* Save files are saved and loaded from '.xnosaves' directory in user's home directory. */
+
 public class Bundler {
     public static class Bundle implements Serializable {
         private ModelBoard modelBoard;
@@ -43,7 +50,6 @@ public class Bundler {
         saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
         new File(saveFileDirPath).mkdir();
     }
-
 
     public void saveBundle() {
         LocalDateTime now = LocalDateTime.now();

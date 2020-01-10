@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.menustates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -14,8 +14,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/* This GameState handles the load button from file screen allowing
+* the user to specify which file to load and commence the game on */
+
 public class GameLoaderState extends GameStateHandler {
     private String saveFileDirPath;
+    private LoadScreen loadScreen;
     public GameLoaderState(GameController gameController) {
         super(gameController);
     }
@@ -24,8 +28,8 @@ public class GameLoaderState extends GameStateHandler {
     public void onGameStateSet() {
         saveFileDirPath = System.getProperty("user.home")+"/.xnosaves";
         new File(saveFileDirPath).mkdir();
-        LoadScreen loadScreen = new LoadScreen();
-        getGameController().registerButtonsForGameState(loadScreen.getButtonList());
+        loadScreen = new LoadScreen();
+        getGameController().registerButtonsForClickHandler(loadScreen.getButtonList());
         getGameController().getUIWrapper().setCenter(loadScreen.getWrapper());
     }
 
@@ -39,13 +43,8 @@ public class GameLoaderState extends GameStateHandler {
             getGameController().getBundler().loadBundle(savedBundle);
             getGameController().setCurrentGameState(StateManager.State.GAME_RUNNING);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            loadScreen.setInfoText("File's corrupted,\nchoose a different one:");
         }
-
-    }
-
-    @Override
-    public <T extends Button> void onSecondaryClickHandler(T button) {
 
     }
 
@@ -54,8 +53,4 @@ public class GameLoaderState extends GameStateHandler {
         return event -> getGameController().setCurrentGameState(StateManager.State.MAIN_MENU);
     }
 
-    @Override
-    public EventHandler<ActionEvent> getRightButtonActionEvent() {
-        return null;
-    }
 }

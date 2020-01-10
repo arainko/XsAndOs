@@ -14,6 +14,10 @@ import java.util.stream.Collectors;
 import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.ConnectionPredicates.containingCell;
 
+/* MoveKeeper is responsible for keeping track of user's move history
+* during the solving of the puzzle process enabling him to go
+* back and forth in game's move history. */
+
 public class MoveKeeper {
     public static class Move implements Serializable {
         private List<Cords> cellCords;

@@ -1,10 +1,11 @@
-package com.arainko.xno.controller.gamestates.boardstates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.InternalClickHandler;
 import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.view.buttons.MenuButton;
 import javafx.scene.control.Button;
 
+/* This ClickHandler handles the behavior of GameButtonBar (Save and Main Menu buttons visible on the top-left) */
 
 public class InternalButtonBarHandler extends InternalClickHandler<GameRunningState> {
 

@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.menustates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
+/* This GameState handles the board size menu and allows the user to pick a board size.*/
+
 public class GameBoardSizeSetupState extends GameStateHandler {
     public GameBoardSizeSetupState(GameController gameController) {
         super(gameController);
@@ -19,7 +21,7 @@ public class GameBoardSizeSetupState extends GameStateHandler {
     @Override
     public void onGameStateSet() {
         SetupScreen setupMenu = new SetupScreen();
-        getGameController().registerButtonsForGameState(setupMenu.getButtonList());
+        getGameController().registerButtonsForClickHandler(setupMenu.getButtonList());
         getGameController().getUIWrapper().changeMainView(setupMenu);
     }
 

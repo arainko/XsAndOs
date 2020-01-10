@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.menustates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -10,6 +10,8 @@ import com.arainko.xno.view.screens.MainMenuScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+
+/* This GameState handles the main menu and the help screens (Rules and Controls) */
 
 public class GameMainMenu extends GameStateHandler {
     MainMenuScreen mainMenuScreen;
@@ -31,7 +33,7 @@ public class GameMainMenu extends GameStateHandler {
         controlsScreenHandler = getControlsScreenHandler();
         rulesHelpScreen = new HelpScreen("RULES", HelpScreen.Type.RULES);
         controlsHelpScreen = new HelpScreen("CONTROLS", HelpScreen.Type.CONTROLS);
-        getGameController().registerButtonsForGameState(mainMenuScreen.getButtonList());
+        getGameController().registerButtonsForClickHandler(mainMenuScreen.getButtonList());
         getGameController().getUIWrapper().changeMainView(mainMenuScreen);
     }
 

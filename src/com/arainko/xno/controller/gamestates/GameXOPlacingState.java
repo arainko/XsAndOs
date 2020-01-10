@@ -1,4 +1,4 @@
-package com.arainko.xno.controller.gamestates.boardstates;
+package com.arainko.xno.controller.gamestates;
 
 import com.arainko.xno.controller.abstracts.GameStateHandler;
 import com.arainko.xno.controller.game.GameController;
@@ -19,8 +19,12 @@ import static com.arainko.xno.abstracts.Board.Cords;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCircle;
 import static com.arainko.xno.model.predicates.CellPredicates.containingCross;
 
+/* This GameState handles placing of Xs and Os on the boards after
+* selecting the 'Create custom board' option. */
+
 public class GameXOPlacingState extends GameStateHandler {
     private Map<Cell.Contents, Integer> contentsCount;
+
     public GameXOPlacingState(GameController gameController) {
         super(gameController);
     }
@@ -28,7 +32,7 @@ public class GameXOPlacingState extends GameStateHandler {
     @Override
     public void onGameStateSet() {
         ViewBoard viewBoard = getGameController().getViewBoard();
-        getGameController().registerButtonsForGameState(viewBoard.getFlattenedBoardElements());
+        getGameController().registerButtonsForClickHandler(viewBoard.getFlattenedBoardElements());
         getGameController().getUIWrapper().changeMainView(viewBoard.getButtonGrid());
         contentsCount = new HashMap<>();
         contentsCount.put(Cell.Contents.CROSS, 0);

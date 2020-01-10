@@ -1,17 +1,11 @@
 package com.arainko.xno.controller.game;
 
-import com.arainko.xno.controller.gamestates.menustates.GameEndState;
-import com.arainko.xno.controller.gamestates.menustates.GameBoardSizeSetupState;
-import com.arainko.xno.controller.gamestates.menustates.GameLoaderState;
-import com.arainko.xno.controller.gamestates.menustates.GameMainMenu;
-import com.arainko.xno.controller.gamestates.boardstates.GameRunningState;
-import com.arainko.xno.controller.gamestates.boardstates.GameXOPlacingState;
 import com.arainko.xno.controller.helpers.Bundler;
 import com.arainko.xno.controller.helpers.MoveKeeper;
 import com.arainko.xno.controller.helpers.StateManager;
 import com.arainko.xno.controller.helpers.StateManager.State;
-import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.controller.interfaces.GameState;
+import com.arainko.xno.controller.interfaces.NavButtonHandler;
 import com.arainko.xno.model.board.ModelBoard;
 import com.arainko.xno.view.board.ViewBoard;
 import com.arainko.xno.view.ui.UIWrapper;
@@ -19,6 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseButton;
 
 import java.util.List;
+
+/* GameController is the main hub for the app, it:
+* - decides what screen is currently displayed
+* - handles GameState switching
+* - decides which GameState is currently in control
+* - handles saving game history (through MoveKeeper)
+* - handles saving game save files (through Bundler) */
 
 public class GameController {
     private UIWrapper UIWrapper;
@@ -37,7 +38,7 @@ public class GameController {
         setCurrentGameState(State.MAIN_MENU);
     }
 
-    public <T extends Button> void registerButtonsForGameState(List<T> buttonList) {
+    public <T extends Button> void registerButtonsForClickHandler(List<T> buttonList) {
         buttonList.forEach(button -> button.setOnMouseClicked(mouseEvent -> {
             T currButton = (T) mouseEvent.getSource();
             if (mouseEvent.getButton() == MouseButton.PRIMARY)
