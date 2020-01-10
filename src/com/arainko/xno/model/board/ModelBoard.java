@@ -12,6 +12,7 @@ import static com.arainko.xno.model.predicates.BoardPredicates.ableToAccommodate
 import static com.arainko.xno.model.predicates.CellPredicates.partOfConnection;
 import static java.util.function.Predicate.not;
 
+
 public class ModelBoard extends Board<Cell> {
     private List<Connection> connections;
 

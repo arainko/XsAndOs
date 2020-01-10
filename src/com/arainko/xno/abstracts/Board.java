@@ -87,9 +87,4 @@ public abstract class Board<T extends BoardElement> implements Serializable {
     public int getDimY() {
         return dimY;
     }
-
-    public void printBoard() {
-        for (List<T> row : boardElements)
-            System.out.println(row);
-    }
 }
