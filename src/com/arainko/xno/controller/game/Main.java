@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/* Created by Aleksander Rainko */
+
 public class Main extends Application {
 
     @Override

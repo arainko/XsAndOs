@@ -26,7 +26,6 @@ public class ModelTests {
     private Connection connection3;
     private List<Cords> cords1;
 
-
     @BeforeEach
     public void setupForTests() {
         modelBoard = new ModelBoard(10,10);
