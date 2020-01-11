@@ -6,6 +6,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 
+/* Main view class, contains current menu/board screen and persistent
+* UI elements (NavButtons and GameButtonBar) */
+
 public class UIWrapper extends BorderPane {
     private NavButton leftButton;
     private NavButton rightButton;

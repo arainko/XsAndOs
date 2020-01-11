@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/* Template for different menu screens */
+
 public abstract class Screen<T extends Button> extends VBox {
     private List<T> buttonList;
 
