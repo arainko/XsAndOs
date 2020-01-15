@@ -1,1 +1,1 @@
-#A puzzle game about perpendicular connections between Xs and O
+# A puzzle game about perpendicular connections between Xs and O
